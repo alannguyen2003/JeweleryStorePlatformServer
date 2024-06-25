@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JeweleryStorePlatformAPI", "JeweleryStorePlatformAPI\JeweleryStorePlatformAPI.csproj", "{6A6AFFAA-0359-4D94-914D-9112055A67DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JeweleryStorePlatformBusinessObject", "JeweleryStorePlatformBusinessObject\JeweleryStorePlatformBusinessObject.csproj", "{CF30146C-F638-4569-AE34-A3EB518CBFAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JeweleryStorePlatformDataAccess", "JeweleryStorePlatformDataAccess\JeweleryStorePlatformDataAccess.csproj", "{7E179C29-13F8-4715-BEB6-9DA63D3C6F80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JeweleryStorePlatformRepository", "JeweleryStorePlatformRepository\JeweleryStorePlatformRepository.csproj", "{C86BFE0A-56D2-4247-97C9-304A176F924E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JeweleryStorePlatformService", "JeweleryStorePlatformService\JeweleryStorePlatformService.csproj", "{9D6834E2-DBE6-486A-8E46-0CA9316CB63B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JeweleryStorePlatformDataTransfer", "JeweleryStorePlatformDataTransfer\JeweleryStorePlatformDataTransfer.csproj", "{41042026-625C-4043-8B3A-E2FD93C54584}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6A6AFFAA-0359-4D94-914D-9112055A67DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A6AFFAA-0359-4D94-914D-9112055A67DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A6AFFAA-0359-4D94-914D-9112055A67DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A6AFFAA-0359-4D94-914D-9112055A67DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF30146C-F638-4569-AE34-A3EB518CBFAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF30146C-F638-4569-AE34-A3EB518CBFAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF30146C-F638-4569-AE34-A3EB518CBFAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF30146C-F638-4569-AE34-A3EB518CBFAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E179C29-13F8-4715-BEB6-9DA63D3C6F80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E179C29-13F8-4715-BEB6-9DA63D3C6F80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E179C29-13F8-4715-BEB6-9DA63D3C6F80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E179C29-13F8-4715-BEB6-9DA63D3C6F80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C86BFE0A-56D2-4247-97C9-304A176F924E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C86BFE0A-56D2-4247-97C9-304A176F924E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C86BFE0A-56D2-4247-97C9-304A176F924E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C86BFE0A-56D2-4247-97C9-304A176F924E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D6834E2-DBE6-486A-8E46-0CA9316CB63B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D6834E2-DBE6-486A-8E46-0CA9316CB63B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D6834E2-DBE6-486A-8E46-0CA9316CB63B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D6834E2-DBE6-486A-8E46-0CA9316CB63B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41042026-625C-4043-8B3A-E2FD93C54584}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41042026-625C-4043-8B3A-E2FD93C54584}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41042026-625C-4043-8B3A-E2FD93C54584}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41042026-625C-4043-8B3A-E2FD93C54584}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
