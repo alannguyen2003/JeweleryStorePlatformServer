@@ -1,3 +1,9 @@
+using JeweleryStorePlatformAPI.Configuration;
+using JeweleryStorePlatformBusinessObject.Account;
+using JeweleryStorePlatformDataAccess;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddRepository();
+builder.Services.AddService();
+builder.Services.AddAutoMapper();
+builder.Services.AddSeeding();
+builder.Services.AddCloudinarySetting(builder.Configuration);
+builder.Services.AddJwtAuthentication(builder.Configuration);
 
 var app = builder.Build();
 
@@ -15,12 +28,25 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseHttpsRedirection();
 app.MapControllers();
 
-app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    var context = services.GetRequiredService<Seeding>(); 
+    await context.AccountSeeding();
 }
+catch (Exception ex)
+{
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "An error while seeding data"); 
+}
+
+
+app.Run();
