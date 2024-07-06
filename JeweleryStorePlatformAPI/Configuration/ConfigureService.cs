@@ -1,4 +1,6 @@
 ﻿using JeweleryStorePlatformAPI.Configuration.Cloudinary;
+using JeweleryStorePlatformService.Interface;
+using JeweleryStorePlatformService;
 using Microsoft.OpenApi.Models;
 
 namespace JeweleryStorePlatformAPI.Configuration;
@@ -57,6 +59,12 @@ public static class ConfigureService
     public static IServiceCollection AddCloudinarySetting(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<CloudinarySetting>(configuration.GetSection("CloudinarySettings"));
+        return services;
+    }
+
+    public static IServiceCollection AddJewelryService(this IServiceCollection services)
+    {
+        services.AddScoped<IJeweleryService, JeweleryService>();
         return services;
     }
 }

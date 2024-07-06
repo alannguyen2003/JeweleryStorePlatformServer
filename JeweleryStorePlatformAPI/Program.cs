@@ -1,12 +1,19 @@
 using JeweleryStorePlatformAPI.Configuration;
 using JeweleryStorePlatformBusinessObject.Account;
 using JeweleryStorePlatformDataAccess;
+using JeweleryStorePlatformService.Interface;
+using JeweleryStorePlatformService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using JeweleryStorePlatformRepository.Interface;
+using JeweleryStorePlatformRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<IJeweleryRepository, JeweleryRepository>();
+builder.Services.AddScoped<IJeweleryService, JeweleryService>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -18,6 +25,7 @@ builder.Services.AddAutoMapper();
 builder.Services.AddSeeding();
 builder.Services.AddCloudinarySetting(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
+
 
 var app = builder.Build();
 

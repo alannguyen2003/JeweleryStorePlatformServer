@@ -35,6 +35,7 @@ public class AppDbContext : IdentityDbContext<AccountEntity,
     public DbSet<RoleEntity> Roles { get; set; }
     public DbSet<AccountRoleEntity> AccountRoles { get; set; }
     public DbSet<JeweleryEntity> Jeweleries { get; set; }
+    public DbSet<JeweleryTypeEntity> JeweleryTypes { get; set; }
     public DbSet<JeweleryCaseEntity> JeweleryCases { get; set; }
     public DbSet<PaymentMethodEntity> PaymentMethods { get; set; }
     public DbSet<TransactionEntity> Transactions { get; set; }
