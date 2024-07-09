@@ -3,10 +3,10 @@
 namespace JeweleryStorePlatformBusinessObject.Address;
 
 [Table("Addresses")]
-public class AddressEntity : BaseEntity
+public class Address : BaseEntity
 {
-    public string Address { get; set; }
+    public string AddressString { get; set; }
     [ForeignKey("DistrictId")]
     public int DistrictId { get; set; }
-    public virtual DistrictEntity DistrictEntity { get; set; }
+    public virtual District District { get; set; }
 }

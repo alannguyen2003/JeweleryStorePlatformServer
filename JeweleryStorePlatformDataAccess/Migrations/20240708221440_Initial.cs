@@ -12,21 +12,6 @@ namespace JeweleryStorePlatformDataAccess.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Roles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Accounts",
                 columns: table => new
                 {
@@ -56,7 +41,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.PrimaryKey("PK_Accounts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -174,31 +159,20 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AccountRoles",
+                name: "Roles",
                 columns: table => new
                 {
-                    AccountId = table.Column<int>(type: "int", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false),
-                    AccountEntityId = table.Column<int>(type: "int", nullable: false),
-                    RoleEntityId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountRoles", x => new { x.AccountId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_AccountRoles_Roles_RoleEntityId",
-                        column: x => x.RoleId,
-                        principalTable: "Roles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AccountRoles_AspNetUsers_AccountEntityId",
-                        column: x => x.AccountEntityId,
-                        principalTable: "Accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                 });
-            
+
             migrationBuilder.CreateTable(
                 name: "Districts",
                 columns: table => new
@@ -206,15 +180,14 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DistrictName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CityId = table.Column<int>(type: "int", nullable: false),
-                    CityEntityId = table.Column<int>(type: "int", nullable: false)
+                    CityId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Districts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Districts_Cities_CityEntityId",
-                        column: x => x.CityEntityId,
+                        name: "FK_Districts_Cities_CityId",
+                        column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -228,15 +201,14 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ReportNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ReportUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DiamondId = table.Column<int>(type: "int", nullable: false),
-                    DiamondEntityId = table.Column<int>(type: "int", nullable: false)
+                    DiamondId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GIAReports", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GIAReports_Diamonds_DiamondEntityId",
-                        column: x => x.DiamondEntityId,
+                        name: "FK_GIAReports_Diamonds_DiamondId",
+                        column: x => x.DiamondId,
                         principalTable: "Diamonds",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -250,15 +222,14 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImageDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DesignId = table.Column<int>(type: "int", nullable: false),
-                    JeweleryDesignEntityId = table.Column<int>(type: "int", nullable: false)
+                    JeweleryDesignId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_JeweleryDesignImages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_JeweleryDesignImages_JeweleryDesigns_JeweleryDesignEntityId",
-                        column: x => x.JeweleryDesignEntityId,
+                        name: "FK_JeweleryDesignImages_JeweleryDesigns_JeweleryDesignId",
+                        column: x => x.JeweleryDesignId,
                         principalTable: "JeweleryDesigns",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -271,15 +242,14 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     JeweleryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TypeId = table.Column<int>(type: "int", nullable: false),
-                    JeweleryTypeEntityId = table.Column<int>(type: "int", nullable: false)
+                    JeweleryTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Jeweleries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Jeweleries_JeweleryTypes_JeweleryTypeEntityId",
-                        column: x => x.JeweleryTypeEntityId,
+                        name: "FK_Jeweleries_JeweleryTypes_JeweleryTypeId",
+                        column: x => x.JeweleryTypeId,
                         principalTable: "JeweleryTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -293,22 +263,20 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CaseName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ColorId = table.Column<int>(type: "int", nullable: false),
-                    ColorEntityId = table.Column<int>(type: "int", nullable: false),
-                    MaterialId = table.Column<int>(type: "int", nullable: false),
-                    MaterialEntityId = table.Column<int>(type: "int", nullable: false)
+                    MaterialId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_JeweleryCases", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_JeweleryCases_Colors_ColorEntityId",
-                        column: x => x.ColorEntityId,
+                        name: "FK_JeweleryCases_Colors_ColorId",
+                        column: x => x.ColorId,
                         principalTable: "Colors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_JeweleryCases_Materials_MaterialEntityId",
-                        column: x => x.MaterialEntityId,
+                        name: "FK_JeweleryCases_Materials_MaterialId",
+                        column: x => x.MaterialId,
                         principalTable: "Materials",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -320,8 +288,6 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 {
                     AccountId = table.Column<int>(type: "int", nullable: false),
                     PromotionId = table.Column<int>(type: "int", nullable: false),
-                    AccountEntityId = table.Column<int>(type: "int", nullable: false),
-                    PromotionEntityId = table.Column<int>(type: "int", nullable: false),
                     PromotionCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExpiredDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -329,35 +295,58 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 {
                     table.PrimaryKey("PK_AccountPromotions", x => new { x.AccountId, x.PromotionId });
                     table.ForeignKey(
-                        name: "FK_AccountPromotions_Accounts_AccountEntityId",
-                        column: x => x.AccountEntityId,
+                        name: "FK_AccountPromotions_Accounts_AccountId",
+                        column: x => x.AccountId,
                         principalTable: "Accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AccountPromotions_Promotions_PromotionEntityId",
-                        column: x => x.PromotionEntityId,
+                        name: "FK_AccountPromotions_Promotions_PromotionId",
+                        column: x => x.PromotionId,
                         principalTable: "Promotions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
+                name: "AccountRoles",
+                columns: table => new
+                {
+                    AccountId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AccountRoles", x => new { x.AccountId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AccountRoles_Accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AccountRoles_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+            
+            migrationBuilder.CreateTable(
                 name: "Addresses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DistrictId = table.Column<int>(type: "int", nullable: false),
-                    DistrictEntityId = table.Column<int>(type: "int", nullable: false)
+                    AddressString = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DistrictId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Addresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Addresses_Districts_DistrictEntityId",
-                        column: x => x.DistrictEntityId,
+                        name: "FK_Addresses_Districts_DistrictId",
+                        column: x => x.DistrictId,
                         principalTable: "Districts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -371,26 +360,25 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Price = table.Column<int>(type: "int", nullable: false),
                     AddressId = table.Column<int>(type: "int", nullable: false),
-                    AddressEntityId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     StartDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FinishedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AccountId = table.Column<int>(type: "int", nullable: false),
-                    AccountEntityId = table.Column<int>(type: "int", nullable: false)
+                    PromotionCode = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Addresses_AddressEntityId",
-                        column: x => x.AddressEntityId,
-                        principalTable: "Addresses",
+                        name: "FK_Orders_Accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Orders_Accounts_AccountEntityId",
-                        column: x => x.AccountEntityId,
-                        principalTable: "Accounts",
+                        name: "FK_Orders_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Addresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -402,22 +390,42 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     JeweleryCaseId = table.Column<int>(type: "int", nullable: false),
-                    JeweleryCaseEntityId = table.Column<int>(type: "int", nullable: false),
+                    JeweleryId = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: false),
-                    OrderEntityId = table.Column<int>(type: "int", nullable: false)
+                    DiamondId = table.Column<int>(type: "int", nullable: false),
+                    JeweleryDesignId = table.Column<int>(type: "int", nullable: false),
+                    DesignFee = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderItems_JeweleryCases_JeweleryCaseEntityId",
-                        column: x => x.JeweleryCaseEntityId,
+                        name: "FK_OrderItems_Diamonds_DiamondId",
+                        column: x => x.DiamondId,
+                        principalTable: "Diamonds",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Jeweleries_JeweleryId",
+                        column: x => x.JeweleryId,
+                        principalTable: "Jeweleries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_JeweleryCases_JeweleryCaseId",
+                        column: x => x.JeweleryCaseId,
                         principalTable: "JeweleryCases",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderItems_Orders_OrderEntityId",
-                        column: x => x.OrderEntityId,
+                        name: "FK_OrderItems_JeweleryDesigns_JeweleryDesignId",
+                        column: x => x.JeweleryDesignId,
+                        principalTable: "JeweleryDesigns",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Orders_OrderId",
+                        column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -432,51 +440,41 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     TransactionStatus = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: false),
-                    OrderEntityId = table.Column<int>(type: "int", nullable: false),
                     AccountId = table.Column<int>(type: "int", nullable: false),
-                    AccountEntityId = table.Column<int>(type: "int", nullable: false)
+                    PaymentMethodId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transactions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transactions_AspNetUsers_AccountEntityId",
+                        name: "FK_Transactions_Accounts_AccountId",
                         column: x => x.AccountId,
                         principalTable: "Accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Transactions_Orders_OrderEntityId",
+                        name: "FK_Transactions_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Transactions_PaymentMethods_PaymentMethodId",
+                        column: x => x.PaymentMethodId,
+                        principalTable: "PaymentMethods",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AccountPromotions_AccountEntityId",
+                name: "IX_AccountPromotions_PromotionId",
                 table: "AccountPromotions",
-                column: "AccountEntityId");
+                column: "PromotionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AccountPromotions_PromotionEntityId",
-                table: "AccountPromotions",
-                column: "PromotionEntityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AccountRoles_AccountEntityId",
+                name: "IX_AccountRoles_RoleId",
                 table: "AccountRoles",
-                column: "AccountEntityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AccountRoles_RoleEntityId",
-                table: "AccountRoles",
-                column: "RoleEntityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Addresses_DistrictEntityId",
-                table: "Addresses",
-                column: "DistrictEntityId");
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -491,64 +489,96 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Districts_CityEntityId",
+                name: "IX_Addresses_DistrictId",
+                table: "Addresses",
+                column: "DistrictId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Districts_CityId",
                 table: "Districts",
-                column: "CityEntityId");
+                column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GIAReports_DiamondEntityId",
+                name: "IX_GIAReports_DiamondId",
                 table: "GIAReports",
-                column: "DiamondEntityId");
+                column: "DiamondId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jeweleries_JeweleryTypeEntityId",
+                name: "IX_Jeweleries_JeweleryTypeId",
                 table: "Jeweleries",
-                column: "JeweleryTypeEntityId");
+                column: "JeweleryTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JeweleryCases_ColorEntityId",
+                name: "IX_JeweleryCases_ColorId",
                 table: "JeweleryCases",
-                column: "ColorEntityId");
+                column: "ColorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JeweleryCases_MaterialEntityId",
+                name: "IX_JeweleryCases_MaterialId",
                 table: "JeweleryCases",
-                column: "MaterialEntityId");
+                column: "MaterialId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JeweleryDesignImages_JeweleryDesignEntityId",
+                name: "IX_JeweleryDesignImages_JeweleryDesignId",
                 table: "JeweleryDesignImages",
-                column: "JeweleryDesignEntityId");
+                column: "JeweleryDesignId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_JeweleryCaseEntityId",
+                name: "IX_OrderItems_DiamondId",
                 table: "OrderItems",
-                column: "JeweleryCaseEntityId");
+                column: "DiamondId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_OrderEntityId",
+                name: "IX_OrderItems_JeweleryCaseId",
                 table: "OrderItems",
-                column: "OrderEntityId");
+                column: "JeweleryCaseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_AccountEntityId",
+                name: "IX_OrderItems_JeweleryDesignId",
+                table: "OrderItems",
+                column: "JeweleryDesignId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_JeweleryId",
+                table: "OrderItems",
+                column: "JeweleryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_OrderId",
+                table: "OrderItems",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_AccountId",
                 table: "Orders",
-                column: "AccountEntityId");
+                column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_AddressEntityId",
+                name: "IX_Orders_AddressId",
                 table: "Orders",
-                column: "AddressEntityId");
+                column: "AddressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transactions_AccountEntityId",
-                table: "Transactions",
-                column: "AccountEntityId");
+                name: "RoleNameIndex",
+                table: "Roles",
+                column: "NormalizedName",
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transactions_OrderEntityId",
+                name: "IX_Transactions_AccountId",
                 table: "Transactions",
-                column: "OrderEntityId");
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_OrderId",
+                table: "Transactions",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_PaymentMethodId",
+                table: "Transactions",
+                column: "PaymentMethodId");
         }
 
         /// <inheritdoc />
@@ -564,16 +594,10 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 name: "GIAReports");
 
             migrationBuilder.DropTable(
-                name: "Jeweleries");
-
-            migrationBuilder.DropTable(
                 name: "JeweleryDesignImages");
 
             migrationBuilder.DropTable(
                 name: "OrderItems");
-
-            migrationBuilder.DropTable(
-                name: "PaymentMethods");
 
             migrationBuilder.DropTable(
                 name: "Transactions");
@@ -588,16 +612,22 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 name: "Diamonds");
 
             migrationBuilder.DropTable(
-                name: "JeweleryTypes");
-
-            migrationBuilder.DropTable(
-                name: "JeweleryDesigns");
+                name: "Jeweleries");
 
             migrationBuilder.DropTable(
                 name: "JeweleryCases");
 
             migrationBuilder.DropTable(
+                name: "JeweleryDesigns");
+
+            migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "PaymentMethods");
+
+            migrationBuilder.DropTable(
+                name: "JeweleryTypes");
 
             migrationBuilder.DropTable(
                 name: "Colors");
@@ -606,10 +636,10 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 name: "Materials");
 
             migrationBuilder.DropTable(
-                name: "Addresses");
+                name: "Accounts");
 
             migrationBuilder.DropTable(
-                name: "Accounts");
+                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "Districts");

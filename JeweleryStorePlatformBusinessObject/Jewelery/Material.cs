@@ -2,8 +2,8 @@
 
 namespace JeweleryStorePlatformBusinessObject.Jewelery;
 
-[Table("Colors")]
-public class ColorEntity : BaseEntity
+[Table("Materials")]
+public class Material : BaseEntity
 {
-    public string ColorDescription { get; set; }
+    public string MaterialDescription { get; set; }
 }

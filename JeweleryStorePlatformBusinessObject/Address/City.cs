@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace JeweleryStorePlatformBusinessObject.Address;
 
 [Table("Cities")]
-public class CityEntity : BaseEntity
+public class City : BaseEntity
 {
     [Required]
     public string CityName { get; set; }

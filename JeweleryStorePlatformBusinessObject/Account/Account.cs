@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 namespace JeweleryStorePlatformBusinessObject.Account;
 
 [Table("Accounts")]
-public class AccountEntity : IdentityUser<int>
+public class Account : IdentityUser<int>
 {
     public string FirstName { get; set; }
     public string MiddleName { get; set; }

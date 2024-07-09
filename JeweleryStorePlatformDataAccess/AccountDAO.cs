@@ -25,18 +25,18 @@ public class AccountDAO
         }
     }
 
-    public async Task<List<AccountEntity>> GetAllAccount()
+    public async Task<List<Account>> GetAllAccount()
     {
         return await _context.Accounts.ToListAsync();
     }
 
-    public async Task AddNewAccount(AccountEntity account)
+    public async Task AddNewAccount(Account account)
     {
         await _context.Accounts.AddAsync(account);
         await _context.SaveChangesAsync();
     }
 
-    public async Task AddRangeAccount(List<AccountEntity> accounts)
+    public async Task AddRangeAccount(List<Account> accounts)
     {
         await _context.Accounts.AddRangeAsync(accounts);
         await _context.SaveChangesAsync();

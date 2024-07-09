@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 namespace JeweleryStorePlatformBusinessObject.Account;
 
 [Table("Roles")]
-public class RoleEntity : IdentityRole<int>
+public class Role : IdentityRole<int>
 {
     
 }

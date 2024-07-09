@@ -2,8 +2,8 @@
 
 namespace JeweleryStorePlatformBusinessObject.Jewelery;
 
-[Table("Materials")]
-public class MaterialEntity : BaseEntity
+[Table("JeweleryTypes")]
+public class JeweleryType : BaseEntity
 {
-    public string MaterialDescription { get; set; }
+    public string TypeName { get; set; }
 }

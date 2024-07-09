@@ -20,9 +20,9 @@ public class Seeding
             return;
         }
 
-        var accounts = new List<AccountEntity>()
+        var accounts = new List<Account>()
         {
-            new AccountEntity()
+            new Account()
             {
                 Email = "nguyenho30112003@gmail.com",
                 FirstName = "Ho Duong",

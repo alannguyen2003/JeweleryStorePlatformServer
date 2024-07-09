@@ -13,8 +13,8 @@ using Microsoft.Extensions.Configuration;
 
 namespace JeweleryStorePlatformDataAccess;
 
-public class AppDbContext : IdentityDbContext<AccountEntity, 
-    RoleEntity, 
+public class AppDbContext : IdentityDbContext<Account, 
+    Role, 
     int,
     IdentityUserClaim<int>,
     IdentityUserRole<int>,
@@ -31,26 +31,25 @@ public class AppDbContext : IdentityDbContext<AccountEntity,
     {
     }
     
-    public DbSet<AccountEntity> Accounts { get; set; }
-    public DbSet<RoleEntity> Roles { get; set; }
-    public DbSet<AccountRoleEntity> AccountRoles { get; set; }
-    public DbSet<JeweleryEntity> Jeweleries { get; set; }
-    public DbSet<JeweleryTypeEntity> JeweleryTypes { get; set; }
-    public DbSet<JeweleryCaseEntity> JeweleryCases { get; set; }
-    public DbSet<PaymentMethodEntity> PaymentMethods { get; set; }
-    public DbSet<TransactionEntity> Transactions { get; set; }
-    public DbSet<OrderEntity> Orders { get; set; }
-    public DbSet<OrderItemEntity> OrderItems { get; set; }
-    public DbSet<JeweleryDesignEntity> JeweleryDesigns { get; set; }
-    public DbSet<JeweleryDesignImageEntity> JeweleryDesignImages { get; set; }
-    public DbSet<ColorEntity> Colors { get; set; }
-    public DbSet<GIAReportEntity> Reports { get; set; }
-    public DbSet<MaterialEntity> Materials { get; set; }
-    public DbSet<AddressEntity> Addresses { get; set; }
-    public DbSet<DistrictEntity> Districts { get; set; }
-    public DbSet<CityEntity> Cities { get; set; }
-    public DbSet<PromotionEntity> Promotions { get; set; }
-    public DbSet<AccountPromotionEntity> AccountPromotions { get; set; }
+    public DbSet<Account> Accounts { get; set; }
+    public DbSet<Role> Roles { get; set; }
+    public DbSet<AccountRole> AccountRoles { get; set; }
+    public DbSet<Jewelery> Jeweleries { get; set; }
+    public DbSet<JeweleryCase> JeweleryCases { get; set; }
+    public DbSet<PaymentMethod> PaymentMethods { get; set; }
+    public DbSet<Transaction> Transactions { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<JeweleryDesign> JeweleryDesigns { get; set; }
+    public DbSet<JeweleryDesignImage> JeweleryDesignImages { get; set; }
+    public DbSet<Color> Colors { get; set; }
+    public DbSet<GIAReport> Reports { get; set; }
+    public DbSet<Material> Materials { get; set; }
+    public DbSet<Address> Addresses { get; set; }
+    public DbSet<District> Districts { get; set; }
+    public DbSet<City> Cities { get; set; }
+    public DbSet<Promotion> Promotions { get; set; }
+    public DbSet<AccountPromotion> AccountPromotions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -69,15 +68,15 @@ public class AppDbContext : IdentityDbContext<AccountEntity,
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.Entity<AccountPromotionEntity>()
+        builder.Entity<AccountPromotion>()
             .HasKey(item => new { item.AccountId, item.PromotionId });
-        builder.Entity<AccountRoleEntity>()
+        builder.Entity<AccountRole>()
             .HasKey(item => new { item.AccountId, item.RoleId });
-        builder.Entity<AccountEntity>(entity =>
+        builder.Entity<Account>(entity =>
         {
             entity.ToTable(name: "Accounts");
         });
-        builder.Entity<RoleEntity>(entity =>
+        builder.Entity<Role>(entity =>
         {
             entity.ToTable(name: "Roles");
         });

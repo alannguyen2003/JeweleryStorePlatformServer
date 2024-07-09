@@ -3,7 +3,7 @@
 namespace JeweleryStorePlatformBusinessObject.Diamond;
 
 [Table("Diamonds")]
-public class DiamondEntity : BaseEntity
+public class Diamond : BaseEntity
 {
     public int Price { get; set; }
     public string CutType { get; set; }

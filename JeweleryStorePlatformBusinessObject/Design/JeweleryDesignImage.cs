@@ -3,11 +3,11 @@
 namespace JeweleryStorePlatformBusinessObject.Design;
 
 [Table("JeweleryDesignImages")]
-public class JeweleryDesignImageEntity : BaseEntity 
+public class JeweleryDesignImage : BaseEntity 
 {
     public string ImageUrl { get; set; }
     public string ImageDescription { get; set; }
-    [ForeignKey("DesignId")]
-    public int DesignId { get; set; }
-    public virtual JeweleryDesignEntity JeweleryDesignEntity { get; set; }
+    [ForeignKey("JeweleryDesignId")]
+    public int JeweleryDesignId { get; set; }
+    public virtual JeweleryDesign JeweleryDesign { get; set; }
 }
