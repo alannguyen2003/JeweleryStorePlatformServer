@@ -3,11 +3,11 @@
 namespace JeweleryStorePlatformBusinessObject.Diamond;
 
 [Table("GIAReports")]
-public class GIAReportEntity : BaseEntity
+public class GIAReport : BaseEntity
 {
     public string ReportNumber { get; set; }
     public string ReportUrl { get; set; }
     [ForeignKey("DiamondId")]
     public int DiamondId { get; set; }
-    public virtual DiamondEntity DiamondEntity { get; set; }
+    public virtual Diamond Diamond { get; set; }
 }

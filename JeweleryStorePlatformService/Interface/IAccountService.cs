@@ -4,8 +4,8 @@ namespace JeweleryStorePlatformService.Interface;
 
 public interface IAccountService
 {
-    public Task<List<AccountEntity>> GetAllAccounts();
-    public Task AddNewAccount(AccountEntity account);
-    public Task AddRangeAccount(List<AccountEntity> accounts);
+    public Task<List<Account>> GetAllAccounts();
+    public Task AddNewAccount(Account account);
+    public Task AddRangeAccount(List<Account> accounts);
     
 }

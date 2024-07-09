@@ -6,18 +6,23 @@ namespace JeweleryStorePlatformRepository;
 
 public class AccountRepository : IAccountRepository
 {
-    public async Task<List<AccountEntity>> GetAllAccounts()
+    public async Task<List<Account>> GetAllAccounts()
     {
         return await AccountDAO.Instance.GetAllAccount();
     }
 
-    public async Task AddNewAccount(AccountEntity account)
+    public async Task AddNewAccount(Account account)
     {
         await AccountDAO.Instance.AddNewAccount(account);
     }
 
-    public async Task AddRangeAccount(List<AccountEntity> accounts)
+    public async Task AddRangeAccount(List<Account> accounts)
     {
         await AccountDAO.Instance.AddRangeAccount(accounts);
+    }
+
+    public string GenerateJwtToken()
+    {
+        throw new NotImplementedException();
     }
 }

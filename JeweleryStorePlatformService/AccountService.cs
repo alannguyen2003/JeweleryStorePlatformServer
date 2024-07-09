@@ -12,17 +12,17 @@ public class AccountService : IAccountService
     {
         _accountRepository = accountRepository;
     }
-    public async Task<List<AccountEntity>> GetAllAccounts()
+    public async Task<List<Account>> GetAllAccounts()
     {
         return await _accountRepository.GetAllAccounts();
     }
 
-    public async Task AddNewAccount(AccountEntity account)
+    public async Task AddNewAccount(Account account)
     {
         await _accountRepository.AddNewAccount(account);
     }
 
-    public async Task AddRangeAccount(List<AccountEntity> accounts)
+    public async Task AddRangeAccount(List<Account> accounts)
     {
         await _accountRepository.AddRangeAccount(accounts);
     }
