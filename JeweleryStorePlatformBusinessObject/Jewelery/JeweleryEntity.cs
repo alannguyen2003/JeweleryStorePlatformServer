@@ -8,10 +8,10 @@ namespace JeweleryStorePlatformBusinessObject.Jewelery
         public string JeweleryName { get; set; }
 
         // Foreign key property
+        [ForeignKey("TypeId")]
         public int TypeId { get; set; }
 
         // Navigation property to JeweleryTypeEntity
-        [ForeignKey("TypeId")]
-        public virtual JeweleryTypeEntity? JeweleryTypeEntity { get; set; }
+        //public virtual JeweleryTypeEntity? JeweleryTypeEntity { get; set; }
     }
 }

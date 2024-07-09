@@ -12,8 +12,8 @@ namespace JeweleryStorePlatformService.Interface
         Task<List<JeweleryEntity>> GetAll();
         Task<JeweleryEntity> GetById(int jeweleryId);
         Task<int> Create(JeweleryCreateRequest request);
-        //Task<int> Update(JeweleryUpdateRequest request);
-        //Task<int> Delete(int jeweleryId);
+        Task<int> Update(JeweleryUpdateRequest jewelery);
+        Task<int> Delete(int jeweleryId);
         //Task<PagedResult<ProductVm>> GetProductsPaging(GetManageProductPagingRequest request);
         //Task<PagedResult<JeweleryEntity>> GetAllByStyle(GetPublicJewelryPagingRequest request);
         //Task<List<ProductQuantityView>> OrderProductQuanity(AddJewelryRequest request);

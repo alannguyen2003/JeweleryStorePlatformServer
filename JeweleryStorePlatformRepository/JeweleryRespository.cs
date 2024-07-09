@@ -28,14 +28,14 @@ namespace JeweleryStorePlatformRepository
             await JeweleryDAO.Instance.AddRange(jewelery);
         }
 
-        public async Task Update(JeweleryEntity jewelery)
+        public async Task<int> Update(JeweleryEntity jewelery)
         {
-            await JeweleryDAO.Instance.Update(jewelery);
+            return await JeweleryDAO.Instance.Update(jewelery); // Ensure it accepts JeweleryEntity
         }
 
-        public async Task Delete(int jeweleryId)
+        public async Task<int> Delete(int jeweleryId)
         {
-            await JeweleryDAO.Instance.Delete(jeweleryId);
+            return await JeweleryDAO.Instance.Delete(jeweleryId);
         }
     }
 }

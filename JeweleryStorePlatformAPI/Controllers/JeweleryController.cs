@@ -78,37 +78,35 @@ namespace JeweleryStorePlatformAPI.Controllers
             }
         }
 
+        // PUT: api/Jewelry/5
+        [HttpPut("{jeweleryId}")]
+        public async Task<ActionResult<int>> Update(int jeweleryId, [FromBody] JeweleryUpdateRequest request)
+        {
+            try
+            {
+                request.Id = jeweleryId; // Ensure the ID from route matches the request
+                var result = await _jeweleryService.Update(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
 
-
-        //// PUT: api/Jewelry/5
-        //[HttpPut("{jewelryId}")]
-        //public async Task<ActionResult<int>> Update(int jewelryId, [FromBody] JeweleryUpdateRequest request)
-        //{
-        //    try
-        //    {
-        //        request.Id = jewelryId; // Ensure the ID from route matches the request
-        //        var result = await _jewelryService.Update(request);
-        //        return Ok(result);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, $"Internal server error: {ex.Message}");
-        //    }
-        //}
-
-        //// DELETE: api/Jewelry/5
-        //[HttpDelete("{jewelryId}")]
-        //public async Task<ActionResult<int>> Delete(int jewelryId)
-        //{
-        //    try
-        //    {
-        //        var result = await _jewelryService.Delete(jewelryId);
-        //        return Ok(result);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, $"Internal server error: {ex.Message}");
-        //    }
-        //}
+        // DELETE: api/Jewelry/5
+        [HttpDelete("{jeweleryId}")]
+        public async Task<ActionResult<int>> Delete(int jeweleryId)
+        {
+            try
+            {
+                var result = await _jeweleryService.Delete(jeweleryId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }

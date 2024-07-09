@@ -41,27 +41,27 @@ namespace JeweleryStorePlatformService
                 JeweleryTypeEntity jeweleryTypeEntity = null;
 
                 // Check if JeweleryTypeEntity is provided
-                if (request.JeweleryTypeEntity != null)
-                {
-                    jeweleryTypeEntity = new JeweleryTypeEntity
-                    {
-                        TypeName = request.JeweleryTypeEntity.TypeName
-                    };
+                //if (request.JeweleryTypeEntity != null)
+                //{
+                //    jeweleryTypeEntity = new JeweleryTypeEntity
+                //    {
+                //        TypeName = request.JeweleryTypeEntity.TypeName
+                //    };
 
-                    // Add and save JeweleryTypeEntity first to get its generated Id
-                    _context.JeweleryTypes.Add(jeweleryTypeEntity);
-                    await _context.SaveChangesAsync();
+                //    // Add and save JeweleryTypeEntity first to get its generated Id
+                //    _context.JeweleryTypes.Add(jeweleryTypeEntity);
+                //    await _context.SaveChangesAsync();
 
-                    // Assign the generated Id to the request's TypeId
-                    request.TypeId = jeweleryTypeEntity.Id;
-                }
+                //    // Assign the generated Id to the request's TypeId
+                //    request.TypeId = jeweleryTypeEntity.Id;
+                //}
 
                 // Create JeweleryEntity
                 var jeweleryEntity = new JeweleryEntity
                 {
                     JeweleryName = request.JeweleryName,
                     TypeId = request.TypeId,
-                    JeweleryTypeEntity = jeweleryTypeEntity
+                    //JeweleryTypeEntity = jeweleryTypeEntity
                 };
 
                 // Add and save JeweleryEntity
@@ -78,28 +78,25 @@ namespace JeweleryStorePlatformService
         }
 
 
-        //public async Task<int> Delete(int jewelryId)
-        //{
-        //    return await _jewelryRepository.Delete(jewelryId);
-        //}
+        public async Task<int> Delete(int jeweleryId)
+        {
+            return await _jeweleryRepository.Delete(jeweleryId);
+        }
 
+        public async Task<int> Update(JeweleryUpdateRequest request)
+        {
+            var existingJewelery = await _jeweleryRepository.GetById(request.Id);
+            if (existingJewelery == null)
+            {
+                throw new KeyNotFoundException($"Jewelery with ID {request.Id} not found.");
+            }
 
+            // Update properties
+            existingJewelery.JeweleryName = request.JeweleryName;
+            existingJewelery.TypeId = request.TypeId;
+            // Update other properties as needed
 
-        //public async Task<int> Update(JeweleryUpdateRequest request)
-        //{
-        //    var existingJewelry = await _jewelryRepository.GetById(request.Id);
-
-        //    if (existingJewelry == null)
-        //    {
-        //        throw new KeyNotFoundException($"Jewelry with ID {request.Id} not found.");
-        //    }
-
-        //    // Update properties from request
-        //    existingJewelry.JeweleryName = request.JeweleryName;
-        //    existingJewelry.TypeId = request.TypeId;
-        //    // Update other properties as needed
-
-        //    return await _jewelryRepository.Update(existingJewelry);
-        //}
+            return await _jeweleryRepository.Update(existingJewelery);
+        }
     }
 }

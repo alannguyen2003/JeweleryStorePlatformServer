@@ -49,20 +49,38 @@ namespace JeweleryStorePlatformDataAccess
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update(JeweleryEntity jewelry)
+        public async Task<int> Update(JeweleryEntity jewelery)
         {
-            _context.Jeweleries.Update(jewelry);
-            await _context.SaveChangesAsync();
+            var existingJewelery = await _context.Jeweleries.FindAsync(jewelery.Id);
+            if (existingJewelery == null)
+            {
+                throw new KeyNotFoundException($"Jewelery with ID {jewelery.Id} not found.");
+            }
+
+            // Update properties
+            existingJewelery.JeweleryName = jewelery.JeweleryName;
+            existingJewelery.TypeId = jewelery.TypeId;
+            // Update other properties as needed
+
+            _context.Jeweleries.Update(existingJewelery);
+            return await _context.SaveChangesAsync(); // This will return the number of affected rows
         }
 
-        public async Task Delete(int jewelryId)
+        public async Task<int> Delete(int jeweleryId)
         {
-            var jewelry = await _context.Jeweleries.FindAsync(jewelryId);
-            if (jewelry != null)
+            var jewelry = await _context.Jeweleries.FindAsync(jeweleryId);
+            if (jewelry == null)
             {
-                _context.Jeweleries.Remove(jewelry);
-                await _context.SaveChangesAsync();
+                return 0; // Or throw an exception if preferred
             }
+
+            _context.Jeweleries.Remove(jewelry);
+            return await _context.SaveChangesAsync(); // This will return the number of affected rows
+        }
+
+        public async Task<int> Update(JeweleryUpdateRequest jewelery)
+        {
+            throw new NotImplementedException();
         }
     }
 }
