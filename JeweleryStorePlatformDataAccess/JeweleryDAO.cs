@@ -15,9 +15,9 @@ namespace JeweleryStorePlatformDataAccess
             _context = new AppDbContext(); // Ensure you have a parameterless constructor or configure DI
         }
 
-        public async Task<List<JeweleryEntity>> GetAllJewelery()
+        public async Task<List<Jewelery>> GetAllJewelery()
         {
-            return await _context.Jeweleries.ToListAsync();
+            return await _context.Jeweleries.Include(j => j.JeweleryType).ToListAsync();
         }
 
         public static JeweleryDAO Instance
@@ -32,24 +32,24 @@ namespace JeweleryStorePlatformDataAccess
             }
         }
 
-        public async Task<JeweleryEntity> GetById(int jewelryId)
+        public async Task<Jewelery> GetById(int jewelryId)
         {
             return await _context.Jeweleries.FindAsync(jewelryId);
         }
 
-        public async Task Add(JeweleryEntity jewelry)
+        public async Task Add(Jewelery jewelry)
         {
             await _context.Jeweleries.AddAsync(jewelry);
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddRange(List<JeweleryEntity> jewelry)
+        public async Task AddRange(List<Jewelery> jewelry)
         {
             await _context.Jeweleries.AddRangeAsync(jewelry);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<int> Update(JeweleryEntity jewelery)
+        public async Task<int> Update(Jewelery jewelery)
         {
             var existingJewelery = await _context.Jeweleries.FindAsync(jewelery.Id);
             if (existingJewelery == null)
@@ -59,7 +59,7 @@ namespace JeweleryStorePlatformDataAccess
 
             // Update properties
             existingJewelery.JeweleryName = jewelery.JeweleryName;
-            existingJewelery.TypeId = jewelery.TypeId;
+            existingJewelery.JeweleryTypeId = jewelery.JeweleryTypeId;
             // Update other properties as needed
 
             _context.Jeweleries.Update(existingJewelery);
@@ -76,11 +76,6 @@ namespace JeweleryStorePlatformDataAccess
 
             _context.Jeweleries.Remove(jewelry);
             return await _context.SaveChangesAsync(); // This will return the number of affected rows
-        }
-
-        public async Task<int> Update(JeweleryUpdateRequest jewelery)
-        {
-            throw new NotImplementedException();
         }
     }
 }

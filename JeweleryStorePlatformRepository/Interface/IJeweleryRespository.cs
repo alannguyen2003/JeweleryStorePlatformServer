@@ -4,11 +4,11 @@ namespace JeweleryStorePlatformRepository.Interface
 {
     public interface IJeweleryRepository
     {
-        Task<List<JeweleryEntity>> GetAll();
-        Task<JeweleryEntity> GetById(int jeweleryId);
-        Task Add(JeweleryEntity jewelery);
-        Task AddRange(List<JeweleryEntity> jewelery);
-        Task<int> Update(JeweleryEntity jewelery);
+        Task<List<Jewelery>> GetAll();
+        Task<Jewelery> GetById(int jeweleryId);
+        Task Add(Jewelery jewelery);
+        Task AddRange(List<Jewelery> jewelery);
+        Task<int> Update(Jewelery jewelery);
         Task<int> Delete(int jeweleryId);
     }
 }

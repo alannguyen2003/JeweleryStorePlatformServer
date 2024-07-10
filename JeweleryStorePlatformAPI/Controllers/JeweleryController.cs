@@ -20,12 +20,12 @@ namespace JeweleryStorePlatformAPI.Controllers
 
         // GET: api/Jewelry
         [HttpGet("GetAll")]
-        public async Task<ActionResult<List<JeweleryEntity>>> GetAll()
+        public async Task<ActionResult<List<Jewelery>>> GetAll()
         {
             try
             {
-                var jewelries = await _jeweleryService.GetAll();
-                return Ok(jewelries);
+                var jeweleries = await _jeweleryService.GetAll();
+                return Ok(jeweleries);
             }
             catch (Exception ex)
             {
@@ -36,7 +36,7 @@ namespace JeweleryStorePlatformAPI.Controllers
 
         // GET: api/Jewelery/5
         [HttpGet("{jeweleryId}")]
-        public async Task<ActionResult<JeweleryEntity>> GetById(int jeweleryId)
+        public async Task<ActionResult<Jewelery>> GetById(int jeweleryId)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace JeweleryStorePlatformAPI.Controllers
             }
         }
 
-        // POST: api/Jewelry
+        // POST: api/Jewelery/Create
         [HttpPost("Create")]
         public async Task<ActionResult<int>> Create([FromBody] JeweleryCreateRequest request)
         {
@@ -64,12 +64,8 @@ namespace JeweleryStorePlatformAPI.Controllers
                 if (jeweleryId == 0)
                     return BadRequest();
 
-                var jewelery = await _jeweleryService.GetById(jeweleryId);
-                if (jewelery == null)
-                    return NotFound();
-
-                // Return a message indicating successful creation
-                return CreatedAtAction(nameof(GetById), new { id = jeweleryId }, jewelery);
+                // Return a URI with the ID of the created jewelery
+                return CreatedAtAction(nameof(GetById), new { jeweleryId = jeweleryId }, null);
             }
             catch (Exception ex)
             {
@@ -77,6 +73,7 @@ namespace JeweleryStorePlatformAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
 
         // PUT: api/Jewelry/5
         [HttpPut("{jeweleryId}")]

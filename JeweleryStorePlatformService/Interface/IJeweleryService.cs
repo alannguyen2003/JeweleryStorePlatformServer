@@ -9,8 +9,8 @@ namespace JeweleryStorePlatformService.Interface
 {
     public interface IJeweleryService
     {
-        Task<List<JeweleryEntity>> GetAll();
-        Task<JeweleryEntity> GetById(int jeweleryId);
+        Task<List<Jewelery>> GetAll();
+        Task<Jewelery> GetById(int jeweleryId);
         Task<int> Create(JeweleryCreateRequest request);
         Task<int> Update(JeweleryUpdateRequest jewelery);
         Task<int> Delete(int jeweleryId);

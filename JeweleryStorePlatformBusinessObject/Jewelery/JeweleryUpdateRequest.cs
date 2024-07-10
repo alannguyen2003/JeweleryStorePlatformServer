@@ -16,6 +16,7 @@ namespace JeweleryStorePlatformBusinessObject.Jewelery
         [ForeignKey("TypeId")]
         public int TypeId { get; set; }
 
-        //public virtual JeweleryTypeEntity JeweleryTypeEntity { get; set; }
+        public virtual JeweleryType JeweleryType { get; set; }
+
     }
 }

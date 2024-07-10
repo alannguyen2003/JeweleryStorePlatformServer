@@ -13,6 +13,7 @@ namespace JeweleryStorePlatformBusinessObject.Jewelery
 
         public int TypeId { get; set; }
 
-        //public JeweleryTypeEntity JeweleryTypeEntity { get; set; }
+        //public virtual JeweleryType JeweleryType { get; set; }
+
     }
 }

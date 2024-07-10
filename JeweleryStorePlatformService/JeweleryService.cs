@@ -2,6 +2,7 @@
 using JeweleryStorePlatformDataAccess;
 using JeweleryStorePlatformRepository.Interface;
 using JeweleryStorePlatformService.Interface;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,14 +14,14 @@ namespace JeweleryStorePlatformService
         private readonly IJeweleryRepository _jeweleryRepository;
         private readonly AppDbContext _context;
 
-        public async Task<List<JeweleryEntity>> GetAll()
+        public async Task<List<Jewelery>> GetAll()
         {
             return await _jeweleryRepository.GetAll();
         }
 
-        public async Task<JeweleryEntity> GetById(int jewelryId)
+        public async Task<Jewelery> GetById(int jeweleryId)
         {
-            return await _jeweleryRepository.GetById(jewelryId);
+            return await _jeweleryRepository.GetById(jeweleryId);
         }
         public JeweleryService(AppDbContext context, IJeweleryRepository jeweleryRepository)
         {
@@ -37,46 +38,34 @@ namespace JeweleryStorePlatformService
 
             try
             {
-                // Initialize JeweleryTypeEntity to null
-                JeweleryTypeEntity jeweleryTypeEntity = null;
+                // Kiểm tra xem JeweleryType có tồn tại không
+                var jeweleryType = await _context.JeweleryTypes.FindAsync(request.TypeId);
+                if (jeweleryType == null)
+                {
+                    throw new ArgumentException($"JeweleryType with ID {request.TypeId} does not exist.");
+                }
 
-                // Check if JeweleryTypeEntity is provided
-                //if (request.JeweleryTypeEntity != null)
-                //{
-                //    jeweleryTypeEntity = new JeweleryTypeEntity
-                //    {
-                //        TypeName = request.JeweleryTypeEntity.TypeName
-                //    };
-
-                //    // Add and save JeweleryTypeEntity first to get its generated Id
-                //    _context.JeweleryTypes.Add(jeweleryTypeEntity);
-                //    await _context.SaveChangesAsync();
-
-                //    // Assign the generated Id to the request's TypeId
-                //    request.TypeId = jeweleryTypeEntity.Id;
-                //}
-
-                // Create JeweleryEntity
-                var jeweleryEntity = new JeweleryEntity
+                // Tạo mới đối tượng Jewelery
+                var jewelery = new Jewelery
                 {
                     JeweleryName = request.JeweleryName,
-                    TypeId = request.TypeId,
-                    //JeweleryTypeEntity = jeweleryTypeEntity
+                    JeweleryTypeId = request.TypeId,
+                    JeweleryType = jeweleryType // Gán thể hiện của JeweleryType từ DB
                 };
 
-                // Add and save JeweleryEntity
-                _context.Jeweleries.Add(jeweleryEntity);
+                // Thêm Jewelery vào context và lưu vào cơ sở dữ liệu
+                _context.Jeweleries.Add(jewelery);
                 await _context.SaveChangesAsync();
 
-                return jeweleryEntity.Id;
+                // Trả về id của Jewelery vừa được tạo
+                return jewelery.Id;
             }
             catch (Exception ex)
             {
-                // Log and handle the exception as needed
-                throw new Exception("An error occurred while creating the jewelry", ex);
+                // Xử lý và ném lại ngoại lệ nếu có lỗi xảy ra
+                throw new Exception("An error occurred while creating the jewelery", ex);
             }
         }
-
 
         public async Task<int> Delete(int jeweleryId)
         {
@@ -93,7 +82,7 @@ namespace JeweleryStorePlatformService
 
             // Update properties
             existingJewelery.JeweleryName = request.JeweleryName;
-            existingJewelery.TypeId = request.TypeId;
+            existingJewelery.JeweleryTypeId = request.TypeId;
             // Update other properties as needed
 
             return await _jeweleryRepository.Update(existingJewelery);
