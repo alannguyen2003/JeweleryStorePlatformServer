@@ -50,6 +50,7 @@ public class AppDbContext : IdentityDbContext<AccountEntity,
     public DbSet<CityEntity> Cities { get; set; }
     public DbSet<PromotionEntity> Promotions { get; set; }
     public DbSet<AccountPromotionEntity> AccountPromotions { get; set; }
+    public DbSet<DiamondEntity> Diamonds { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
