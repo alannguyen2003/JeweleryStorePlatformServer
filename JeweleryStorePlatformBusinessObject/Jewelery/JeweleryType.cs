@@ -3,7 +3,7 @@
 namespace JeweleryStorePlatformBusinessObject.Jewelery;
 
 [Table("JeweleryTypes")]
-public class JeweleryTypeEntity : BaseEntity
+public class JeweleryType : BaseEntity
 {
     public string TypeName { get; set; }
 }

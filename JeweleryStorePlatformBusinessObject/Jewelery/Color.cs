@@ -3,7 +3,7 @@
 namespace JeweleryStorePlatformBusinessObject.Jewelery;
 
 [Table("Colors")]
-public class ColorEntity : BaseEntity
+public class Color : BaseEntity
 {
     public string ColorDescription { get; set; }
 }

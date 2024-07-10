@@ -22,7 +22,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Account.AccountEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Account.Account", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -114,10 +114,10 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("Accounts", (string)null);
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Account.AccountRoleEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Account.AccountRole", b =>
                 {
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
@@ -125,22 +125,14 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("AccountEntityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoleEntityId")
-                        .HasColumnType("int");
-
                     b.HasKey("AccountId", "RoleId");
 
-                    b.HasIndex("AccountEntityId");
-
-                    b.HasIndex("RoleEntityId");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("AccountRoles");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Account.RoleEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Account.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -167,10 +159,10 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("Roles", (string)null);
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Address.AddressEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Address.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -178,24 +170,21 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Address")
+                    b.Property<string>("AddressString")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DistrictEntityId")
-                        .HasColumnType("int");
 
                     b.Property<int>("DistrictId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DistrictEntityId");
+                    b.HasIndex("DistrictId");
 
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Address.CityEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Address.City", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -212,16 +201,13 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     b.ToTable("Cities");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Address.DistrictEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Address.District", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CityEntityId")
-                        .HasColumnType("int");
 
                     b.Property<int>("CityId")
                         .HasColumnType("int");
@@ -232,12 +218,12 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityEntityId");
+                    b.HasIndex("CityId");
 
                     b.ToTable("Districts");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Design.JeweleryDesignEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Design.JeweleryDesign", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -254,16 +240,13 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     b.ToTable("JeweleryDesigns");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Design.JeweleryDesignImageEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Design.JeweleryDesignImage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("DesignId")
-                        .HasColumnType("int");
 
                     b.Property<string>("ImageDescription")
                         .IsRequired()
@@ -273,17 +256,17 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("JeweleryDesignEntityId")
+                    b.Property<int>("JeweleryDesignId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JeweleryDesignEntityId");
+                    b.HasIndex("JeweleryDesignId");
 
                     b.ToTable("JeweleryDesignImages");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Diamond.DiamondEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Diamond.Diamond", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -326,16 +309,13 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     b.ToTable("Diamonds");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Diamond.GIAReportEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Diamond.GIAReport", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("DiamondEntityId")
-                        .HasColumnType("int");
 
                     b.Property<int>("DiamondId")
                         .HasColumnType("int");
@@ -350,12 +330,12 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DiamondEntityId");
+                    b.HasIndex("DiamondId");
 
                     b.ToTable("GIAReports");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Jewelery.ColorEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Jewelery.Color", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -372,40 +352,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     b.ToTable("Colors");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Jewelery.JeweleryCaseEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CaseName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ColorEntityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ColorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MaterialEntityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MaterialId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ColorEntityId");
-
-                    b.HasIndex("MaterialEntityId");
-
-                    b.ToTable("JeweleryCases");
-                });
-
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Jewelery.JeweleryEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Jewelery.Jewelery", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -417,20 +364,44 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("JeweleryTypeEntityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TypeId")
+                    b.Property<int>("JeweleryTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JeweleryTypeEntityId");
+                    b.HasIndex("JeweleryTypeId");
 
                     b.ToTable("Jeweleries");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Jewelery.JeweleryTypeEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Jewelery.JeweleryCase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CaseName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ColorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ColorId");
+
+                    b.HasIndex("MaterialId");
+
+                    b.ToTable("JeweleryCases");
+                });
+
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Jewelery.JeweleryType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -447,7 +418,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     b.ToTable("JeweleryTypes");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Jewelery.MaterialEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Jewelery.Material", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -464,7 +435,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     b.ToTable("Materials");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Order.OrderEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Order.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -472,13 +443,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AccountEntityId")
-                        .HasColumnType("int");
-
                     b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AddressEntityId")
                         .HasColumnType("int");
 
                     b.Property<int>("AddressId")
@@ -490,6 +455,10 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
+                    b.Property<string>("PromotionCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("StartDateTime")
                         .HasColumnType("datetime2");
 
@@ -498,14 +467,14 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountEntityId");
+                    b.HasIndex("AccountId");
 
-                    b.HasIndex("AddressEntityId");
+                    b.HasIndex("AddressId");
 
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Order.OrderItemEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Order.OrderItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -513,13 +482,19 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("JeweleryCaseEntityId")
+                    b.Property<int>("DesignFee")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DiamondId")
                         .HasColumnType("int");
 
                     b.Property<int>("JeweleryCaseId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderEntityId")
+                    b.Property<int>("JeweleryDesignId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JeweleryId")
                         .HasColumnType("int");
 
                     b.Property<int>("OrderId")
@@ -527,22 +502,25 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JeweleryCaseEntityId");
+                    b.HasIndex("DiamondId");
 
-                    b.HasIndex("OrderEntityId");
+                    b.HasIndex("JeweleryCaseId");
+
+                    b.HasIndex("JeweleryDesignId");
+
+                    b.HasIndex("JeweleryId");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Promotion.AccountPromotionEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Promotion.AccountPromotion", b =>
                 {
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
 
                     b.Property<int>("PromotionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AccountEntityId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ExpiredDate")
@@ -552,19 +530,14 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PromotionEntityId")
-                        .HasColumnType("int");
-
                     b.HasKey("AccountId", "PromotionId");
 
-                    b.HasIndex("AccountEntityId");
-
-                    b.HasIndex("PromotionEntityId");
+                    b.HasIndex("PromotionId");
 
                     b.ToTable("AccountPromotions");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Promotion.PromotionEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Promotion.Promotion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -591,7 +564,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     b.ToTable("Promotions");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Transaction.PaymentMethodEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Transaction.PaymentMethod", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -608,7 +581,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     b.ToTable("PaymentMethods");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Transaction.TransactionEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Transaction.Transaction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -616,19 +589,16 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AccountEntityId")
-                        .HasColumnType("int");
-
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderEntityId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int>("PaymentMethodId")
                         .HasColumnType("int");
 
                     b.Property<int>("TransactionStatus")
@@ -636,9 +606,11 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountEntityId");
+                    b.HasIndex("AccountId");
 
-                    b.HasIndex("OrderEntityId");
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("PaymentMethodId");
 
                     b.ToTable("Transactions");
                 });
@@ -746,178 +718,210 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Account.AccountRoleEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Account.AccountRole", b =>
                 {
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.AccountEntity", "AccountEntity")
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.Account", "Account")
                         .WithMany()
-                        .HasForeignKey("AccountEntityId")
+                        .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.RoleEntity", "RoleEntity")
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleEntityId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AccountEntity");
+                    b.Navigation("Account");
 
-                    b.Navigation("RoleEntity");
+                    b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Address.AddressEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Address.Address", b =>
                 {
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Address.DistrictEntity", "DistrictEntity")
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Address.District", "District")
                         .WithMany()
-                        .HasForeignKey("DistrictEntityId")
+                        .HasForeignKey("DistrictId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DistrictEntity");
+                    b.Navigation("District");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Address.DistrictEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Address.District", b =>
                 {
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Address.CityEntity", "CityEntity")
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Address.City", "City")
                         .WithMany()
-                        .HasForeignKey("CityEntityId")
+                        .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CityEntity");
+                    b.Navigation("City");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Design.JeweleryDesignImageEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Design.JeweleryDesignImage", b =>
                 {
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Design.JeweleryDesignEntity", "JeweleryDesignEntity")
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Design.JeweleryDesign", "JeweleryDesign")
                         .WithMany()
-                        .HasForeignKey("JeweleryDesignEntityId")
+                        .HasForeignKey("JeweleryDesignId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("JeweleryDesignEntity");
+                    b.Navigation("JeweleryDesign");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Diamond.GIAReportEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Diamond.GIAReport", b =>
                 {
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Diamond.DiamondEntity", "DiamondEntity")
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Diamond.Diamond", "Diamond")
                         .WithMany()
-                        .HasForeignKey("DiamondEntityId")
+                        .HasForeignKey("DiamondId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DiamondEntity");
+                    b.Navigation("Diamond");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Jewelery.JeweleryCaseEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Jewelery.Jewelery", b =>
                 {
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Jewelery.ColorEntity", "ColorEntity")
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Jewelery.JeweleryType", "JeweleryType")
                         .WithMany()
-                        .HasForeignKey("ColorEntityId")
+                        .HasForeignKey("JeweleryTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Jewelery.MaterialEntity", "MaterialEntity")
-                        .WithMany()
-                        .HasForeignKey("MaterialEntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ColorEntity");
-
-                    b.Navigation("MaterialEntity");
+                    b.Navigation("JeweleryType");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Jewelery.JeweleryEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Jewelery.JeweleryCase", b =>
                 {
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Jewelery.JeweleryTypeEntity", "JeweleryTypeEntity")
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Jewelery.Color", "Color")
                         .WithMany()
-                        .HasForeignKey("JeweleryTypeEntityId")
+                        .HasForeignKey("ColorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("JeweleryTypeEntity");
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Jewelery.Material", "Material")
+                        .WithMany()
+                        .HasForeignKey("MaterialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Color");
+
+                    b.Navigation("Material");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Order.OrderEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Order.Order", b =>
                 {
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.AccountEntity", "AccountEntity")
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.Account", "Account")
                         .WithMany()
-                        .HasForeignKey("AccountEntityId")
+                        .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Address.AddressEntity", "AddressEntity")
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Address.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressEntityId")
+                        .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AccountEntity");
+                    b.Navigation("Account");
 
-                    b.Navigation("AddressEntity");
+                    b.Navigation("Address");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Order.OrderItemEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Order.OrderItem", b =>
                 {
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Jewelery.JeweleryCaseEntity", "JeweleryCaseEntity")
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Diamond.Diamond", "Diamond")
                         .WithMany()
-                        .HasForeignKey("JeweleryCaseEntityId")
+                        .HasForeignKey("DiamondId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Order.OrderEntity", "OrderEntity")
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Jewelery.JeweleryCase", "JeweleryCase")
                         .WithMany()
-                        .HasForeignKey("OrderEntityId")
+                        .HasForeignKey("JeweleryCaseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("JeweleryCaseEntity");
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Design.JeweleryDesign", "JeweleryDesign")
+                        .WithMany()
+                        .HasForeignKey("JeweleryDesignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("OrderEntity");
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Jewelery.Jewelery", "Jewelery")
+                        .WithMany()
+                        .HasForeignKey("JeweleryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Order.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Diamond");
+
+                    b.Navigation("Jewelery");
+
+                    b.Navigation("JeweleryCase");
+
+                    b.Navigation("JeweleryDesign");
+
+                    b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Promotion.AccountPromotionEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Promotion.AccountPromotion", b =>
                 {
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.AccountEntity", "AccountEntity")
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.Account", "Account")
                         .WithMany()
-                        .HasForeignKey("AccountEntityId")
+                        .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Promotion.PromotionEntity", "PromotionEntity")
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Promotion.Promotion", "Promotion")
                         .WithMany()
-                        .HasForeignKey("PromotionEntityId")
+                        .HasForeignKey("PromotionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AccountEntity");
+                    b.Navigation("Account");
 
-                    b.Navigation("PromotionEntity");
+                    b.Navigation("Promotion");
                 });
 
-            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Transaction.TransactionEntity", b =>
+            modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Transaction.Transaction", b =>
                 {
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.AccountEntity", "AccountEntity")
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.Account", "Account")
                         .WithMany()
-                        .HasForeignKey("AccountEntityId")
+                        .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Order.OrderEntity", "OrderEntity")
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Order.Order", "Order")
                         .WithMany()
-                        .HasForeignKey("OrderEntityId")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AccountEntity");
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Transaction.PaymentMethod", "PaymentMethod")
+                        .WithMany()
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("OrderEntity");
+                    b.Navigation("Account");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("PaymentMethod");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.RoleEntity", null)
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -926,7 +930,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.AccountEntity", null)
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.Account", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -935,7 +939,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.AccountEntity", null)
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.Account", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -944,13 +948,13 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.RoleEntity", null)
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.AccountEntity", null)
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.Account", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -959,7 +963,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.AccountEntity", null)
+                    b.HasOne("JeweleryStorePlatformBusinessObject.Account.Account", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

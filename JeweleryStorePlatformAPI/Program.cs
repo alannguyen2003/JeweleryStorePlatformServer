@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddRepository();
@@ -49,6 +49,8 @@ try
 {
     var context = services.GetRequiredService<Seeding>(); 
     await context.AccountSeeding();
+    await context.SeedingJeweleryTypes();
+    await context.SeedingRole();
 }
 catch (Exception ex)
 {

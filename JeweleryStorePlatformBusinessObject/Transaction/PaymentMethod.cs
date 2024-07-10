@@ -3,7 +3,7 @@
 namespace JeweleryStorePlatformBusinessObject.Transaction;
 
 [Table("PaymentMethods")]
-public class PaymentMethodEntity : BaseEntity
+public class PaymentMethod : BaseEntity
 {
     public string PaymentMethodName { get; set; }
 }

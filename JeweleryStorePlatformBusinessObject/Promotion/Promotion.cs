@@ -3,7 +3,7 @@
 namespace JeweleryStorePlatformBusinessObject.Promotion;
 
 [Table("Promotions")]
-public class PromotionEntity : BaseEntity
+public class Promotion : BaseEntity
 {
     public string PromotionName { get; set; }
     public string PromotionContent { get; set; }
