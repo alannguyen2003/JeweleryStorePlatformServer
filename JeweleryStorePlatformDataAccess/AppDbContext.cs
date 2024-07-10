@@ -51,6 +51,7 @@ public class AppDbContext : IdentityDbContext<Account,
     public DbSet<City> Cities { get; set; }
     public DbSet<Promotion> Promotions { get; set; }
     public DbSet<AccountPromotion> AccountPromotions { get; set; }
+    public DbSet<Diamond> Diamonds { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

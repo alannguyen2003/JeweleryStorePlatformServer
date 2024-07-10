@@ -1,4 +1,5 @@
 ﻿using JeweleryStorePlatformBusinessObject.Account;
+using JeweleryStorePlatformBusinessObject.Diamond;
 
 namespace JeweleryStorePlatformRepository.Interface;
 

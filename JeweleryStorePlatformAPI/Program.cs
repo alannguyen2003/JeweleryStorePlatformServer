@@ -1,8 +1,12 @@
 using JeweleryStorePlatformAPI.Configuration;
 using JeweleryStorePlatformBusinessObject.Account;
 using JeweleryStorePlatformDataAccess;
+using JeweleryStorePlatformService.Interface;
+using JeweleryStorePlatformService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using JeweleryStorePlatformRepository.Interface;
+using JeweleryStorePlatformRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +22,10 @@ builder.Services.AddAutoMapper();
 builder.Services.AddSeeding();
 builder.Services.AddCloudinarySetting(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services.AddScoped<IDiamondService, DiamondService>();
+builder.Services.AddScoped<IDiamondRepository, DiamondRepository>();
+
+
 
 var app = builder.Build();
 
