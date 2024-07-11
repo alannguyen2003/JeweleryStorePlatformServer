@@ -1,16 +1,25 @@
 ﻿using JeweleryStorePlatformBusinessObject.Account;
 using JeweleryStorePlatformRepository.Interface;
 using JeweleryStorePlatformService.Interface;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace JeweleryStorePlatformService;
 
 public class AccountService : IAccountService
 {
     private readonly IAccountRepository _accountRepository;
+    private readonly IAccountRoleRepository _accountRoleRepository;
+    private readonly IConfiguration _config;
 
-    public AccountService(IAccountRepository accountRepository)
+    public AccountService(IAccountRepository accountRepository, IConfiguration configuration, IAccountRoleRepository accountRoleRepository)
     {
         _accountRepository = accountRepository;
+        _config = configuration;
+        _accountRoleRepository = accountRoleRepository;
     }
     public async Task<List<Account>> GetAllAccounts()
     {
@@ -26,4 +35,31 @@ public class AccountService : IAccountService
     {
         await _accountRepository.AddRangeAccount(accounts);
     }
+
+    public Account CheckLogin(string email, string password)
+    {
+        return _accountRepository.CheckLogin(email, password);
+    }
+
+    public string GenerateJwtToken(Account account)
+    {
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+        int roleId = _accountRoleRepository.GetRoleIdByAccountId(account.Id);
+
+        var token = new JwtSecurityToken(_config["Jwt:Issuer"],
+            _config["Jwt:Audience"],
+            new Claim[]
+            {
+            new Claim(ClaimTypes.Email, account.Email),
+            new Claim("RoleId", roleId.ToString()),
+            },
+            expires: DateTime.Now.AddMinutes(120),
+            signingCredentials: credentials
+        );
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
 }

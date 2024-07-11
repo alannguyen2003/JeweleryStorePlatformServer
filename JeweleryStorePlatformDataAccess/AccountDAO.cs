@@ -41,4 +41,19 @@ public class AccountDAO
         await _context.Accounts.AddRangeAsync(accounts);
         await _context.SaveChangesAsync();
     }
+
+    public Account CheckLogin(string email, string password)
+    {
+        return _context.Accounts.FirstOrDefault(l => l.Email == email && l.Password == password);
+    }
+
+    public int GetRoleIdByAccountId(int accountId)
+    {
+        var accountRole = _context.AccountRoles.FirstOrDefault(ar => ar.AccountId == accountId);
+        if (accountRole != null)
+        {
+            return accountRole.RoleId;
+        }
+        return 0;
+    }
 }
