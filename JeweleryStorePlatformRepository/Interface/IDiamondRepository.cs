@@ -5,5 +5,5 @@ namespace JeweleryStorePlatformRepository.Interface;
 
 public interface IDiamondRepository
 {
-    public IQueryable<DiamondEntity> GetAllDiamonds();
+    public IQueryable<Diamond> GetAllDiamonds();
 }

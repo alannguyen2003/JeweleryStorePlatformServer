@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace JeweleryStorePlatformService.DTOs
 {
-    public class DiamondDTO : IMapFrom<DiamondEntity>
+    public class DiamondDTO : IMapFrom<Diamond>
     {
         public int Id { get; set; }
         public int Price { get; set; }
@@ -23,7 +23,7 @@ namespace JeweleryStorePlatformService.DTOs
         public bool IsMainDiamond { get; set; }
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<DiamondEntity, DiamondDTO>();
+            profile.CreateMap<Diamond, DiamondDTO>();
         }
     }
 

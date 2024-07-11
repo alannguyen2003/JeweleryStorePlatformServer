@@ -34,7 +34,7 @@ public class DiamondService : IDiamondService
         }
 
         return await diamonds
-            .ListPaginateWithSortAsync<DiamondEntity, DiamondDTO>(
+            .ListPaginateWithSortAsync<Diamond, DiamondDTO>(
                 request.Page,
                 request.Size,
                 request.SortBy,
