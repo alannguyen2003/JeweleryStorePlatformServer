@@ -25,9 +25,9 @@ public class DiamondDAO
         }
     }
 
-    public IQueryable<DiamondEntity> GetAllDiamonds()
+    public IQueryable<Diamond> GetAllDiamonds()
     {
-        return _context.Set<DiamondEntity>();
+        return _context.Set<Diamond>();
     }
 
 }

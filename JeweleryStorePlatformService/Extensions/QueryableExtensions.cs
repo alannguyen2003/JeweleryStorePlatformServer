@@ -31,7 +31,7 @@ public static class QueryableExtensions
     {
         if (sortBy is null || !IsValidProperty<TEntityDto>(sortBy))
         {
-            if (typeof(TEntity) == typeof(DiamondEntity))
+            if (typeof(TEntity) == typeof(Diamond))
             {
                 sortBy = nameof(DiamondDTO.Id);
             }
