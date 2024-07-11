@@ -21,8 +21,8 @@ public class AccountRepository : IAccountRepository
         await AccountDAO.Instance.AddRangeAccount(accounts);
     }
 
-    public string GenerateJwtToken()
+    public Account CheckLogin(string email, string password)
     {
-        throw new NotImplementedException();
+        return AccountDAO.Instance.CheckLogin(email, password);
     }
 }
