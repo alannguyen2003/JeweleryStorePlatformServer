@@ -40,6 +40,10 @@ public class AccountService : IAccountService
     {
         return _accountRepository.CheckLogin(email, password);
     }
+    public int GetRoleIdByAccountId(int accountId)
+    {
+        return _accountRepository.GetRoleIdByAccountId(accountId);
+    }
 
     public string GenerateJwtToken(Account account)
     {
