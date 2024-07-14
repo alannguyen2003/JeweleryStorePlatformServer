@@ -53,8 +53,6 @@ public class AppDbContext : IdentityDbContext<Account,
     public DbSet<AccountPromotion> AccountPromotions { get; set; }
     public DbSet<Diamond> Diamonds { get; set; }
 
-    public DbSet<JeweleryType> JeweleryTypes { get; set; }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(GetConnectionString());
