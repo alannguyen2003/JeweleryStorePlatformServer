@@ -36,6 +36,7 @@ public class AppDbContext : IdentityDbContext<Account,
     public DbSet<AccountRole> AccountRoles { get; set; }
     public DbSet<Jewelery> Jeweleries { get; set; }
     public DbSet<JeweleryCase> JeweleryCases { get; set; }
+    public DbSet<JeweleryType> JeweleryTypes { get; set; }
     public DbSet<PaymentMethod> PaymentMethods { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
     public DbSet<Order> Orders { get; set; }
@@ -50,6 +51,7 @@ public class AppDbContext : IdentityDbContext<Account,
     public DbSet<City> Cities { get; set; }
     public DbSet<Promotion> Promotions { get; set; }
     public DbSet<AccountPromotion> AccountPromotions { get; set; }
+    public DbSet<Diamond> Diamonds { get; set; }
 
     public DbSet<JeweleryType> JeweleryTypes { get; set; }
 

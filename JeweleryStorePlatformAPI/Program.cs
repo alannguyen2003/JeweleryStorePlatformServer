@@ -16,7 +16,7 @@ builder.Services.AddScoped<IJeweleryService, JeweleryService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddRepository();
@@ -25,6 +25,10 @@ builder.Services.AddAutoMapper();
 builder.Services.AddSeeding();
 builder.Services.AddCloudinarySetting(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services.AddScoped<IDiamondService, DiamondService>();
+builder.Services.AddScoped<IDiamondRepository, DiamondRepository>();
+
+
 
 
 var app = builder.Build();
@@ -49,6 +53,8 @@ try
 {
     var context = services.GetRequiredService<Seeding>(); 
     await context.AccountSeeding();
+    await context.SeedingJeweleryTypes();
+    await context.SeedingRole();
 }
 catch (Exception ex)
 {
