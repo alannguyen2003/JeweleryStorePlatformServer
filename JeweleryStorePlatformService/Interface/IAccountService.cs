@@ -9,4 +9,5 @@ public interface IAccountService
     public Task AddRangeAccount(List<Account> accounts);
     public string GenerateJwtToken(Account account);
     Account CheckLogin(string email, string password);
+    public int GetRoleIdByAccountId(int accountId);
 }

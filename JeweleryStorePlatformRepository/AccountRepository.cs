@@ -25,4 +25,8 @@ public class AccountRepository : IAccountRepository
     {
         return AccountDAO.Instance.CheckLogin(email, password);
     }
+    public int GetRoleIdByAccountId(int accountId)
+    {
+        return AccountDAO.Instance.GetRoleIdByAccountId((int)accountId);
+    }
 }

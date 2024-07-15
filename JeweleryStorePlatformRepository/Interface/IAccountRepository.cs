@@ -9,4 +9,5 @@ public interface IAccountRepository
     public Task AddNewAccount(Account account);
     public Task AddRangeAccount(List<Account> accounts);
     public Account CheckLogin(string email, string password);
+    public int GetRoleIdByAccountId(int accountId);
 }

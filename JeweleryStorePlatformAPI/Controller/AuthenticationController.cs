@@ -1,5 +1,7 @@
 ﻿using JeweleryStorePlatformDataTransfer;
 using JeweleryStorePlatformDataTransfer.Request.AccountDTO;
+using JeweleryStorePlatformRepository.Interface;
+using JeweleryStorePlatformService;
 using JeweleryStorePlatformService.Interface;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -11,21 +13,12 @@ namespace JeweleryStorePlatformAPI.Controller;
 public class AuthenticationController : ControllerBase
 {
     private readonly IAccountService _accountService;
-    public AuthenticationController(IAccountService accountService)
+    private readonly IAccountRoleRepository _accountRoleRepository;
+    public AuthenticationController(IAccountService accountService, IAccountRoleRepository accountRoleRepository)
     {
         _accountService = accountService;
+        _accountRoleRepository = accountRoleRepository;
     }
-    /*    [HttpPost]
-        [Route("Login")]
-        public IActionResult<ApiResponse> Login([FromBody] AccountsDTO request)
-        {
-            var account = this._accountService.CheckLogin(request.Email, request.Password);
-            if (account == null)
-                return Unauthorized();
-
-            var token = this._accountService.GenerateJwtToken(account);
-            return Ok(ApiResponse);
-        }*/
 
     [HttpPost]
     [Route("Login")]
@@ -37,7 +30,8 @@ public class AuthenticationController : ControllerBase
             {
                 StatusCode = 400,
                 Message = "Invalid client request",
-                Data = null
+                Data = null,
+                RoleId = 6
             });
         }
 
@@ -48,16 +42,19 @@ public class AuthenticationController : ControllerBase
             {
                 StatusCode = 401,
                 Message = "Unauthorized",
-                Data = null
+                Data = null,
+                RoleId = 6
             });
         }
 
         var token = _accountService.GenerateJwtToken(account);
+        var roleId = _accountService.GetRoleIdByAccountId(account.Id);
         return Ok(new ApiResponse
         {
             StatusCode = 200,
             Message = "Login successful",
-            Data = token
+            Data = token,
+            RoleId = roleId
         });
     }
 }
