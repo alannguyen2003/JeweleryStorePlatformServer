@@ -85,5 +85,10 @@ namespace JeweleryStorePlatformService
         {
             return await _accountRepository.GetAccountById(accountId);
         }
+
+        public int GetRoleIdByAccountId(int accountId)
+        {
+            return _accountRepository.GetRoleIdByAccountId(accountId);
+        }
     }
 }
