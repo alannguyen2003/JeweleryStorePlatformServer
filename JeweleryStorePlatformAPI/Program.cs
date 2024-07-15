@@ -47,7 +47,8 @@ using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 try
 {
-    var context = services.GetRequiredService<Seeding>(); 
+    var context = services.GetRequiredService<Seeding>();
+    await context.MigrationAsync();
     await context.AccountSeeding();
     await context.SeedingJeweleryTypes();
     await context.SeedingRole();

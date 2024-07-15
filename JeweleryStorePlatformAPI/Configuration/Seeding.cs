@@ -9,14 +9,22 @@ public class Seeding
     private readonly IAccountService _accountService;
     private readonly IJeweleryTypeService _jeweleryTypeService;
     private readonly IRoleService _roleService;
+    private readonly IDataService _dataService;
 
-    public Seeding(IAccountService accountService, IJeweleryTypeService jeweleryTypeService, IRoleService roleService)
+    public Seeding(IAccountService accountService, IJeweleryTypeService jeweleryTypeService, 
+        IRoleService roleService, IDataService dataService)
     {
         _accountService = accountService;
         _jeweleryTypeService = jeweleryTypeService;
         _roleService = roleService;
+        _dataService = dataService;
     }
 
+    public async Task MigrationAsync()
+    {
+        await _dataService.MigrationAsync();
+    }
+    
     public async Task AccountSeeding()
     {
         var account = await _accountService.GetAllAccounts();
