@@ -13,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddScoped<IJeweleryRepository, JeweleryRepository>();
 builder.Services.AddScoped<IJeweleryService, JeweleryService>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -27,9 +29,6 @@ builder.Services.AddCloudinarySetting(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddScoped<IDiamondService, DiamondService>();
 builder.Services.AddScoped<IDiamondRepository, DiamondRepository>();
-
-
-
 
 var app = builder.Build();
 

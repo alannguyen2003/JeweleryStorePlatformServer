@@ -1,12 +1,17 @@
 ﻿using JeweleryStorePlatformBusinessObject.Account;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
-namespace JeweleryStorePlatformRepository.Interface;
-
-
-public interface IAccountRepository
+namespace JeweleryStorePlatformRepository.Interface
 {
-    public Task<List<Account>> GetAllAccounts();
-    public Task AddNewAccount(Account account);
-    public Task AddRangeAccount(List<Account> accounts);
-    public Account CheckLogin(string email, string password);
+    public interface IAccountRepository
+    {
+        Task<List<Account>> GetAllAccounts();
+        Task AddNewAccount(Account account);
+        Task AddRangeAccount(List<Account> accounts);
+        Account CheckLogin(string email, string password);
+        Task<Account> UpdateAccount(Account account);
+        Task<bool> DeleteAccount(int accountId);
+        Task<Account> GetAccountById(int accountId);
+    }
 }
