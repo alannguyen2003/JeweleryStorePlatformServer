@@ -13,6 +13,7 @@ public static class DependencyInjection
         services.AddScoped<IJeweleryTypeRepository, JeweleryTypeRepository>();
         services.AddScoped<IRoleRepository, RoleRepository>();
         services.AddScoped<IAccountRoleRepository, AccountRoleRepository>();
+        services.AddScoped<IDataRepository, DataRepository>();
         return services;
     }
 
@@ -21,6 +22,7 @@ public static class DependencyInjection
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<IJeweleryTypeService, JeweleryTypeService>();
         services.AddScoped<IRoleService, RoleService>();
+        services.AddScoped<IDataService, DataService>();
         return services;
     }
 }
