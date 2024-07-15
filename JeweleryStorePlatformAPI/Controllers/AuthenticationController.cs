@@ -31,7 +31,7 @@ public class AuthenticationController : ControllerBase
                 StatusCode = 400,
                 Message = "Invalid client request",
                 Data = null,
-                RoleId = 6
+                RoleId = 0
             });
         }
 
@@ -43,7 +43,7 @@ public class AuthenticationController : ControllerBase
                 StatusCode = 401,
                 Message = "Unauthorized",
                 Data = null,
-                RoleId = 6
+                RoleId = 0
             });
         }
 
