@@ -1,30 +1,34 @@
-﻿using AutoMapper;
-using JeweleryStorePlatformBusinessObject.Diamond;
-using Service.Common.Mapping;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JeweleryStorePlatformService.DTOs
+namespace JeweleryStorePlatformDataTransfer.Request.Diamond
 {
-    public class DiamondDTO : IMapFrom<Diamond>
+    public class UpdateDiamondRequest
     {
-        public int Id { get; set; }
+        [Required]
         public int Price { get; set; }
+        [Required]
         public string CutType { get; set; }
+
+        [Required]
         public string CaratType { get; set; }
+
+        [Required]
         public string ColorType { get; set; }
+
+        [Required]
         public string ClarityType { get; set; }
+
+        [Required]
         public string DiamondOrigin { get; set; }
 
         public string PreviewImage { get; set; }
-        public bool IsMainDiamond { get; set; }
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<Diamond, DiamondDTO>();
-        }
-    }
+        public string ReportNumber { get; set; }
+        public string ReportUrl { get; set; }
 
+    }
 }
