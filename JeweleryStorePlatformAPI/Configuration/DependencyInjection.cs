@@ -14,6 +14,8 @@ public static class DependencyInjection
         services.AddScoped<IRoleRepository, RoleRepository>();
         services.AddScoped<IAccountRoleRepository, AccountRoleRepository>();
         services.AddScoped<IDataRepository, DataRepository>();
+        services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
         return services;
     }
 
@@ -23,6 +25,8 @@ public static class DependencyInjection
         services.AddScoped<IJeweleryTypeService, JeweleryTypeService>();
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IDataService, DataService>();
+        services.AddScoped<IOrderItemService, OrderItemsService>();
+        services.AddScoped<IOrderService, OrderService>();
         return services;
     }
 }
