@@ -1,5 +1,6 @@
-﻿using JeweleryStorePlatformBusinessObject.Jewelery;
-using JeweleryStorePlatformDataAccess;
+using JeweleryStorePlatformBusinessObject.Design;
+using JeweleryStorePlatformBusinessObject.Jewelery;
+using JeweleryStorePlatformRepository.Interface;
 using JeweleryStorePlatformService.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -10,11 +11,15 @@ namespace JeweleryStorePlatformService
     public class JeweleryTypeService : IJeweleryTypeService
     {
         private readonly AppDbContext _context;
+    public JeweleryTypeService(IJeweleryTypeRepository jeweleryTypeRepository)
+    {
+        _jeweleryTypeRepository = jeweleryTypeRepository;
+    }
 
-        public JeweleryTypeService(AppDbContext context)
-        {
-            _context = context;
-        }
+    public async Task<List<JeweleryType>> GetAllJeweleryType()
+    {
+        return await _jeweleryTypeRepository.GetAllJeweleryType();
+    }
 
         public async Task<List<JeweleryType>> GetAllJeweleryType()
         {
