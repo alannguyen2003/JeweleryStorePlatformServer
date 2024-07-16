@@ -1,4 +1,5 @@
 ﻿using JeweleryStorePlatformBusinessObject.Diamond;
+using JeweleryStorePlatformDataTransfer.Request.Diamond;
 using JeweleryStorePlatformService.DTOs;
 using Service.Models.Payload.Requests.Member;
 using System;
@@ -11,6 +12,10 @@ namespace JeweleryStorePlatformService.Interface
 {
     public interface IDiamondService
     {
-        Task<PaginatedList<DiamondDTO>> GetAllDiamonds(GetDiamondsRequest request);
+        Task<PaginatedList<GIAReportDTO>> GetAllDiamonds(GetDiamondsRequest request);
+        Task<DiamondDTO> GetDiamondById(int id);
+        Task<DiamondDTO> CreateDiamond(CreateDiamondRequest request);
+        Task<DiamondDTO> UpdateDiamond(int id, UpdateDiamondRequest request);
+        Task<bool> DeleteDiamond(int id);
     }
 }
