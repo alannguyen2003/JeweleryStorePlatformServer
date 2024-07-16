@@ -1,4 +1,5 @@
 ﻿using JeweleryStorePlatformBusinessObject.Diamond;
+using JeweleryStorePlatformBusinessObject.Jewelery;
 using Microsoft.EntityFrameworkCore;
 
 namespace JeweleryStorePlatformDataAccess;
