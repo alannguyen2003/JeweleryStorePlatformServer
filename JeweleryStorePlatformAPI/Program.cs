@@ -24,13 +24,6 @@ builder.Services.AddCloudinarySetting(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddScoped<IDiamondService, DiamondService>();
 builder.Services.AddScoped<IDiamondRepository, DiamondRepository>();
-builder.Services.AddScoped<IDiamondService, DiamondService>();
-builder.Services.AddScoped<IDiamondRepository, DiamondRepository>();
-builder.Services.AddScoped<IGIAReportRepository, GIAReportRepository>();
-builder.Services.AddScoped<IJeweleryDesignService, JeweleryDesignService>();
-builder.Services.AddScoped<IJeweleryDesignRepository, JeweleryDesignRepository>();
-builder.Services.AddScoped<IJeweleryDesignImageRepository, JeweleryDesignImageRepository>();
-
 
 
 

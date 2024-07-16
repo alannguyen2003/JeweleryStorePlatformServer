@@ -1,10 +1,5 @@
 using System.Reflection;
 using AutoMapper;
-using JeweleryStorePlatformBusinessObject.Design;
-using JeweleryStorePlatformBusinessObject.Diamond;
-using JeweleryStorePlatformDataTransfer.Request;
-using JeweleryStorePlatformDataTransfer.Request.Diamond;
-using JeweleryStorePlatformService.DTOs;
 
 namespace Service.Common.Mapping;
 
@@ -13,10 +8,6 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         ApplyMappingFromAssembly(Assembly.GetExecutingAssembly());
-        CreateMap<CreateDiamondRequest, Diamond>();
-        CreateMap<UpdateDiamondRequest, Diamond>();
-        CreateMap<Diamond, DiamondDTO>();
-        CreateMap<CreateJeweleryDesignRequest, JeweleryDesign>();
     }
 
     private void ApplyMappingFromAssembly(Assembly assembly)

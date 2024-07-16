@@ -1,5 +1,4 @@
-﻿using JeweleryStorePlatformBusinessObject.Design;
-using JeweleryStorePlatformBusinessObject.Jewelery;
+﻿using JeweleryStorePlatformBusinessObject.Jewelery;
 using JeweleryStorePlatformRepository.Interface;
 using JeweleryStorePlatformService.Interface;
 
@@ -13,7 +12,7 @@ public class JeweleryTypeService : IJeweleryTypeService
     {
         _jeweleryTypeRepository = jeweleryTypeRepository;
     }
-
+    
     public async Task<List<JeweleryType>> GetAllJeweleryType()
     {
         return await _jeweleryTypeRepository.GetAllJeweleryType();
