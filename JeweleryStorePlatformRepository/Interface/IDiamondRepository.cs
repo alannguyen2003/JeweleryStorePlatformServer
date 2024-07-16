@@ -11,4 +11,5 @@ public interface IDiamondRepository
     Task<Diamond> CreateDiamond(Diamond diamond);
     Task<Diamond> UpdateDiamond(Diamond diamond);
     Task<bool> DeleteDiamond(int id);
+
 }

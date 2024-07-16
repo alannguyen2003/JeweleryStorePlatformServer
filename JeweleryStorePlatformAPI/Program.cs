@@ -11,6 +11,11 @@ using JeweleryStorePlatformRepository;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<IJeweleryRepository, JeweleryRepository>();
+builder.Services.AddScoped<IJeweleryService, JeweleryService>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerAuthorization();
@@ -30,8 +35,6 @@ builder.Services.AddScoped<IGIAReportRepository, GIAReportRepository>();
 builder.Services.AddScoped<IJeweleryDesignService, JeweleryDesignService>();
 builder.Services.AddScoped<IJeweleryDesignRepository, JeweleryDesignRepository>();
 builder.Services.AddScoped<IJeweleryDesignImageRepository, JeweleryDesignImageRepository>();
-
-
 
 
 var app = builder.Build();
@@ -54,7 +57,8 @@ using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 try
 {
-    var context = services.GetRequiredService<Seeding>(); 
+    var context = services.GetRequiredService<Seeding>();
+    await context.MigrationAsync();
     await context.AccountSeeding();
     await context.SeedingJeweleryTypes();
     await context.SeedingRole();

@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\JeweleryStorePlatformBusinessObject\JeweleryStorePlatformBusinessObject.csproj" />
       <ProjectReference Include="..\JeweleryStorePlatformDataAccess\JeweleryStorePlatformDataAccess.csproj" />
       <ProjectReference Include="..\JeweleryStorePlatformDataTransfer\JeweleryStorePlatformDataTransfer.csproj" />
     </ItemGroup>

@@ -28,10 +28,12 @@ public class DiamondDAO
     public IQueryable<Diamond> GetAllDiamonds()
     {
         return _context.Set<Diamond>();
+
     }
     public async Task<Diamond> GetDiamondById(int id)
     {
         return await _context.Set<Diamond>().FindAsync(id);
+
     }
 
     public async Task<Diamond> CreateDiamond(Diamond diamond)
