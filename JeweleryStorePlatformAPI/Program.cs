@@ -35,7 +35,12 @@ builder.Services.AddScoped<IGIAReportRepository, GIAReportRepository>();
 builder.Services.AddScoped<IJeweleryDesignService, JeweleryDesignService>();
 builder.Services.AddScoped<IJeweleryDesignRepository, JeweleryDesignRepository>();
 builder.Services.AddScoped<IJeweleryDesignImageRepository, JeweleryDesignImageRepository>();
-
+builder.Services.AddSingleton<HttpClientHelper>();
+builder.Services.AddTransient<ApiService>();
+builder.Services.AddTransient<ICityRepository, CityRepository>();
+builder.Services.AddTransient<IDistrictRepository, DistrictRepository>();
+builder.Services.AddTransient<IAddressRepository, AddressRepository>();
+builder.Services.AddTransient<ProvinceService>();
 
 var app = builder.Build();
 
