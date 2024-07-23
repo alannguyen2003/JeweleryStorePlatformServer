@@ -17,6 +17,8 @@ builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPromotionRepository, PromotionRepository>();
 builder.Services.AddScoped<IPromotionService, PromotionService>();
+builder.Services.AddScoped<IColorService, ColorService>();
+builder.Services.AddScoped<IMaterialService, MaterialService>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -32,8 +34,6 @@ builder.Services.AddCloudinarySetting(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddScoped<IDiamondService, DiamondService>();
 builder.Services.AddScoped<IDiamondRepository, DiamondRepository>();
-builder.Services.AddScoped<IDiamondService, DiamondService>();
-builder.Services.AddScoped<IDiamondRepository, DiamondRepository>();
 builder.Services.AddScoped<IGIAReportRepository, GIAReportRepository>();
 builder.Services.AddScoped<IJeweleryDesignService, JeweleryDesignService>();
 builder.Services.AddScoped<IJeweleryDesignRepository, JeweleryDesignRepository>();
@@ -45,6 +45,9 @@ builder.Services.AddTransient<IDistrictRepository, DistrictRepository>();
 builder.Services.AddTransient<IAddressRepository, AddressRepository>();
 builder.Services.AddTransient<IProvinceService, ProvinceService>();
 builder.Services.AddTransient<IGIAReportService, GIAReportService>();
+builder.Services.AddTransient<IColorRepository, ColorRepository>();
+builder.Services.AddTransient<IMaterialRepository, MaterialRepository>();
+
 
 var app = builder.Build();
 
@@ -73,6 +76,9 @@ try
     await context.SeedingRole();
     await context.SeedingDiamond();
     await context.SeedingAddress();
+    await context.SeedingMaterial();
+    await context.SeedingColor();
+    await context.SeedingJeweleryCases();
 }
 catch (Exception ex)
 {

@@ -1,4 +1,5 @@
-﻿using JeweleryStorePlatformBusinessObject.Jewelery;
+﻿using JeweleryStorePlatformBusinessObject.Address;
+using JeweleryStorePlatformBusinessObject.Jewelery;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -80,6 +81,11 @@ namespace JeweleryStorePlatformDataAccess
 
             _context.JeweleryCases.Remove(jewelry);
             return await _context.SaveChangesAsync(); // This will return the number of affected rows
+        }
+        public async Task AddRange(IEnumerable<JeweleryCase> jeweleryCases)
+        {
+            await _context.JeweleryCases.AddRangeAsync(jeweleryCases);
+            await _context.SaveChangesAsync();
         }
     }
 }

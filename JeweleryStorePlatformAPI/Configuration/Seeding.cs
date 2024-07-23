@@ -19,9 +19,13 @@ public class Seeding
     private readonly IDiamondService _diamondService;
     private readonly IGIAReportService _gIAReportService;
     private readonly IProvinceService _provinceService;
+    private readonly IJeweleryCaseService _jeweleryCaseService;
+    private readonly IColorService _colorService;
+    private readonly IMaterialService _materialService;
 
     public Seeding(IAccountService accountService, IJeweleryTypeService jeweleryTypeService, 
-        IRoleService roleService, IDataService dataService, IDiamondService diamondService, IGIAReportService gIAReportService, IProvinceService provinceService)
+        IRoleService roleService, IDataService dataService, IDiamondService diamondService, IGIAReportService gIAReportService, IProvinceService provinceService, IJeweleryCaseService jeweleryCaseService,
+        IColorService colorService, IMaterialService materialService)
     {
         _accountService = accountService;
         _jeweleryTypeService = jeweleryTypeService;
@@ -30,6 +34,9 @@ public class Seeding
         _diamondService = diamondService;
         _gIAReportService = gIAReportService;
         _provinceService = provinceService;
+        _jeweleryCaseService = jeweleryCaseService;
+        _colorService = colorService;
+        _materialService = materialService;
     }
 
     public async Task MigrationAsync()
@@ -233,5 +240,122 @@ public class Seeding
         }
         await _provinceService.FetchAndStoreDataAsync();
     }
+    public async Task SeedingColor()
+    {
+        var colors = await _colorService.GetAllColors();
+        if (colors.Any())
+        {
+            return;
+        }
 
+        colors = new List<Color>()
+    {
+        new Color()
+        {
+            ColorDescription = "Red"
+        },
+        new Color()
+        {
+            ColorDescription = "Blue"
+        },
+        new Color()
+        {
+            ColorDescription = "Green"
+        },
+        new Color()
+        {
+            ColorDescription = "Yellow"
+        },
+        new Color()
+        {
+            ColorDescription = "Black"
+        }
+    };
+        await _colorService.AddRange(colors);
     }
+    public async Task SeedingMaterial()
+    {
+        var materials = await _materialService.GetAllMaterials();
+        if (materials.Any())
+        {
+            return;
+        }
+
+        materials = new List<Material>()
+    {
+        new Material()
+        {
+            MaterialDescription = "Gold"
+        },
+        new Material()
+        {
+            MaterialDescription = "Silver"
+        },
+        new Material()
+        {
+            MaterialDescription = "Platinum"
+        },
+        new Material()
+        {
+            MaterialDescription = "Palladium"
+        },
+        new Material()
+        {
+            MaterialDescription = "Titanium"
+        }
+    };
+        await _materialService.AddRange(materials);
+    }
+    public async Task SeedingJeweleryCases()
+    {
+        var jeweleryCases = await _jeweleryCaseService.GetAll();
+        if (jeweleryCases.Any())
+        {
+            return;
+        }
+        var colors = await _colorService.GetAllColors();
+        var materials = await _materialService.GetAllMaterials();
+        if (!colors.Any() || !materials.Any())
+        {
+            throw new InvalidOperationException("Màu sắc hoặc vật liệu không có trong cơ sở dữ liệu.");
+        }
+        var colorIds = colors.Select(c => c.Id).ToList();
+        var materialIds = materials.Select(m => m.Id).ToList();
+        var jeweleryCasesToAdd = new List<JeweleryCase>()
+    {
+        new JeweleryCase()
+        {
+            CaseName = "Luxury Gold Case",
+            ColorId = colorIds[0],
+            MaterialId = materialIds[0]
+        },
+        new JeweleryCase()
+        {
+            CaseName = "Elegant Silver Case",
+            ColorId = colorIds[1],
+            MaterialId = materialIds[1]
+        },
+        new JeweleryCase()
+        {
+            CaseName = "Classic Wooden Case",
+            ColorId = colorIds[2],
+            MaterialId = materialIds[2]
+        },
+        new JeweleryCase()
+        {
+            CaseName = "Modern Glass Case",
+            ColorId = colorIds[3],
+            MaterialId = materialIds[3]
+        },
+        new JeweleryCase()
+        {
+            CaseName = "Vintage Leather Case",
+            ColorId = colorIds[4],
+            MaterialId = materialIds[4]
+        }
+    };
+
+        await _jeweleryCaseService.AddRange(jeweleryCasesToAdd);
+    }
+
+}

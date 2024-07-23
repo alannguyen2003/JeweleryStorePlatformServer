@@ -1,4 +1,5 @@
-﻿using JeweleryStorePlatformBusinessObject.Jewelery;
+﻿using JeweleryStorePlatformBusinessObject.Diamond;
+using JeweleryStorePlatformBusinessObject.Jewelery;
 using JeweleryStorePlatformDataTransfer.Request.JewelerysDTO;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace JeweleryStorePlatformService.Interface
         Task<int> Create(JeweleryCaseDTO request);
         Task<int> Delete(int jeweleryId);
         Task<int> Update(JeweleryCaseUpdateDTO request);
+        Task AddRange(List<JeweleryCase> jeweleryCases);
 
     }
 }

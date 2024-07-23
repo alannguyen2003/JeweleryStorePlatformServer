@@ -1,4 +1,5 @@
-﻿using JeweleryStorePlatformBusinessObject.Jewelery;
+﻿using JeweleryStorePlatformBusinessObject.Address;
+using JeweleryStorePlatformBusinessObject.Jewelery;
 using JeweleryStorePlatformDataAccess;
 using JeweleryStorePlatformRepository.Interface;
 using System;
@@ -39,6 +40,10 @@ namespace JeweleryStorePlatformRepository
         public async Task<int> Delete(int jeweleryId)
         {
             return await JeweleryCaseDAO.Instance.Delete(jeweleryId);
+        }
+        public async Task AddRange(IEnumerable<JeweleryCase> jeweleryCases)
+        {
+            await JeweleryCaseDAO.Instance.AddRange(jeweleryCases);
         }
     }
 }

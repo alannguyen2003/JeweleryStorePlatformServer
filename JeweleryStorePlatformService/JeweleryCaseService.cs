@@ -1,6 +1,8 @@
-﻿using JeweleryStorePlatformBusinessObject.Jewelery;
+﻿using JeweleryStorePlatformBusinessObject.Diamond;
+using JeweleryStorePlatformBusinessObject.Jewelery;
 using JeweleryStorePlatformDataAccess;
 using JeweleryStorePlatformDataTransfer.Request.JewelerysDTO;
+using JeweleryStorePlatformRepository;
 using JeweleryStorePlatformRepository.Interface;
 using JeweleryStorePlatformService.Interface;
 using System;
@@ -94,6 +96,10 @@ namespace JeweleryStorePlatformService
             // Update other properties as needed
 
             return await _jewelerycaseRepository.Update(existingJewelery);
+        }
+        public async Task AddRange(List<JeweleryCase> jeweleryCases)
+        {
+            await _jewelerycaseRepository.AddRange(jeweleryCases);
         }
     }
 }
