@@ -16,6 +16,7 @@ public static class DependencyInjection
         services.AddScoped<IDataRepository, DataRepository>();
         services.AddScoped<IOrderItemRepository, OrderItemRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<IJeweleryCaseRepository, JeweleryCaseRepository>();
         return services;
     }
 
@@ -27,6 +28,7 @@ public static class DependencyInjection
         services.AddScoped<IDataService, DataService>();
         services.AddScoped<IOrderItemService, OrderItemsService>();
         services.AddScoped<IOrderService, OrderService>();
+        services.AddScoped<IJeweleryCaseService, JeweleryCaseService>();
         return services;
     }
 }
