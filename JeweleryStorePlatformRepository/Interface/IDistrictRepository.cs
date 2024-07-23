@@ -11,5 +11,6 @@ namespace JeweleryStorePlatformRepository.Interface
     public interface IDistrictRepository
     {
         Task AddRange(IEnumerable<District> district);
+        Task<List<District>> GetAllDistricts();
     }
 }

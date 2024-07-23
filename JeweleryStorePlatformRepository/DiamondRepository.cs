@@ -29,4 +29,9 @@ public class DiamondRepository : IDiamondRepository
     {
         return await DiamondDAO.Instance.DeleteDiamond(id);
     }
+
+    public async Task AddRangeDiamonds(List<Diamond> diamonds)
+    {
+         await DiamondDAO.Instance.AddRangeDiamonds(diamonds);
+    }
 }

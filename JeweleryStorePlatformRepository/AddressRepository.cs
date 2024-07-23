@@ -16,5 +16,9 @@ namespace JeweleryStorePlatformRepository
             await AddressDAO.Instance.AddRange(address);
 
         }
+        public async Task<List<Address>> GetAllAddresses()
+        {
+            return await AddressDAO.Instance.GetAllAddresses();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using JeweleryStorePlatformBusinessObject.Diamond;
+﻿using JeweleryStorePlatformBusinessObject.Account;
+using JeweleryStorePlatformBusinessObject.Diamond;
 using Microsoft.EntityFrameworkCore;
 
 namespace JeweleryStorePlatformDataAccess;
@@ -67,5 +68,10 @@ public class DiamondDAO
         _context.Set<Diamond>().Remove(diamond);
         await _context.SaveChangesAsync();
         return true;
+    }
+    public async Task AddRangeDiamonds(List<Diamond> diamonds)
+    {
+        await _context.Set<Diamond>().AddRangeAsync(diamonds);
+        await _context.SaveChangesAsync();
     }
 }

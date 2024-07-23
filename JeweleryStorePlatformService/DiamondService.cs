@@ -26,7 +26,7 @@ public class DiamondService : IDiamondService
         _gIAReportRepository = gIAReportRepository;
     }
 
-    public async Task<PaginatedList<GIAReportDTO>> GetAllDiamonds(GetDiamondsRequest request)
+    public async Task<PaginatedList<GIAReportDTO>> GetAllDiamondswithGIAReport(GetDiamondsRequest request)
     { 
         var diamonds = _gIAReportRepository.GetAll().Include(x => x.Diamond)
             .AsQueryable();
@@ -111,5 +111,29 @@ public class DiamondService : IDiamondService
             return false;
         }
         return await _diamondRepository.DeleteDiamond(gia.DiamondId);
+    }
+    public async Task AddRangeDiamonds(List<Diamond> diamonds)
+    {
+        await _diamondRepository.AddRangeDiamonds(diamonds);
+    }
+    public async Task<PaginatedList<DiamondDTO>> GetAllDiamonds(GetDiamondsRequest request)
+    {
+        var diamonds = _diamondRepository.GetAllDiamonds();
+
+        if (request.SearchTerm is not null)
+        {
+            diamonds = diamonds.Where(x => x.ClarityType.Contains(request.SearchTerm) ||
+                                       x.CaratType.Contains(request.SearchTerm) ||
+                                       x.ColorType.Contains(request.SearchTerm) ||
+                                       x.CutType.Contains(request.SearchTerm));
+        }
+
+        return await diamonds
+            .ListPaginateWithSortAsync<Diamond, DiamondDTO>(
+                request.Page,
+                request.Size,
+                request.SortBy,
+                request.SortOrder,
+                _mapper.ConfigurationProvider);
     }
 }

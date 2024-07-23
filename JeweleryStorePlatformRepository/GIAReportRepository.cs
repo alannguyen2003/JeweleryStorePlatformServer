@@ -29,4 +29,8 @@ public class GIAReportRepository : IGIAReportRepository
     {
         return await GIAReportDAO.Instance.DeleteGIAReport(id);
     }
+    public async Task AddRangeGIAReports(List<GIAReport> gIAReports)
+    {
+        await GIAReportDAO.Instance.AddRangeGIAReports(gIAReports);
+    }
 }

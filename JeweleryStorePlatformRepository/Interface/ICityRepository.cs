@@ -1,4 +1,5 @@
-﻿using JeweleryStorePlatformBusinessObject.Address;
+﻿using JeweleryStorePlatformBusinessObject.Account;
+using JeweleryStorePlatformBusinessObject.Address;
 using JeweleryStorePlatformBusinessObject.Diamond;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,6 @@ namespace JeweleryStorePlatformRepository.Interface
     public interface ICityRepository
     {
         Task AddRange(IEnumerable<City> city);
+        Task<List<City>> GetAllCities();
     }
 }

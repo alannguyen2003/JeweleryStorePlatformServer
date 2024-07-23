@@ -15,5 +15,9 @@ namespace JeweleryStorePlatformRepository
         {
             await DistrictDAO.Instance.AddRange(district);
         }
+        public async Task<List<District>> GetAllDistricts()
+        {
+            return await DistrictDAO.Instance.GetAllDistricts();
+        }
     }
 }

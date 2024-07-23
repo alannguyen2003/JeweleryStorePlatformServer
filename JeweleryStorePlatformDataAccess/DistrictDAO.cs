@@ -1,4 +1,5 @@
 ﻿using JeweleryStorePlatformBusinessObject.Address;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,10 @@ namespace JeweleryStorePlatformDataAccess
         {
             await _context.Districts.AddRangeAsync(districts);
             await _context.SaveChangesAsync();
+        }
+        public async Task<List<District>> GetAllDistricts()
+        {
+            return await _context.Districts.ToListAsync();
         }
     }
 }

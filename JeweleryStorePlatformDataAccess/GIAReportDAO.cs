@@ -66,4 +66,9 @@ public class GIAReportDAO
         await _context.SaveChangesAsync();
         return true;
     }
+    public async Task AddRangeGIAReports(List<GIAReport> gIAReports)
+    {
+        await _context.Set<GIAReport>().AddRangeAsync(gIAReports);
+        await _context.SaveChangesAsync();
+    }
 }
