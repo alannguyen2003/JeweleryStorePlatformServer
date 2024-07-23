@@ -15,6 +15,9 @@ builder.Services.AddScoped<IJeweleryRepository, JeweleryRepository>();
 builder.Services.AddScoped<IJeweleryService, JeweleryService>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IPromotionRepository, PromotionRepository>();
+builder.Services.AddScoped<IPromotionService, PromotionService>();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
