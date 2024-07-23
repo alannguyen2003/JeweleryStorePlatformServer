@@ -43,7 +43,8 @@ builder.Services.AddTransient<ApiService>();
 builder.Services.AddTransient<ICityRepository, CityRepository>();
 builder.Services.AddTransient<IDistrictRepository, DistrictRepository>();
 builder.Services.AddTransient<IAddressRepository, AddressRepository>();
-builder.Services.AddTransient<ProvinceService>();
+builder.Services.AddTransient<IProvinceService, ProvinceService>();
+builder.Services.AddTransient<IGIAReportService, GIAReportService>();
 
 var app = builder.Build();
 
@@ -70,6 +71,8 @@ try
     await context.AccountSeeding();
     await context.SeedingJeweleryTypes();
     await context.SeedingRole();
+    await context.SeedingDiamond();
+    await context.SeedingAddress();
 }
 catch (Exception ex)
 {

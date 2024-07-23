@@ -1,5 +1,7 @@
 ﻿using JeweleryStorePlatformBusinessObject.Address;
+using JeweleryStorePlatformBusinessObject.Design;
 using JeweleryStorePlatformBusinessObject.Jewelery;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +35,10 @@ namespace JeweleryStorePlatformDataAccess
         {
             await _context.Cities.AddRangeAsync(city);
             await _context.SaveChangesAsync();
+        }
+        public async Task<List<City>> GetAllCities()
+        {
+            return await _context.Cities.ToListAsync();
         }
     }
 }

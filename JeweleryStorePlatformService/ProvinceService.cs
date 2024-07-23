@@ -1,6 +1,9 @@
 ﻿using JeweleryStorePlatformBusinessObject.Address;
+using JeweleryStorePlatformBusinessObject.Design;
+using JeweleryStorePlatformRepository;
 using JeweleryStorePlatformRepository.Interface;
 using JeweleryStorePlatformService.DTOs;
+using JeweleryStorePlatformService.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace JeweleryStorePlatformService
 {
-    public class ProvinceService
+    public class ProvinceService : IProvinceService
     {
         private readonly ICityRepository _cityRepository;
         private readonly IAddressRepository _addressRepository;
@@ -69,6 +72,18 @@ namespace JeweleryStorePlatformService
                     await _addressRepository.AddRange(wardDTOs);
                 }
             }
+        }
+        public async Task<List<City>> GetAllCities()
+        {
+            return await _cityRepository.GetAllCities();
+        }
+        public async Task<List<District>> GetAllDistricts()
+        {
+            return await _districtRepository.GetAllDistricts();
+        }
+        public async Task<List<Address>> GetAllAddresses()
+        {
+            return await _addressRepository.GetAllAddresses();
         }
     }
 }

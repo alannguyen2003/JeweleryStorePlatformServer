@@ -35,6 +35,10 @@ public static class QueryableExtensions
             {
                 sortBy = nameof(GIAReport.Id);
             }
+            if (typeof(TEntity) == typeof(Diamond))
+            {
+                sortBy = nameof(Diamond.Id);
+            }
         }
             
         sortOrder ??= "asc";

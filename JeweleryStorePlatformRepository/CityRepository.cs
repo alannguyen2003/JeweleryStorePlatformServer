@@ -1,4 +1,5 @@
 ﻿using JeweleryStorePlatformBusinessObject.Address;
+using JeweleryStorePlatformBusinessObject.Design;
 using JeweleryStorePlatformBusinessObject.Jewelery;
 using JeweleryStorePlatformDataAccess;
 using JeweleryStorePlatformRepository.Interface;
@@ -15,6 +16,10 @@ namespace JeweleryStorePlatformRepository
         public async Task AddRange(IEnumerable<City> city)
         {
             await CityDAO.Instance.AddRange(city);
+        }
+        public async Task<List<City>> GetAllCities()
+        {
+            return await CityDAO.Instance.GetAllCities();
         }
     }
 }

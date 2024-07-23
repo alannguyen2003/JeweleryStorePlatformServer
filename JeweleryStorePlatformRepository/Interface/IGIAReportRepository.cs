@@ -11,4 +11,5 @@ public interface IGIAReportRepository
     Task<GIAReport> CreateGIA(GIAReport giareport);
     Task<GIAReport> UpdateGIA(GIAReport giareport);
     Task<bool> DeleteGIA(int id);
+    Task AddRangeGIAReports(List<GIAReport> gIAReports);
 }

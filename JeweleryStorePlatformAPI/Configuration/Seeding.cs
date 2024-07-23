@@ -1,6 +1,12 @@
-﻿using JeweleryStorePlatformBusinessObject.Account;
+﻿using Azure.Core;
+using JeweleryStorePlatformBusinessObject.Account;
+using JeweleryStorePlatformBusinessObject.Diamond;
 using JeweleryStorePlatformBusinessObject.Jewelery;
+using JeweleryStorePlatformRepository.Interface;
+using JeweleryStorePlatformService;
 using JeweleryStorePlatformService.Interface;
+using Octopus.Server.MessageContracts.Base;
+using Service.Models.Payload.Requests.Member;
 
 namespace JeweleryStorePlatformAPI.Configuration;
 
@@ -10,14 +16,20 @@ public class Seeding
     private readonly IJeweleryTypeService _jeweleryTypeService;
     private readonly IRoleService _roleService;
     private readonly IDataService _dataService;
+    private readonly IDiamondService _diamondService;
+    private readonly IGIAReportService _gIAReportService;
+    private readonly IProvinceService _provinceService;
 
     public Seeding(IAccountService accountService, IJeweleryTypeService jeweleryTypeService, 
-        IRoleService roleService, IDataService dataService)
+        IRoleService roleService, IDataService dataService, IDiamondService diamondService, IGIAReportService gIAReportService, IProvinceService provinceService)
     {
         _accountService = accountService;
         _jeweleryTypeService = jeweleryTypeService;
         _roleService = roleService;
         _dataService = dataService;
+        _diamondService = diamondService;
+        _gIAReportService = gIAReportService;
+        _provinceService = provinceService;
     }
 
     public async Task MigrationAsync()
@@ -119,4 +131,107 @@ public class Seeding
         };
         await _roleService.AddRangeRoles(roles);
     }
-}
+    public async Task SeedingDiamond()
+    {
+        var request = new GetDiamondsRequest
+        {
+            Page = 1, 
+            Size = 1, 
+            SearchTerm = null, 
+            SortBy = "Id", 
+            SortOrder = "asc" 
+        };
+        var diamondsResponse = await _diamondService.GetAllDiamonds(request);
+        if (diamondsResponse.Items.Any())
+        {
+            return;
+        }
+        var sampleDiamonds = new List<Diamond>
+    {
+        new Diamond
+        {
+            Price = 1000,
+            CutType = "Excellent",
+            CaratType = "1.0",
+            ColorType = "D",
+            ClarityType = "IF",
+            DiamondOrigin = "South Africa",
+            PreviewImage = "image1.jpg",
+            IsMainDiamond = true 
+        },
+        new Diamond
+        {
+            Price = 750,
+            CutType = "Very Good",
+            CaratType = "0.75",
+            ColorType = "E",
+            ClarityType = "VVS1",
+            DiamondOrigin = "Brazil",
+            PreviewImage = "image2.jpg",
+            IsMainDiamond = false 
+        },
+        new Diamond
+        {
+            Price = 500,
+            CutType = "Good",
+            CaratType = "0.50",
+            ColorType = "F",
+            ClarityType = "VS1",
+            DiamondOrigin = "Russia",
+            PreviewImage = "image3.jpg",
+            IsMainDiamond = false
+        },
+        new Diamond
+        {
+            Price = 250,
+            CutType = "Fair",
+            CaratType = "0.25",
+            ColorType = "G",
+            ClarityType = "SI1",
+            DiamondOrigin = "India",
+            PreviewImage = "image4.jpg",
+            IsMainDiamond = false
+        }
+    };
+
+         await _diamondService.AddRangeDiamonds(sampleDiamonds);
+
+        var addedDiamonds = await _diamondService.GetAllDiamonds(new GetDiamondsRequest
+        {
+            Page = 1,
+            Size = sampleDiamonds.Count,
+            SearchTerm = null,
+            SortBy = "Id",
+            SortOrder = "asc"
+        });
+        var giaReports = new List<GIAReport>
+    {
+        new GIAReport { ReportNumber = "R12345", ReportUrl = "http://example.com/report1", DiamondId = addedDiamonds.Items[0].Id },
+        new GIAReport { ReportNumber = "R12346", ReportUrl = "http://example.com/report2", DiamondId = addedDiamonds.Items[1].Id },
+        new GIAReport { ReportNumber = "R12347", ReportUrl = "http://example.com/report3", DiamondId = addedDiamonds.Items[2].Id },
+        new GIAReport { ReportNumber = "R12348", ReportUrl = "http://example.com/report4", DiamondId = addedDiamonds.Items[3].Id }
+    };
+
+        await _gIAReportService.AddRangeGIAReports(giaReports);
+    }
+    public async Task SeedingAddress()
+    {
+        var city = await _provinceService.GetAllCities();
+        if (city.Any())
+        {
+            return;
+        }
+        var district = await _provinceService.GetAllDistricts();
+        if (district.Any())
+        {
+            return;
+        }
+        var address = await _provinceService.GetAllAddresses();
+        if (address.Any())
+        {
+            return;
+        }
+        await _provinceService.FetchAndStoreDataAsync();
+    }
+
+    }

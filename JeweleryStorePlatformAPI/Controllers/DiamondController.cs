@@ -22,11 +22,17 @@ namespace JeweleryStorePlatformAPI.Controller
         }
 
 
-        [HttpGet]
-        public async Task<ActionResult<Result<PaginatedList<GIAReportDTO>>>> GetDiamonds([FromQuery] GetDiamondsRequest request)
+        [HttpGet("AllDiamondswithGIAReport")]
+        public async Task<ActionResult<Result<PaginatedList<GIAReportDTO>>>> GetAllDiamondswithGIAReport([FromQuery] GetDiamondsRequest request)
+        {
+            var diamonds = await _service.GetAllDiamondswithGIAReport(request);
+            return Ok(Result<PaginatedList<GIAReportDTO>>.Succeed(diamonds));
+        }
+        [HttpGet("AllDiamonds")]
+        public async Task<ActionResult<Result<PaginatedList<DiamondDTO>>>> GetAllDiamonds([FromQuery] GetDiamondsRequest request)
         {
             var diamonds = await _service.GetAllDiamonds(request);
-            return Ok(Result<PaginatedList<GIAReportDTO>>.Succeed(diamonds));
+            return Ok(Result<PaginatedList<DiamondDTO>>.Succeed(diamonds));
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<Result<DiamondDTO>>> GetDiamondById(int id)
