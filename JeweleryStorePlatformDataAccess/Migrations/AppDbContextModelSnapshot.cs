@@ -187,10 +187,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
             modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Address.City", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CityName")
                         .IsRequired()
@@ -204,10 +201,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
             modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Address.District", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CityId")
                         .HasColumnType("int");

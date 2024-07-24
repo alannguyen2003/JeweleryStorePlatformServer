@@ -66,6 +66,110 @@ public class Seeding
                 Points = 0,
                 DateOfBirth = DateTime.Now,
                 Password = "12345"
+            },
+            new Account()
+            {
+                Email = "honhungoc@gmail.com",
+                FirstName = "Ho Nhu",
+                MiddleName = "",
+                ProfileImage = "",
+                LastName = "Ngoc",
+                EmailConfirmed = true,
+                PhoneNumber = "0123456789",
+                Points = 0,
+                DateOfBirth = DateTime.Now,
+                Password = "12345"
+            },
+            new Account()
+            {
+                Email = "minhnguyet@gmail.com",
+                FirstName = "Minh",
+                MiddleName = "",
+                ProfileImage = "",
+                LastName = "Nguyet",
+                EmailConfirmed = true,
+                PhoneNumber = "012341231",
+                Points = 0,
+                DateOfBirth = DateTime.Now,
+                Password = "12345"
+            },
+            new Account()
+            {
+                Email = "nguyenho30112003@gmail.com",
+                FirstName = "Ho Duong",
+                MiddleName = "",
+                ProfileImage = "",
+                LastName = "Trung Nguyen",
+                EmailConfirmed = true,
+                PhoneNumber = "0847919292",
+                Points = 0,
+                DateOfBirth = DateTime.Now,
+                Password = "12345"
+            },
+            new Account()
+            {
+                Email = "nguyenho30112003@gmail.com",
+                FirstName = "Ho Duong",
+                MiddleName = "",
+                ProfileImage = "",
+                LastName = "Trung Nguyen",
+                EmailConfirmed = true,
+                PhoneNumber = "0847919292",
+                Points = 0,
+                DateOfBirth = DateTime.Now,
+                Password = "12345"
+            },
+            new Account()
+            {
+                Email = "nguyenho30112003@gmail.com",
+                FirstName = "Ho Duong",
+                MiddleName = "",
+                ProfileImage = "",
+                LastName = "Trung Nguyen",
+                EmailConfirmed = true,
+                PhoneNumber = "0847919292",
+                Points = 0,
+                DateOfBirth = DateTime.Now,
+                Password = "12345"
+            },
+            new Account()
+            {
+                Email = "nguyenho30112003@gmail.com",
+                FirstName = "Ho Duong",
+                MiddleName = "",
+                ProfileImage = "",
+                LastName = "Trung Nguyen",
+                EmailConfirmed = true,
+                PhoneNumber = "0847919292",
+                Points = 0,
+                DateOfBirth = DateTime.Now,
+                Password = "12345"
+            },
+            new Account()
+            {
+                Email = "nguyenho30112003@gmail.com",
+                FirstName = "Ho Duong",
+                MiddleName = "",
+                ProfileImage = "",
+                LastName = "Trung Nguyen",
+                EmailConfirmed = true,
+                PhoneNumber = "0847919292",
+                Points = 0,
+                DateOfBirth = DateTime.Now,
+                Password = "12345"
+            },
+            new Account()
+            {
+                Email = "nguyenho30112003@gmail.com",
+                FirstName = "Ho Duong",
+                MiddleName = "",
+                ProfileImage = "",
+                LastName = "Trung Nguyen",
+                EmailConfirmed = true,
+                PhoneNumber = "0847919292",
+                Points = 0,
+                DateOfBirth = DateTime.Now,
+                Password = "12345"
             }
         };
         await _accountService.AddRangeAccount(accounts);

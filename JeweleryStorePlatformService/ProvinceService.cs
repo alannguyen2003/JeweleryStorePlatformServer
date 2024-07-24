@@ -40,11 +40,10 @@ namespace JeweleryStorePlatformService
                 });
             }
             await _cityRepository.AddRange(cities);
-
+            var districtEntities = new List<District>();
             foreach (var province in provinces)
             {
                 var districts = await _apiService.GetDistrictsAsync(province.province_id);
-                var districtEntities = new List<District>();
                 foreach (var district in districts)
                 {
                     districtEntities.Add(new District
@@ -54,24 +53,8 @@ namespace JeweleryStorePlatformService
                         CityId = province.province_id
                     });
                 }
-                await _districtRepository.AddRange(districtEntities);
-
-                foreach (var district in districts)
-                {
-                    var wards = await _apiService.GetWardsAsync(district.district_id);
-                    var wardDTOs = new List<Address>();
-                    foreach (var ward in wards)
-                    {
-                        wardDTOs.Add(new Address
-                        {
-                            Id = ward.ward_id,
-                            AddressString = ward.ward_name,
-                            DistrictId = district.district_id
-                        });
-                    }
-                    await _addressRepository.AddRange(wardDTOs);
-                }
             }
+            await _districtRepository.AddRange(districtEntities);
         }
         public async Task<List<City>> GetAllCities()
         {
