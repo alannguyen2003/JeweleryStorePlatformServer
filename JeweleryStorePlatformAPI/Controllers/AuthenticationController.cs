@@ -22,7 +22,7 @@ public class AuthenticationController : ControllerBase
 
     [HttpPost]
     [Route("Login")]
-    public IActionResult Login([FromBody] AccountsDTO request)
+    public async Task<IActionResult> Login([FromBody] AccountsDTO request)
     {
         if (request == null)
         {
@@ -48,7 +48,7 @@ public class AuthenticationController : ControllerBase
         }
 
         var token = _accountService.GenerateJwtToken(account);
-        var roleId = _accountService.GetRoleIdByAccountId(account.Id);
+        var roleId = await _accountService.GetRoleIdByAccountId(account.Id);
         return Ok(new ApiResponse
         {
             StatusCode = 200,
