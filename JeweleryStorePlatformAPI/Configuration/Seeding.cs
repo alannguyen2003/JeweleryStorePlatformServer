@@ -54,37 +54,52 @@ public class Seeding
 
     public async Task SeedingJeweleryTypes()
     {
-        var jeweleryTypes = await _jeweleryTypeService.GetAllJeweleryType();
-        if (jeweleryTypes.Any())
+        // Create a GetJeweleryTypesRequest with default or required values
+        var request = new GetJeweleryTypesRequest
+        {
+            Page = 1,
+            Size = 10,
+            SortBy = "TypeName",
+            SortOrder = "asc",
+            SearchTerm = null
+        };
+
+        // Pass the request to the GetAllJeweleryTypes method
+        var paginatedResult = await _jeweleryTypeService.GetAllJeweleryTypes(request);
+
+        // Check if the items list in PaginatedList is empty
+        if (paginatedResult.Items.Any())
         {
             return;
         }
 
-        jeweleryTypes = new List<JeweleryType>()
+        var jeweleryTypes = new List<JeweleryType>()
+    {
+        new JeweleryType()
         {
-            new JeweleryType()
-            {
-                TypeName = "Necklaces"
-            },
-            new JeweleryType()
-            {
-                TypeName = "Rings"
-            },
-            new JeweleryType()
-            {
-                TypeName = "Bracelets"
-            },
-            new JeweleryType()
-            {
-                TypeName = "Earrings"
-            },
-            new JeweleryType()
-            {
-                TypeName = "Wedding-bridals"
-            }
-        };
-        await _jeweleryTypeService.AddRangeJeweleryType(jeweleryTypes);
+            TypeName = "Necklaces"
+        },
+        new JeweleryType()
+        {
+            TypeName = "Rings"
+        },
+        new JeweleryType()
+        {
+            TypeName = "Bracelets"
+        },
+        new JeweleryType()
+        {
+            TypeName = "Earrings"
+        },
+        new JeweleryType()
+        {
+            TypeName = "Wedding-bridals"
+        }
+    };
+
+        await _jeweleryTypeService.AddRangeJeweleryTypes(jeweleryTypes);
     }
+
 
     public async Task SeedingRole()
     {
