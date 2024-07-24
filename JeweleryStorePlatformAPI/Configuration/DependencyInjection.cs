@@ -1,4 +1,5 @@
-﻿using JeweleryStorePlatformRepository;
+﻿using JeweleryStorePlatformAPI.Configuration.Cloudinary.Interface;
+using JeweleryStorePlatformRepository;
 using JeweleryStorePlatformRepository.Interface;
 using JeweleryStorePlatformService;
 using JeweleryStorePlatformService.Interface;
@@ -29,6 +30,7 @@ public static class DependencyInjection
         services.AddScoped<IOrderItemService, OrderItemsService>();
         services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<IJeweleryCaseService, JeweleryCaseService>();
+        services.AddScoped<IImageService, ImageService>();
         return services;
     }
 }

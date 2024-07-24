@@ -268,9 +268,8 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CaratType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<float>("CaratType")
+                        .HasColumnType("real");
 
                     b.Property<string>("ClarityType")
                         .IsRequired()

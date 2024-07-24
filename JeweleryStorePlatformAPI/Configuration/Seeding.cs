@@ -1,5 +1,6 @@
 ﻿using Azure.Core;
 using JeweleryStorePlatformBusinessObject.Account;
+using JeweleryStorePlatformBusinessObject.Constant;
 using JeweleryStorePlatformBusinessObject.Diamond;
 using JeweleryStorePlatformBusinessObject.Jewelery;
 using JeweleryStorePlatformRepository.Interface;
@@ -276,46 +277,46 @@ public class Seeding
     {
         new Diamond
         {
-            Price = 1000,
-            CutType = "Excellent",
-            CaratType = "1.0",
-            ColorType = "D",
-            ClarityType = "IF",
-            DiamondOrigin = "South Africa",
-            PreviewImage = "image1.jpg",
+            Price = 10382000,
+            CutType = CutTypeConstant.EXCELLENT,
+            CaratType = CaratTypeConstant.CT3P6,
+            ColorType = ColorTypeConstant.D,
+            ClarityType = ClarityTypeConstant.IF,
+            DiamondOrigin = DiamondOriginConstant.NATURAL,
+            PreviewImage = "https://product.hstatic.net/1000381168/product/upload_17785375e47c4a1089ba2cbf703f7e75_1024x1024.jpg",
             IsMainDiamond = true 
         },
         new Diamond
         {
-            Price = 750,
-            CutType = "Very Good",
-            CaratType = "0.75",
-            ColorType = "E",
-            ClarityType = "VVS1",
-            DiamondOrigin = "Brazil",
-            PreviewImage = "image2.jpg",
+            Price = 13643000,
+            CutType = CutTypeConstant.VERY_GOOD,
+            CaratType = CaratTypeConstant.CT4P5,
+            ColorType = ColorTypeConstant.F,
+            ClarityType = ClarityTypeConstant.VVS1,
+            DiamondOrigin = DiamondOriginConstant.NATURAL,
+            PreviewImage = "https://product.hstatic.net/1000381168/product/upload_17785375e47c4a1089ba2cbf703f7e75_1024x1024.jpg",
             IsMainDiamond = false 
         },
         new Diamond
         {
-            Price = 500,
-            CutType = "Good",
-            CaratType = "0.50",
-            ColorType = "F",
-            ClarityType = "VS1",
-            DiamondOrigin = "Russia",
-            PreviewImage = "image3.jpg",
+            Price = 12433000,
+            CutType = CutTypeConstant.VERY_GOOD,
+            CaratType = CaratTypeConstant.CT4P1,
+            ColorType = ColorTypeConstant.F,
+            ClarityType = ClarityTypeConstant.VS1,
+            DiamondOrigin = DiamondOriginConstant.NATURAL,
+            PreviewImage = "https://product.hstatic.net/1000381168/product/upload_17785375e47c4a1089ba2cbf703f7e75_1024x1024.jpg",
             IsMainDiamond = false
         },
         new Diamond
         {
-            Price = 250,
-            CutType = "Fair",
-            CaratType = "0.25",
-            ColorType = "G",
-            ClarityType = "SI1",
-            DiamondOrigin = "India",
-            PreviewImage = "image4.jpg",
+            Price = 9750000,
+            CutType = CutTypeConstant.EXCELLENT,
+            CaratType = CaratTypeConstant.CT6P,
+            ColorType = ColorTypeConstant.G,
+            ClarityType = ClarityTypeConstant.IF,
+            DiamondOrigin = DiamondOriginConstant.NATURAL,
+            PreviewImage = "https://product.hstatic.net/1000381168/product/upload_17785375e47c4a1089ba2cbf703f7e75_1024x1024.jpg",
             IsMainDiamond = false
         }
     };
@@ -332,10 +333,10 @@ public class Seeding
         });
         var giaReports = new List<GIAReport>
     {
-        new GIAReport { ReportNumber = "R12345", ReportUrl = "http://example.com/report1", DiamondId = addedDiamonds.Items[0].Id },
-        new GIAReport { ReportNumber = "R12346", ReportUrl = "http://example.com/report2", DiamondId = addedDiamonds.Items[1].Id },
-        new GIAReport { ReportNumber = "R12347", ReportUrl = "http://example.com/report3", DiamondId = addedDiamonds.Items[2].Id },
-        new GIAReport { ReportNumber = "R12348", ReportUrl = "http://example.com/report4", DiamondId = addedDiamonds.Items[3].Id }
+        new GIAReport { ReportNumber = "2141438172", ReportUrl = "http://example.com/report1", DiamondId = addedDiamonds.Items[0].Id },
+        new GIAReport { ReportNumber = "2141438173", ReportUrl = "http://example.com/report2", DiamondId = addedDiamonds.Items[1].Id },
+        new GIAReport { ReportNumber = "2141438174", ReportUrl = "http://example.com/report3", DiamondId = addedDiamonds.Items[2].Id },
+        new GIAReport { ReportNumber = "2141438175", ReportUrl = "http://example.com/report4", DiamondId = addedDiamonds.Items[3].Id }
     };
 
         await _gIAReportService.AddRangeGIAReports(giaReports);
@@ -349,11 +350,6 @@ public class Seeding
         }
         var district = await _provinceService.GetAllDistricts();
         if (district.Any())
-        {
-            return;
-        }
-        var address = await _provinceService.GetAllAddresses();
-        if (address.Any())
         {
             return;
         }
@@ -441,38 +437,38 @@ public class Seeding
         var colorIds = colors.Select(c => c.Id).ToList();
         var materialIds = materials.Select(m => m.Id).ToList();
         var jeweleryCasesToAdd = new List<JeweleryCase>()
-    {
-        new JeweleryCase()
         {
-            CaseName = "Luxury Gold Case",
-            ColorId = colorIds[0],
-            MaterialId = materialIds[0]
-        },
-        new JeweleryCase()
-        {
-            CaseName = "Elegant Silver Case",
-            ColorId = colorIds[1],
-            MaterialId = materialIds[1]
-        },
-        new JeweleryCase()
-        {
-            CaseName = "Classic Wooden Case",
-            ColorId = colorIds[2],
-            MaterialId = materialIds[2]
-        },
-        new JeweleryCase()
-        {
-            CaseName = "Modern Glass Case",
-            ColorId = colorIds[3],
-            MaterialId = materialIds[3]
-        },
-        new JeweleryCase()
-        {
-            CaseName = "Vintage Leather Case",
-            ColorId = colorIds[4],
-            MaterialId = materialIds[4]
-        }
-    };
+            new JeweleryCase()
+            {
+                CaseName = "Luxury Gold Case",
+                ColorId = colorIds[0],
+                MaterialId = materialIds[0]
+            },
+            new JeweleryCase()
+            {
+                CaseName = "Elegant Silver Case",
+                ColorId = colorIds[1],
+                MaterialId = materialIds[1]
+            },
+            new JeweleryCase()
+            {
+                CaseName = "Classic Wooden Case",
+                ColorId = colorIds[2],
+                MaterialId = materialIds[2]
+            },
+            new JeweleryCase()
+            {
+                CaseName = "Modern Glass Case",
+                ColorId = colorIds[3],
+                MaterialId = materialIds[3]
+            },
+            new JeweleryCase()
+            {
+                CaseName = "Vintage Leather Case",
+                ColorId = colorIds[4],
+                MaterialId = materialIds[4]
+            }
+        };
 
         await _jeweleryCaseService.AddRange(jeweleryCasesToAdd);
     }

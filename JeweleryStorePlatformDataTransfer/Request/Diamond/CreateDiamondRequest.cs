@@ -15,7 +15,7 @@ namespace JeweleryStorePlatformDataTransfer.Request.Diamond
         public string CutType { get; set; }
 
         [Required]
-        public string CaratType { get; set; }
+        public float CaratType { get; set; }
 
         [Required]
         public string ColorType { get; set; }

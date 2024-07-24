@@ -34,7 +34,6 @@ public class DiamondService : IDiamondService
         if (request.SearchTerm is not null)
         {
             diamonds = diamonds.Where(x => x.Diamond.ClarityType.Contains(request.SearchTerm) ||
-                                       x.Diamond.CaratType.Contains(request.SearchTerm) ||
                                        x.Diamond.ColorType.Contains(request.SearchTerm) ||
                                        x.Diamond.CutType.Contains(request.SearchTerm));
         }
@@ -123,7 +122,6 @@ public class DiamondService : IDiamondService
         if (request.SearchTerm is not null)
         {
             diamonds = diamonds.Where(x => x.ClarityType.Contains(request.SearchTerm) ||
-                                       x.CaratType.Contains(request.SearchTerm) ||
                                        x.ColorType.Contains(request.SearchTerm) ||
                                        x.CutType.Contains(request.SearchTerm));
         }

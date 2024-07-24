@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JeweleryStorePlatformDataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240724070740_Initial")]
+    [Migration("20240724194943_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -271,9 +271,8 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CaratType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<float>("CaratType")
+                        .HasColumnType("real");
 
                     b.Property<string>("ClarityType")
                         .IsRequired()

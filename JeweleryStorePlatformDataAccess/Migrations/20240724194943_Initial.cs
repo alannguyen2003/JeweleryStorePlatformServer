@@ -77,7 +77,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Price = table.Column<int>(type: "int", nullable: false),
                     CutType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CaratType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CaratType = table.Column<float>(type: "real", nullable: false),
                     ColorType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ClarityType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DiamondOrigin = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -171,7 +171,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Roles", x => x.Id);
                 });
-
+            
             migrationBuilder.CreateTable(
                 name: "Districts",
                 columns: table => new
@@ -490,7 +490,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 name: "IX_Addresses_DistrictId",
                 table: "Addresses",
                 column: "DistrictId");
-
+            
             migrationBuilder.CreateIndex(
                 name: "IX_Districts_CityId",
                 table: "Districts",
