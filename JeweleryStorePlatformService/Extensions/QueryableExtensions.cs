@@ -18,42 +18,38 @@ public static class QueryableExtensions
     {
         return items.Skip((page - 1) * size).Take(size);
     }
-    
+
     public static async Task<PaginatedList<TEntityDto>> ListPaginateWithSortAsync<TEntity, TEntityDto>(
-        this IQueryable<TEntity> items,
-        int? page,
-        int? size,
-        string? sortBy,
-        string? sortOrder,
-        AutoMapper.IConfigurationProvider mapperConfiguration
-       )
-        where TEntityDto :  IMapFrom<TEntity>
+    this IQueryable<TEntity> items,
+    int? page,
+    int? size,
+    string? sortBy,
+    string? sortOrder,
+    AutoMapper.IConfigurationProvider mapperConfiguration
+   )
+    where TEntityDto : IMapFrom<TEntity>
     {
-        if (sortBy is null || !IsValidProperty<TEntityDto>(sortBy))
+        if (string.IsNullOrEmpty(sortBy) || !IsValidProperty<TEntityDto>(sortBy))
         {
-            if (typeof(TEntity) == typeof(GIAReport))
-            {
-                sortBy = nameof(GIAReport.Id);
-            }
-            if (typeof(TEntity) == typeof(Diamond))
-            {
-                sortBy = nameof(Diamond.Id);
-            }
+            // Set a default sorting property if sortBy is null or invalid
+            sortBy = typeof(TEntity) == typeof(GIAReport) ? nameof(GIAReport.Id) :
+                     typeof(TEntity) == typeof(Diamond) ? nameof(Diamond.Id) :
+                     throw new ArgumentException("Invalid sortBy property.");
         }
-            
+
         sortOrder ??= "asc";
-        var pageNumber = page is null or <= 0 ? 1 : page;
-        var sizeNumber = size is null or <= 0 ? 10 : size;
-            
+        var pageNumber = page.GetValueOrDefault(1);
+        var sizeNumber = size.GetValueOrDefault(10);
+
         var count = await items.CountAsync();
-        var list  = await items
+        var list = await items
             .OrderByCustom(sortBy, sortOrder)
-            .Paginate(pageNumber.Value, sizeNumber.Value)
+            .Paginate(pageNumber, sizeNumber)
             .ToListAsync();
 
         var mapper = mapperConfiguration.CreateMapper();
         var result = mapper.Map<List<TEntityDto>>(list);
-        return new PaginatedList<TEntityDto>(result, count, pageNumber.Value, sizeNumber.Value);
+        return new PaginatedList<TEntityDto>(result, count, pageNumber, sizeNumber);
     }
 
     private static bool IsValidProperty<TEntityDto>(string propertyName)
@@ -64,17 +60,27 @@ public static class QueryableExtensions
 
     public static IQueryable<TEntity> OrderByCustom<TEntity>(this IQueryable<TEntity> items, string sortBy, string sortOrder)
     {
+        if (string.IsNullOrEmpty(sortBy))
+            throw new ArgumentNullException(nameof(sortBy), "Sort by parameter cannot be null or empty.");
+
         var type = typeof(TEntity);
-        var expression2 = Expression.Parameter(type, "t");
+        var parameter = Expression.Parameter(type, "t");
         var property = type.GetProperty(sortBy);
-        var expression1 = Expression.MakeMemberAccess(expression2, property!);
-        var lambda = Expression.Lambda(expression1, expression2);
+
+        if (property == null)
+            throw new ArgumentException($"Property '{sortBy}' does not exist on type '{type.Name}'.");
+
+        var propertyAccess = Expression.MakeMemberAccess(parameter, property);
+        var orderByExpression = Expression.Lambda(propertyAccess, parameter);
+        var methodName = sortOrder.Equals("desc", StringComparison.OrdinalIgnoreCase) ? "OrderByDescending" : "OrderBy";
+
         var result = Expression.Call(
             typeof(Queryable),
-            sortOrder.Equals("desc") ? "OrderByDescending" : "OrderBy",
-            new Type[] { type, property!.PropertyType },
+            methodName,
+            new[] { type, property.PropertyType },
             items.Expression,
-            Expression.Quote(lambda));
+            Expression.Quote(orderByExpression)
+        );
 
         return items.Provider.CreateQuery<TEntity>(result);
     }

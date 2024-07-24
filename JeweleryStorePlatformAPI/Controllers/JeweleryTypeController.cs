@@ -1,4 +1,6 @@
 ﻿using JeweleryStorePlatformBusinessObject.Jewelery;
+using JeweleryStorePlatformDataTransfer.Responses;
+using JeweleryStorePlatformService.DTOs;
 using JeweleryStorePlatformService.Interface;
 using Microsoft.AspNetCore.Mvc;
 namespace JeweleryStorePlatformAPI.Controllers
@@ -53,7 +55,7 @@ namespace JeweleryStorePlatformAPI.Controllers
                     TypeName = request.TypeName,
                     // Set other properties as needed
                 };
-                var jeweleryTypeId = await _jeweleryTypeService.AddNewJeweleryType(jeweleryType);
+                var jeweleryTypeId = await _jeweleryTypeService.CreateJeweleryType(jeweleryType);
 
                 return CreatedAtAction(nameof(GetById), new { jeweleryTypeId = jeweleryTypeId }, jeweleryType);
             }
@@ -64,29 +66,29 @@ namespace JeweleryStorePlatformAPI.Controllers
         }
 
         // PUT: api/JeweleryType/{id}
-        [HttpPut("{jeweleryTypeId}")]
-        public async Task<ActionResult<int>> Update(int jeweleryTypeId, [FromBody] JeweleryTypeUpdateRequest request)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Result<JeweleryTypeDTO>>> UpdateJeweleryType(int id, [FromBody] JeweleryTypeUpdateRequest request)
         {
             try
             {
-                var jeweleryType = await _jeweleryTypeService.GetJeweleryTypeById(jeweleryTypeId);
-                if (jeweleryType == null)
+                // Gọi dịch vụ để cập nhật loại trang sức
+                var jeweleryTypeDTO = await _jeweleryTypeService.UpdateJeweleryType(id, request);
+
+                if (jeweleryTypeDTO == null)
                 {
                     return NotFound("Cannot find jewelery type");
                 }
 
-                jeweleryType.TypeName = request.TypeName;
-                // Update other properties as needed
-
-                await _jeweleryTypeService.UpdateJeweleryType(jeweleryType);
-
-                return Ok(jeweleryTypeId);
+                // Trả về kết quả thành công với DTO đã cập nhật
+                return Ok(Result<JeweleryTypeDTO>.Succeed(jeweleryTypeDTO));
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                // Trả về lỗi 500 nếu có lỗi xảy ra
+                return StatusCode(StatusCodes.Status500InternalServerError, "Cannot find jewelery type");
             }
         }
+
 
         // DELETE: api/JeweleryType/{id}
         [HttpDelete("{jeweleryTypeId}")]
