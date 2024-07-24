@@ -8,10 +8,10 @@ namespace JeweleryStorePlatformRepository.Interface
     public interface IJeweleryTypeRepository
     {
         IQueryable<JeweleryType> GetAllJeweleryTypes();
-        Task<JeweleryType> GetJeweleryTypeByIdAsync(int id);
-        Task AddNewJeweleryTypeAsync(JeweleryType jeweleryType);
-        Task AddRangeJeweleryTypesAsync(List<JeweleryType> jeweleryTypes);
-        Task UpdateJeweleryTypeAsync(JeweleryType jeweleryType);
-        Task DeleteJeweleryTypeAsync(int id);
+        Task<JeweleryType> GetJeweleryTypeById(int id);
+        Task<JeweleryType> CreateJeweleryType(JeweleryType jeweleryType);
+        Task<JeweleryType> UpdateJeweleryType(JeweleryType jeweleryType);
+        Task<bool> DeleteJeweleryType(int id);
+        Task AddRangeJeweleryTypes(List<JeweleryType> jeweleryTypes);
     }
 }

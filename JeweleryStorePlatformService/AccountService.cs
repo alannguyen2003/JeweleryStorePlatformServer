@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using JeweleryStorePlatformDataAccess;
 
 namespace JeweleryStorePlatformService
 {
@@ -85,10 +86,9 @@ namespace JeweleryStorePlatformService
         {
             return await _accountRepository.GetAccountById(accountId);
         }
-
-        public int GetRoleIdByAccountId(int accountId)
+        public async Task<int> GetRoleIdByAccountId(int accountId)
         {
-            return _accountRepository.GetRoleIdByAccountId(accountId);
+            return await _accountRepository.GetRoleIdByAccountId(accountId);
         }
     }
 }

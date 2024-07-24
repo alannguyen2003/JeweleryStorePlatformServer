@@ -1,44 +1,80 @@
 ﻿using JeweleryStorePlatformBusinessObject.Jewelery;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace JeweleryStorePlatformDataAccess;
-
-public class JeweleryTypeDAO
+namespace JeweleryStorePlatformDataAccess
 {
-    private readonly AppDbContext _context;
-    private static JeweleryTypeDAO instance;
-    
-    public JeweleryTypeDAO()
+    public class JeweleryTypeDAO
     {
-        _context = new AppDbContext();
-    }
+        private readonly AppDbContext _context;
+        private static JeweleryTypeDAO instance;
 
-    public static JeweleryTypeDAO Instance
-    {
-        get
+        private JeweleryTypeDAO()
         {
-            if (instance == null)
-            {
-                instance = new JeweleryTypeDAO();
-            }
-            return instance;
+            _context = new AppDbContext();
         }
-    }
 
-    public async Task<List<JeweleryType>> GetAllJeweleryType()
-    {
-        return await _context.JeweleryTypes.ToListAsync();
-    }
+        public static JeweleryTypeDAO Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new JeweleryTypeDAO();
+                }
+                return instance;
+            }
+        }
 
-    public async Task AddNewJeweleryType(JeweleryType jeweleryType)
-    {
-        await _context.JeweleryTypes.AddAsync(jeweleryType);
-        await _context.SaveChangesAsync();
-    }
+        public IQueryable<JeweleryType> GetAllJeweleryTypes()
+        {
+            return _context.Set<JeweleryType>();
+        }
 
-    public async Task AddRangeJeweleryType(List<JeweleryType> jeweleryTypes)
-    {
-        await _context.JeweleryTypes.AddRangeAsync(jeweleryTypes);
-        await _context.SaveChangesAsync();
+        public async Task<JeweleryType> GetJeweleryTypeById(int id)
+        {
+            return await _context.Set<JeweleryType>().FindAsync(id);
+        }
+
+        public async Task<JeweleryType> CreateJeweleryType(JeweleryType jeweleryType)
+        {
+            _context.Set<JeweleryType>().Add(jeweleryType);
+            await _context.SaveChangesAsync();
+            return jeweleryType;
+        }
+
+        public async Task<JeweleryType> UpdateJeweleryType(JeweleryType jeweleryType)
+        {
+            var existingJeweleryType = await _context.Set<JeweleryType>().FindAsync(jeweleryType.Id);
+            if (existingJeweleryType == null)
+            {
+                return null;
+            }
+
+            _context.Entry(existingJeweleryType).CurrentValues.SetValues(jeweleryType);
+            await _context.SaveChangesAsync();
+            return existingJeweleryType;
+        }
+
+        public async Task<bool> DeleteJeweleryType(int id)
+        {
+            var jeweleryType = await _context.Set<JeweleryType>().FindAsync(id);
+            if (jeweleryType == null)
+            {
+                return false;
+            }
+
+            _context.Set<JeweleryType>().Remove(jeweleryType);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task AddRangeJeweleryTypes(List<JeweleryType> jeweleryTypes)
+        {
+            await _context.Set<JeweleryType>().AddRangeAsync(jeweleryTypes);
+            await _context.SaveChangesAsync();
+        }
     }
 }

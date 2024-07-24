@@ -1,7 +1,6 @@
 ﻿using JeweleryStorePlatformBusinessObject.Jewelery;
 using JeweleryStorePlatformDataAccess;
 using JeweleryStorePlatformRepository.Interface;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,49 +9,34 @@ namespace JeweleryStorePlatformRepository
 {
     public class JeweleryTypeRepository : IJeweleryTypeRepository
     {
-        private readonly AppDbContext _context;
-
-        public JeweleryTypeRepository(AppDbContext context)
-        {
-            _context = context;
-        }
-
         public IQueryable<JeweleryType> GetAllJeweleryTypes()
         {
-            return _context.JeweleryTypes.AsNoTracking();
+            return JeweleryTypeDAO.Instance.GetAllJeweleryTypes();
         }
 
-        public async Task<JeweleryType> GetJeweleryTypeByIdAsync(int id)
+        public async Task<JeweleryType> GetJeweleryTypeById(int id)
         {
-            return await _context.JeweleryTypes.FindAsync(id);
+            return await JeweleryTypeDAO.Instance.GetJeweleryTypeById(id);
         }
 
-        public async Task AddNewJeweleryTypeAsync(JeweleryType jeweleryType)
+        public async Task<JeweleryType> CreateJeweleryType(JeweleryType jeweleryType)
         {
-            await _context.JeweleryTypes.AddAsync(jeweleryType);
-            await _context.SaveChangesAsync();
+            return await JeweleryTypeDAO.Instance.CreateJeweleryType(jeweleryType);
         }
 
-        public async Task AddRangeJeweleryTypesAsync(List<JeweleryType> jeweleryTypes)
+        public async Task<JeweleryType> UpdateJeweleryType(JeweleryType jeweleryType)
         {
-            await _context.JeweleryTypes.AddRangeAsync(jeweleryTypes);
-            await _context.SaveChangesAsync();
+            return await JeweleryTypeDAO.Instance.UpdateJeweleryType(jeweleryType);
         }
 
-        public async Task UpdateJeweleryTypeAsync(JeweleryType jeweleryType)
+        public async Task<bool> DeleteJeweleryType(int id)
         {
-            _context.JeweleryTypes.Update(jeweleryType);
-            await _context.SaveChangesAsync();
+            return await JeweleryTypeDAO.Instance.DeleteJeweleryType(id);
         }
 
-        public async Task DeleteJeweleryTypeAsync(int id)
+        public async Task AddRangeJeweleryTypes(List<JeweleryType> jeweleryTypes)
         {
-            var jeweleryType = await _context.JeweleryTypes.FindAsync(id);
-            if (jeweleryType != null)
-            {
-                _context.JeweleryTypes.Remove(jeweleryType);
-                await _context.SaveChangesAsync();
-            }
+            await JeweleryTypeDAO.Instance.AddRangeJeweleryTypes(jeweleryTypes);
         }
     }
 }
