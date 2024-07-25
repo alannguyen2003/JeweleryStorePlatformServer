@@ -35,11 +35,6 @@ namespace JeweleryStorePlatformDataAccess
         public async Task<List<OrderItem>> GetAllOrderItem()
         {
             return await _context.OrderItems
-                .Include(o => o.JeweleryCase)
-                .Include(o => o.Order)
-                .Include(o => o.JeweleryDesign)
-                .Include(o => o.Jewelery)
-                .Include(o => o.Diamond)
                 .ToListAsync();
         }
 
@@ -56,6 +51,7 @@ namespace JeweleryStorePlatformDataAccess
 
         public async Task AddRange(List<OrderItem> orderItem)
         {
+            _context.ChangeTracker.Clear();
             await _context.OrderItems.AddRangeAsync(orderItem);
             await _context.SaveChangesAsync();
         }
@@ -70,6 +66,18 @@ namespace JeweleryStorePlatformDataAccess
 
             _context.OrderItems.Remove(orderItem);
             return await _context.SaveChangesAsync(); // This will return the number of affected rows
+        }
+        public async Task<OrderItem> Update(OrderItem orderitem)
+        {
+            var existingOrderitem = await _context.Set<OrderItem>().FindAsync(orderitem.Id);
+            if (existingOrderitem == null)
+            {
+                return null;
+            }
+
+            _context.Entry(existingOrderitem).CurrentValues.SetValues(orderitem);
+            await _context.SaveChangesAsync();
+            return existingOrderitem;
         }
     }
 }

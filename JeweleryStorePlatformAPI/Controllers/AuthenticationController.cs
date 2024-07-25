@@ -22,7 +22,7 @@ public class AuthenticationController : ControllerBase
 
     [HttpPost]
     [Route("Login")]
-    public IActionResult Login([FromBody] AccountsDTO request)
+    public async Task<IActionResult> Login([FromBody] AccountsDTO request)
     {
         if (request == null)
         {
@@ -48,11 +48,46 @@ public class AuthenticationController : ControllerBase
         }
 
         var token = _accountService.GenerateJwtToken(account);
-        var roleId = _accountService.GetRoleIdByAccountId(account.Id);
+        var roleId = await _accountService.GetRoleIdByAccountId(account.Id);
         return Ok(new ApiResponse
         {
             StatusCode = 200,
             Message = "Login successful",
+            Data = token,
+            RoleId = roleId
+        });
+    }
+
+    [HttpPost("signup")]
+    public async Task<IActionResult> SignUpNewUser(SignUpRequest request)
+    {
+        if (request == null)
+        {
+            return BadRequest(new ApiResponse
+            {
+                StatusCode = 400,
+                Message = "Invalid client request",
+                Data = null,
+                RoleId = 0
+            });
+        }
+        var account = await _accountService.RegisterNewUser(request);
+        if (account == null)
+        {
+            return Unauthorized(new ApiResponse
+            {
+                StatusCode = 401,
+                Message = "Unauthorized",
+                Data = null,
+                RoleId = 0
+            });
+        }
+        var token = _accountService.GenerateJwtToken(account);
+        var roleId = await _accountService.GetRoleIdByAccountId(account.Id);
+        return Ok(new ApiResponse
+        {
+            StatusCode = 200,
+            Message = "Sign up successful!",
             Data = token,
             RoleId = roleId
         });

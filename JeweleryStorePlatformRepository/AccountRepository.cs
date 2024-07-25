@@ -1,75 +1,80 @@
-﻿using JeweleryStorePlatformBusinessObject.Account;
+﻿  using JeweleryStorePlatformBusinessObject.Account;
+using JeweleryStorePlatformBusinessObject.Constant;
 using JeweleryStorePlatformDataAccess;
+using JeweleryStorePlatformDataTransfer.Request.AccountDTO;
 using JeweleryStorePlatformRepository.Interface;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JeweleryStorePlatformBusinessObject.Constant;
+using JeweleryStorePlatformDataTransfer.Request.AccountDTO;
 
 namespace JeweleryStorePlatformRepository
 {
     public class AccountRepository : IAccountRepository
     {
-        private readonly AppDbContext _context;
-
-        public AccountRepository(AppDbContext context)
-        {
-            _context = context;
-        }
 
         public async Task<List<Account>> GetAllAccounts()
         {
-            return await _context.Accounts.ToListAsync();
+            return await AccountDAO.Instance.GetAllAccount();
         }
 
         public async Task AddNewAccount(Account account)
         {
-            await _context.Accounts.AddAsync(account);
-            await _context.SaveChangesAsync();
+            await AccountDAO.Instance.AddNewAccount(account);
         }
 
         public async Task AddRangeAccount(List<Account> accounts)
         {
-            await _context.Accounts.AddRangeAsync(accounts);
-            await _context.SaveChangesAsync();
+            await AccountDAO.Instance.AddRangeAccount(accounts);
         }
 
         public Account CheckLogin(string email, string password)
         {
-            return _context.Accounts.FirstOrDefault(l => l.Email == email && l.Password == password);
+            return AccountDAO.Instance.CheckLogin(email, password);
         }
 
         public async Task<Account> UpdateAccount(Account account)
         {
-            _context.Accounts.Update(account);
-            await _context.SaveChangesAsync();
-            return account;
+            return await AccountDAO.Instance.UpdateAccount(account);
         }
 
         public async Task<bool> DeleteAccount(int accountId)
         {
-            var account = await _context.Accounts.FindAsync(accountId);
-            if (account != null)
-            {
-                _context.Accounts.Remove(account);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            return false;
+            return await AccountDAO.Instance.DeleteAccount(accountId);
         }
 
         public async Task<Account> GetAccountById(int accountId)
         {
-            return await _context.Accounts.FindAsync(accountId);
+            return await AccountDAO.Instance.GetAccountById(accountId);
         }
 
-        public int GetRoleIdByAccountId(int accountId)
+        public async Task<int> GetRoleIdByAccountId(int accountId)
         {
-            var accountRole = _context.AccountRoles.FirstOrDefault(ar => ar.AccountId == accountId);
-            if (accountRole != null)
+            return await AccountDAO.Instance.GetRoleIdByAccountId(accountId);
+        }
+        
+        public async Task<Account> RegisterNewAccount(SignUpRequest request)
+        {
+            Account account = new Account()
             {
-                return accountRole.RoleId;
-            }
-            return 0;
+                Email = request.Email,
+                Password = request.Password,
+                LastName = request.FullName,
+                Points = 0,
+                DateOfBirth = DateTime.Now,
+                PhoneNumber = request.PhoneNumber,
+                EmailConfirmed = true,
+                FirstName = "",
+                ProfileImage = "",
+                MiddleName = ""
+            };
+            var accountAdded = await AccountDAO.Instance.AddNewAccount(account);
+            await AccountRoleDAO.Instance.AddNewAccountRole(new AccountRole()
+            {
+                AccountId = accountAdded.Id,
+                RoleId = (int)RoleConstant.CUSTOMER
+            });
+            return accountAdded;
         }
     }
 }

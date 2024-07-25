@@ -25,5 +25,10 @@ namespace JeweleryStorePlatformRepository
         {
             return await AddressDAO.Instance.GetAddressById(id);
         }
+
+        public async Task<int> AddNewAddress(Address address)
+        {
+            return await AddressDAO.Instance.AddNewAddress(address);
+        }
     }
 }

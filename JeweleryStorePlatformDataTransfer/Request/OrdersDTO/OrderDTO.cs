@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JeweleryStorePlatformDataTransfer.Request.OrderItemsDTO;
 
 namespace JeweleryStorePlatformDataTransfer.Request.OrdersDTO
 {
     public class OrderDTO
     {
-        public int Price { get; set; }
-        public int AddressId { get; set; }
+        public int DistrictId { get; set; }
+        public string Address { get; set; }
         //public DateTime FinishedTime { get; set; }
         public string PromotionCode { get; set; }
-        public int Amount { get; set; }
-        public int PaymentMethodId { get; set; }
+        public int Price { get; set; }
+        public List<OrderItemRequest> OrderItems { get; set; }
     }
 }

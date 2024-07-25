@@ -12,5 +12,6 @@ namespace JeweleryStorePlatformRepository.Interface
     {
         Task AddRange(IEnumerable<District> district);
         Task<List<District>> GetAllDistricts();
+        public Task<List<District>> GetAllDistrictsByProvinceId(int provinceId);
     }
 }

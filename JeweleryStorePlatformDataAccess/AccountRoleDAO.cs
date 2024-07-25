@@ -35,28 +35,28 @@ namespace JeweleryStorePlatformDataAccess
             return await _context.AccountRoles.ToListAsync();
         }
 
-        public async Task AddNewAccounRolet(AccountRole accountrole)
+        public async Task AddNewAccountRole(AccountRole accountRole)
         {
-            await _context.AccountRoles.AddAsync(accountrole);
+            await _context.AccountRoles.AddAsync(accountRole);
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddRangeAccountRole(List<AccountRole> accountrole)
+        public async Task AddRangeAccountRole(List<AccountRole> accountRole)
         {
-            await _context.AccountRoles.AddRangeAsync(accountrole);
+            await _context.AccountRoles.AddRangeAsync(accountRole);
             await _context.SaveChangesAsync();
         }
 
-        public Task UpdateAccountRole(AccountRole accountrole)
+        public async Task UpdateAccountRole(AccountRole accountRole)
         {
-            _context.AccountRoles.Attach(accountrole);
-            return _context.SaveChangesAsync();
+            _context.AccountRoles.Attach(accountRole);
+            await _context.SaveChangesAsync();
         }
 
-        public Task RemoveAccountRole(AccountRole accountrole)
+        public async Task RemoveAccountRole(AccountRole accountRole)
         {
-            _context.AccountRoles.Remove(accountrole);
-            return _context.SaveChangesAsync();
+            _context.AccountRoles.Remove(accountRole);
+            await _context.SaveChangesAsync();
         }
         public int GetRoleIdByAccountId(int accountId)
         {

@@ -1,59 +1,88 @@
 ﻿using JeweleryStorePlatformBusinessObject.Account;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace JeweleryStorePlatformDataAccess;
-
-public class AccountDAO
+namespace JeweleryStorePlatformDataAccess
 {
-    private readonly AppDbContext _context;
-    private static AccountDAO instance;
-    
-    public AccountDAO()
+    public class AccountDAO
     {
-        _context = new AppDbContext();
-    }
+        private readonly AppDbContext _context;
+        private static AccountDAO instance;
 
-    public static AccountDAO Instance
-    {
-        get
+        public AccountDAO()
         {
-            if (instance == null)
+            _context = new AppDbContext();
+        }
+
+        public static AccountDAO Instance
+        {
+            get
             {
-                instance = new AccountDAO();
+                if (instance == null)
+                {
+                    instance = new AccountDAO();
+                }
+                return instance;
             }
-            return instance;
         }
-    }
 
-    public async Task<List<Account>> GetAllAccount()
-    {
-        return await _context.Accounts.ToListAsync();
-    }
-
-    public async Task AddNewAccount(Account account)
-    {
-        await _context.Accounts.AddAsync(account);
-        await _context.SaveChangesAsync();
-    }
-
-    public async Task AddRangeAccount(List<Account> accounts)
-    {
-        await _context.Accounts.AddRangeAsync(accounts);
-        await _context.SaveChangesAsync();
-    }
-
-    public Account CheckLogin(string email, string password)
-    {
-        return _context.Accounts.FirstOrDefault(l => l.Email == email && l.Password == password);
-    }
-
-    public int GetRoleIdByAccountId(int accountId)
-    {
-        var accountRole = _context.AccountRoles.FirstOrDefault(ar => ar.AccountId == accountId);
-        if (accountRole != null)
+        public async Task<List<Account>> GetAllAccount()
         {
-            return accountRole.RoleId;
+            return await _context.Accounts.ToListAsync();
         }
-        return 0;
+
+        public async Task<Account> AddNewAccount(Account account)
+        {
+            await _context.Accounts.AddAsync(account);
+            await _context.SaveChangesAsync();
+            return account;
+        }
+
+        public async Task AddRangeAccount(List<Account> accounts)
+        {
+            await _context.Accounts.AddRangeAsync(accounts);
+            await _context.SaveChangesAsync();
+        }
+
+        public Account CheckLogin(string email, string password)
+        {
+            return _context.Accounts.FirstOrDefault(l => l.Email == email && l.Password == password);
+        }
+
+        public async Task<Account> UpdateAccount(Account account)
+        {
+            _context.Accounts.Update(account);
+            await _context.SaveChangesAsync();
+            return account;
+        }
+
+        public async Task<bool> DeleteAccount(int accountId)
+        {
+            var account = await _context.Accounts.FindAsync(accountId);
+            if (account != null)
+            {
+                _context.Accounts.Remove(account);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<Account> GetAccountById(int accountId)
+        {
+            return await _context.Accounts.FindAsync(accountId);
+        }
+
+        public async Task<int> GetRoleIdByAccountId(int accountId)
+        {
+            var accountRole = await _context.AccountRoles
+                .Where(ar => ar.AccountId == accountId)
+                .Select(ar => ar.RoleId)
+                .FirstOrDefaultAsync();
+
+            return accountRole;
+        }
     }
 }

@@ -12,8 +12,11 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using JeweleryStorePlatformBusinessObject.Address;
+using JeweleryStorePlatformBusinessObject.Constant;
 
 namespace JeweleryStorePlatformService
 {
@@ -24,13 +27,19 @@ namespace JeweleryStorePlatformService
         private readonly IAddressRepository _addressRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper _mapper;
-        public OrderService(IOrderRepository orderRepository, ITransactionRepository transactionRepository, IAddressRepository addressRepository, IHttpContextAccessor httpContextAccessor, IMapper mapper)
+        private readonly IOrderItemRepository _orderItemRepository;
+
+        public OrderService(IOrderRepository orderRepository,
+            ITransactionRepository transactionRepository, IAddressRepository addressRepository,
+            IHttpContextAccessor httpContextAccessor, IMapper mapper,
+            IOrderItemRepository orderItemRepository)
         {
             _orderRepository = orderRepository;
             _transactionRepository = transactionRepository;
             _addressRepository = addressRepository;
             _httpContextAccessor = httpContextAccessor;
             _mapper = mapper;
+            _orderItemRepository = orderItemRepository;
         }
         public async Task<List<Order>> GetAll()
         {
@@ -40,65 +49,58 @@ namespace JeweleryStorePlatformService
         {
             return await _orderRepository.GetById(orderId);
         }
-        public async Task<int> Create(OrderDTO request)
+        public async Task<int> Create(ClaimsPrincipal claims, OrderDTO request)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
             try
             {
-                var address = await _addressRepository.GetAddressById(request.AddressId);
-                if (address == null)
+                var identity = claims.Identity as ClaimsIdentity;
+                var accountId = Int32.Parse(identity.FindFirst("AccountId").Value);
+                Address address = new Address()
                 {
-                    throw new InvalidOperationException($"Address with ID {request.AddressId} does not exist.");
-                }
-
-                var user = _httpContextAccessor.HttpContext.User;
-                var accountIdClaim = user.FindFirst("AccountId");
-
-                if (accountIdClaim == null)
-                {
-                    throw new InvalidOperationException("User is not authenticated or AccountId claim is missing.");
-                }
-
-                var accountId = int.Parse(accountIdClaim.Value);
-
-                var order = new Order
-                {
-                    Price = request.Price,
-                    AddressId = request.AddressId,
-                    Status = 1,
-                    StartDateTime = DateTime.UtcNow,
-                    FinishedTime = DateTime.UtcNow,
-                    AccountId = accountId,
-                    PromotionCode = request.PromotionCode,
+                    DistrictId = request.DistrictId,
+                    AddressString = request.Address
                 };
-
-                await _orderRepository.Add(order);
-
-                if (request.Amount > 0 && request.PaymentMethodId > 0)
+                var addressId = await _addressRepository.AddNewAddress(address);
+                Order order = new Order()
                 {
-                    var transaction = new Transaction
+                    Status = (int)OrderStatusConstant.PENDING,
+                    AddressId = addressId,
+                    StartDateTime = DateTime.Now,
+                    Price = request.Price,
+                    AccountId = accountId
+                };
+                var orderId = await _orderRepository.Add(order);
+                Transaction transaction = new Transaction()
+                {
+                    OrderId = orderId,
+                    AccountId = accountId,
+                    Amount = request.Price,
+                    DateTime = DateTime.Now,
+                    PaymentMethodId = (int)TransactionConstant.BANK_TRANSFER,
+                    TransactionStatus = (int)TransactionStatusConstant.PENDING
+                };
+                await _transactionRepository.CreateTransaction(transaction);
+                var orderItems = new List<OrderItem>();
+                foreach (var item in request.OrderItems)
+                {
+                    OrderItem orderItem = new OrderItem()
                     {
-                        TransactionStatus = 1, 
-                        Amount = request.Amount,
-                        OrderId = order.Id,
-                        AccountId = accountId,
-                        PaymentMethodId = request.PaymentMethodId
+                        DiamondId = item.DiamondId,
+                        Size = item.Size,
+                        JeweleryCaseId = item.CaseId,
+                        OrderId = orderId
                     };
-
-                    await _transactionRepository.CreateTransaction(transaction);
+                    orderItems.Add(orderItem);
                 }
-
-                return order.Id;
+                await _orderItemRepository.AddRange(orderItems);
+                return orderId;
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while creating the order", ex);
+                throw new Exception("An error occurred while creating the order", ex.InnerException);
             }
         }
+
         public async Task<int> Delete(int orderId)
         {
             var order = await _orderRepository.GetById(orderId);
@@ -132,6 +134,21 @@ namespace JeweleryStorePlatformService
             order.Status = status;
             await _orderRepository.Update(order);
             return order.Id;
+        }
+
+        public async Task<List<Order>> GetOrderByAccountId(int accountId)
+        {
+            return await _orderRepository.GetOrderByAccountId(accountId);
+        }
+
+        public async Task<Order> GetOrderByIdAndAccountId(int orderId, int accountId)
+        {
+            return await _orderRepository.GetOrderByIdAndAccountId(orderId, accountId);
+        }
+
+        public async Task AcceptedOrder(int orderId)
+        {
+            await _orderRepository.AcceptOrder(orderId);
         }
     }
 }

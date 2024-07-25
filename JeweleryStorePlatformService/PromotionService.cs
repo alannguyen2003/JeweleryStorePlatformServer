@@ -1,4 +1,5 @@
-﻿using JeweleryStorePlatformBusinessObject.Promotion;
+﻿using JeweleryStorePlatformBusinessObject.Diamond;
+using JeweleryStorePlatformBusinessObject.Promotion;
 using JeweleryStorePlatformRepository;
 using JeweleryStorePlatformRepository.Interface;
 using JeweleryStorePlatformService.Interface;
@@ -39,6 +40,10 @@ namespace JeweleryStorePlatformService
         public async Task<Promotion> GetPromotionById(int promotionId)
         {
             return await _promotionRepository.GetPromotionById(promotionId);
+        }
+        public async Task AddRange(List<Promotion> promotions)
+        {
+            await _promotionRepository.AddRange(promotions);
         }
     }
 }

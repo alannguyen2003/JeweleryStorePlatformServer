@@ -1,58 +1,85 @@
-using JeweleryStorePlatformBusinessObject.Jewelery;
-using JeweleryStorePlatformDataAccess;
+﻿using JeweleryStorePlatformBusinessObject.Jewelery;
+using JeweleryStorePlatformRepository.Interface;
 using JeweleryStorePlatformService.Interface;
-using Microsoft.EntityFrameworkCore;
+using JeweleryStorePlatformService.DTOs;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Service.Extensions;
 
 namespace JeweleryStorePlatformService
 {
     public class JeweleryTypeService : IJeweleryTypeService
     {
-        private readonly AppDbContext _context;
+        private readonly IJeweleryTypeRepository _jeweleryTypeRepository;
+        private readonly IMapper _mapper;
 
-        public JeweleryTypeService(AppDbContext context)
+        public JeweleryTypeService(IJeweleryTypeRepository jeweleryTypeRepository, IMapper mapper)
         {
-            _context = context;
+            _jeweleryTypeRepository = jeweleryTypeRepository;
+            _mapper = mapper;
         }
 
-        public async Task<List<JeweleryType>> GetAllJeweleryType()
+        public async Task<PaginatedList<JeweleryTypeDTO>> GetAllJeweleryTypes(GetJeweleryTypesRequest request)
         {
-            return await _context.JeweleryTypes.ToListAsync();
-        }
+            var jeweleryTypes = _jeweleryTypeRepository.GetAllJeweleryTypes();
 
-        public async Task<JeweleryType> GetJeweleryTypeById(int id)
-        {
-            return await _context.JeweleryTypes.FindAsync(id);
-        }
-
-        public async Task<int> AddNewJeweleryType(JeweleryType jeweleryType)
-        {
-            _context.JeweleryTypes.Add(jeweleryType);
-            await _context.SaveChangesAsync();
-            return jeweleryType.Id;
-        }
-
-        public async Task AddRangeJeweleryType(List<JeweleryType> jeweleryTypes)
-        {
-            _context.JeweleryTypes.AddRange(jeweleryTypes);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task UpdateJeweleryType(JeweleryType jeweleryType)
-        {
-            _context.Entry(jeweleryType).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteJeweleryType(int id)
-        {
-            var jeweleryType = await _context.JeweleryTypes.FindAsync(id);
-            if (jeweleryType != null)
+            if (!string.IsNullOrEmpty(request.SearchTerm))
             {
-                _context.JeweleryTypes.Remove(jeweleryType);
-                await _context.SaveChangesAsync();
+                jeweleryTypes = jeweleryTypes.Where(x => x.TypeName.Contains(request.SearchTerm));
             }
+
+            // Ensure that the sortBy parameter is valid
+            var sortBy = string.IsNullOrEmpty(request.SortBy) ? nameof(JeweleryType.Id) : request.SortBy;
+
+            return await jeweleryTypes
+                .ListPaginateWithSortAsync<JeweleryType, JeweleryTypeDTO>(
+                    request.Page,
+                    request.Size,
+                    sortBy,
+                    request.SortOrder,
+                    _mapper.ConfigurationProvider);
+        }
+
+        public async Task<JeweleryTypeDTO> GetJeweleryTypeById(int id)
+        {
+            var jeweleryType = await _jeweleryTypeRepository.GetJeweleryTypeById(id);
+            return _mapper.Map<JeweleryTypeDTO>(jeweleryType);
+        }
+
+        public async Task<JeweleryTypeDTO> CreateJeweleryType(JeweleryType request)
+        {
+            var jeweleryType = _mapper.Map<JeweleryType>(request);
+            var createdJeweleryType = await _jeweleryTypeRepository.CreateJeweleryType(jeweleryType);
+            return _mapper.Map<JeweleryTypeDTO>(createdJeweleryType);
+        }
+
+        public async Task<JeweleryTypeDTO> UpdateJeweleryType(int id, JeweleryTypeUpdateRequest request)
+        {
+            var jeweleryType = await _jeweleryTypeRepository.GetJeweleryTypeById(id);
+            if (jeweleryType == null)
+            {
+                return null; // Hoặc ném một ngoại lệ tùy theo cách xử lý của bạn
+            }
+
+            // Cập nhật các thuộc tính của jeweleryType từ request
+            jeweleryType.TypeName = request.TypeName;
+            // Cập nhật các thuộc tính khác nếu cần
+
+            await _jeweleryTypeRepository.UpdateJeweleryType(jeweleryType);
+
+            return _mapper.Map<JeweleryTypeDTO>(jeweleryType);
+        }
+
+        public async Task<bool> DeleteJeweleryType(int id)
+        {
+            return await _jeweleryTypeRepository.DeleteJeweleryType(id);
+        }
+
+        public async Task AddRangeJeweleryTypes(List<JeweleryType> jeweleryTypes)
+        {
+            await _jeweleryTypeRepository.AddRangeJeweleryTypes(jeweleryTypes);
         }
     }
 }

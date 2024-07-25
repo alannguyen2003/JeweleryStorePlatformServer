@@ -14,5 +14,6 @@ namespace JeweleryStorePlatformRepository.Interface
         Task Add(OrderItem orderItem);
         Task AddRange(List<OrderItem> orderItems);
         Task<int> Delete(int orderItemId);
+        Task<OrderItem> Update(OrderItem orderitem);
     }
 }

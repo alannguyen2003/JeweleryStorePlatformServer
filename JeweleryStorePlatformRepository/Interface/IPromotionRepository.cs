@@ -1,8 +1,6 @@
 ﻿using JeweleryStorePlatformBusinessObject.Promotion;
-using System;
+using JeweleryStorePlatformBusinessObject.Transaction;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace JeweleryStorePlatformRepository.Interface
@@ -14,5 +12,6 @@ namespace JeweleryStorePlatformRepository.Interface
         Task<Promotion> UpdatePromotion(Promotion promotion);
         Task<bool> DeletePromotion(int promotionId);
         Task<Promotion> GetPromotionById(int promotionId);
+        Task AddRange(IEnumerable<Promotion> promotions);
     }
 }

@@ -34,7 +34,6 @@ namespace JeweleryStorePlatformDataAccess
         public async Task<List<Order>> GetAllOrder()
         {
             return await _context.Orders
-                .Include(o => o.Account)
                 .Include(o => o.Address)
                 .ToListAsync();
         }
@@ -42,10 +41,12 @@ namespace JeweleryStorePlatformDataAccess
         {
             return await _context.Orders.FindAsync(orderId);
         }
-        public async Task Add(Order order)
+        public async Task<int> Add(Order order)
         {
+            _context.ChangeTracker.Clear();
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
+            return order.Id;
         }
         public async Task AddRange(List<Order> order)
         {
@@ -63,6 +64,7 @@ namespace JeweleryStorePlatformDataAccess
             _context.Orders.Remove(order);
             return await _context.SaveChangesAsync();
         }
+
         public async Task<Order> Update(Order order)
         {
             var existingOrder = await _context.Set<Order>().FindAsync(order.Id);
@@ -74,6 +76,18 @@ namespace JeweleryStorePlatformDataAccess
             _context.Entry(existingOrder).CurrentValues.SetValues(order);
             await _context.SaveChangesAsync();
             return existingOrder;
+        }
+
+        public async Task<List<Order>> GetOrderByAccountId(int accountId)
+        {
+            return await _context.Orders.Where(o => o.AccountId == accountId).ToListAsync();
+        }
+
+        public async Task<Order> GetOrderByIdAndAccountId(int orderId, int accountId)
+        {
+            return await _context.Orders
+                .Where(o => o.Id == orderId && o.AccountId == accountId)
+                .FirstOrDefaultAsync();
         }
     }
 }

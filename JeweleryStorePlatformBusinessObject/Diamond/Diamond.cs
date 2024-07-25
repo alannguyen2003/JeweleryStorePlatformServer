@@ -7,7 +7,7 @@ public class Diamond : BaseEntity
 {
     public int Price { get; set; }
     public string CutType { get; set; }
-    public string CaratType { get; set; }
+    public float CaratType { get; set; }
     public string ColorType { get; set; }
     public string ClarityType { get; set; }
     public string DiamondOrigin { get; set; }
