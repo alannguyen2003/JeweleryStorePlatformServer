@@ -171,7 +171,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Roles", x => x.Id);
                 });
-            
+
             migrationBuilder.CreateTable(
                 name: "Districts",
                 columns: table => new
@@ -261,6 +261,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CaseName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PreviewImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
                     ColorId = table.Column<int>(type: "int", nullable: false),
                     MaterialId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -583,7 +584,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "AccountRoles");
-
+            
             migrationBuilder.DropTable(
                 name: "GIAReports");
 

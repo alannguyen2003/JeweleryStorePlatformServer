@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JeweleryStorePlatformDataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240725182809_Initial")]
+    [Migration("20240725192251_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -391,6 +391,9 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     b.Property<string>("PreviewImage")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
