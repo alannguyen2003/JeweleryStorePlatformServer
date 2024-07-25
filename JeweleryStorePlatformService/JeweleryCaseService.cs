@@ -23,7 +23,7 @@ namespace JeweleryStorePlatformService
             return await _jewelerycaseRepository.GetAll();
         }
 
-        public async Task<JeweleryCase> GetById(int jeweleryId)
+        public async Task<JeweleryCase?> GetById(int jeweleryId)
         {
             return await _jewelerycaseRepository.GetById(jeweleryId);
         }

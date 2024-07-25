@@ -17,7 +17,7 @@ namespace JeweleryStorePlatformRepository
             return await JeweleryCaseDAO.Instance.GetAll();
         }
 
-        public async Task<JeweleryCase> GetById(int jeweleryId)
+        public async Task<JeweleryCase?> GetById(int jeweleryId)
         {
             return await JeweleryCaseDAO.Instance.GetById(jeweleryId);
         }
