@@ -1,5 +1,7 @@
 ﻿  using JeweleryStorePlatformBusinessObject.Account;
+using JeweleryStorePlatformBusinessObject.Constant;
 using JeweleryStorePlatformDataAccess;
+using JeweleryStorePlatformDataTransfer.Request.AccountDTO;
 using JeweleryStorePlatformRepository.Interface;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -47,6 +49,29 @@ namespace JeweleryStorePlatformRepository
         public async Task<int> GetRoleIdByAccountId(int accountId)
         {
             return await AccountDAO.Instance.GetRoleIdByAccountId(accountId);
+        }
+        public async Task<Account> RegisterNewAccount(SignUpRequest request)
+        {
+            Account account = new Account()
+            {
+                Email = request.Email,
+                Password = request.Password,
+                LastName = request.FullName,
+                Points = 0,
+                DateOfBirth = DateTime.Now,
+                PhoneNumber = request.PhoneNumber,
+                EmailConfirmed = true,
+                FirstName = "",
+                ProfileImage = "",
+                MiddleName = ""
+            };
+            var accountAdded = await AccountDAO.Instance.AddNewAccount(account);
+            await AccountRoleDAO.Instance.AddNewAccountRole(new AccountRole()
+            {
+                AccountId = accountAdded.Id,
+                RoleId = (int)RoleConstant.CUSTOMER
+            });
+            return accountAdded;
         }
     }
 }
