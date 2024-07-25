@@ -1,6 +1,7 @@
 ﻿using JeweleryStorePlatformBusinessObject.Order;
 using JeweleryStorePlatformDataAccess;
 using JeweleryStorePlatformDataTransfer.Request.OrderItemsDTO;
+using JeweleryStorePlatformRepository;
 using JeweleryStorePlatformRepository.Interface;
 using JeweleryStorePlatformService.Interface;
 using Microsoft.VisualBasic;
@@ -102,6 +103,17 @@ namespace JeweleryStorePlatformService
         public async Task<int> Delete(int orderItemId)
         {
             return await _orderItemRepository.Delete(orderItemId);
+        }
+        public async Task<int> SetDesignFee(int orderItemId, int designfee)
+        {
+            var orderitem = await _orderItemRepository.GetById(orderItemId);
+            if (orderitem == null)
+            {
+                throw new InvalidOperationException($"Order with ID {orderItemId} does not exist.");
+            }
+            orderitem.DesignFee = designfee;
+            await _orderItemRepository.Update(orderitem);
+            return orderitem.Id;
         }
     }
 }

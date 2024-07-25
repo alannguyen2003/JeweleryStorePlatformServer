@@ -15,5 +15,6 @@ namespace JeweleryStorePlatformService.Interface
         Task<int> Create(OrderItemDTO request);
         Task AddRange(List<OrderItem> orderItems);
         Task<int> Delete(int orderItemId);
+        Task<int> SetDesignFee(int orderItemId, int designfee);
     }
 }

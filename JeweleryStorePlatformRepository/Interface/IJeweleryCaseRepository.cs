@@ -11,7 +11,7 @@ namespace JeweleryStorePlatformRepository.Interface
     public interface IJeweleryCaseRepository
     {
         Task<List<JeweleryCase>> GetAll();
-        Task<JeweleryCase> GetById(int jeweleryId);
+        Task<JeweleryCase?> GetById(int jeweleryId);
         Task Add(JeweleryCase jewelery);
         Task AddRange(List<JeweleryCase> jewelery);
         Task<int> Update(JeweleryCase jewelery);

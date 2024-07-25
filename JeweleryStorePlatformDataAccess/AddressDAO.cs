@@ -1,4 +1,5 @@
 ﻿using JeweleryStorePlatformBusinessObject.Address;
+using JeweleryStorePlatformBusinessObject.Diamond;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,13 @@ namespace JeweleryStorePlatformDataAccess
                 return instance;
             }
         }
+
+        public async Task<int> AddNewAddress(Address address)
+        {
+            await _context.Addresses.AddAsync(address);
+            await _context.SaveChangesAsync();
+            return address.Id;
+        }
         public async Task AddRange(IEnumerable<Address> addresses)
         {
             await _context.Addresses.AddRangeAsync(addresses);
@@ -37,6 +45,11 @@ namespace JeweleryStorePlatformDataAccess
         public async Task<List<Address>> GetAllAddresses()
         {
             return await _context.Addresses.ToListAsync();
+        }
+        public async Task<Address> GetAddressById(int id)
+        {
+            return await _context.Set<Address>().FindAsync(id);
+
         }
     }
 }

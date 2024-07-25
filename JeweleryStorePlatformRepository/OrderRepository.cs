@@ -1,4 +1,5 @@
-﻿using JeweleryStorePlatformBusinessObject.Order;
+﻿using JeweleryStorePlatformBusinessObject.Diamond;
+using JeweleryStorePlatformBusinessObject.Order;
 using JeweleryStorePlatformDataAccess;
 using JeweleryStorePlatformRepository.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -20,14 +21,20 @@ namespace JeweleryStorePlatformRepository
         {
             return await OrderDAO.Instance.GetById(orderId);
         }
-        public async Task Add(Order order)
+        public async Task<int> Add(Order order)
         {
-            await OrderDAO.Instance.Add(order);
+            return await OrderDAO.Instance.Add(order);
         }
 
         public async Task AddRange(List<Order> order)
         {
             await OrderDAO.Instance.AddRange(order);
+        }
+
+        public async Task<Order> Update(Order order)
+        {
+            return await OrderDAO.Instance.Update(order);
+
         }
 
         public async Task<int> Delete(int orderId)
@@ -44,5 +51,6 @@ namespace JeweleryStorePlatformRepository
         {
             return await OrderDAO.Instance.GetOrderByIdAndAccountId(orderId, accountId);
         }
+
     }
 }

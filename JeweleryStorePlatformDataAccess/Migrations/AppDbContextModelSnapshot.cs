@@ -187,10 +187,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
             modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Address.City", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CityName")
                         .IsRequired()
@@ -204,10 +201,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
             modelBuilder.Entity("JeweleryStorePlatformBusinessObject.Address.District", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CityId")
                         .HasColumnType("int");
@@ -274,9 +268,8 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CaratType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<float>("CaratType")
+                        .HasColumnType("real");
 
                     b.Property<string>("ClarityType")
                         .IsRequired()
@@ -392,6 +385,10 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     b.Property<int>("MaterialId")
                         .HasColumnType("int");
 
+                    b.Property<string>("PreviewImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ColorId");
@@ -498,6 +495,9 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Size")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

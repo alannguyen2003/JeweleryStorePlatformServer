@@ -71,5 +71,17 @@ namespace JeweleryStorePlatformDataAccess
             _context.OrderItems.Remove(orderItem);
             return await _context.SaveChangesAsync(); // This will return the number of affected rows
         }
+        public async Task<OrderItem> Update(OrderItem orderitem)
+        {
+            var existingOrderitem = await _context.Set<OrderItem>().FindAsync(orderitem.Id);
+            if (existingOrderitem == null)
+            {
+                return null;
+            }
+
+            _context.Entry(existingOrderitem).CurrentValues.SetValues(orderitem);
+            await _context.SaveChangesAsync();
+            return existingOrderitem;
+        }
     }
 }

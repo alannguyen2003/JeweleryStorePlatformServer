@@ -48,8 +48,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 name: "Cities",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     CityName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -78,7 +77,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Price = table.Column<int>(type: "int", nullable: false),
                     CutType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CaratType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CaratType = table.Column<float>(type: "real", nullable: false),
                     ColorType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ClarityType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DiamondOrigin = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -177,8 +176,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 name: "Districts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     DistrictName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CityId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -262,6 +260,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CaseName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PreviewImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ColorId = table.Column<int>(type: "int", nullable: false),
                     MaterialId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -331,7 +330,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-            
+
             migrationBuilder.CreateTable(
                 name: "Addresses",
                 columns: table => new
@@ -362,9 +361,9 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     AddressId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     StartDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FinishedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FinishedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AccountId = table.Column<int>(type: "int", nullable: false),
-                    PromotionCode = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PromotionCode = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -389,12 +388,13 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    JeweleryCaseId = table.Column<int>(type: "int", nullable: false),
-                    JeweleryId = table.Column<int>(type: "int", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    DiamondId = table.Column<int>(type: "int", nullable: false),
-                    JeweleryDesignId = table.Column<int>(type: "int", nullable: false),
-                    DesignFee = table.Column<int>(type: "int", nullable: false)
+                    JeweleryCaseId = table.Column<int>(type: "int", nullable: true),
+                    JeweleryId = table.Column<int>(type: "int", nullable: true),
+                    OrderId = table.Column<int>(type: "int", nullable: true),
+                    DiamondId = table.Column<int>(type: "int", nullable: true),
+                    JeweleryDesignId = table.Column<int>(type: "int", nullable: true),
+                    DesignFee = table.Column<int>(type: "int", nullable: true),
+                    Size = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

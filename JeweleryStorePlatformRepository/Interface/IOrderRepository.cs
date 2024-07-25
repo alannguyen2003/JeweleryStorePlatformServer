@@ -1,4 +1,5 @@
-﻿using JeweleryStorePlatformBusinessObject.Order;
+﻿using JeweleryStorePlatformBusinessObject.Diamond;
+using JeweleryStorePlatformBusinessObject.Order;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace JeweleryStorePlatformRepository.Interface
     {
         Task<List<Order>> GetAll();
         Task<Order> GetById(int orderId);
-        Task Add(Order order);
+        Task<int> Add(Order order);
         Task AddRange(List<Order> order);
+        Task<Order> Update(Order order);
         Task<int> Delete(int orderId);
         Task<List<Order>> GetOrderByAccountId(int accountId);
         Task<Order> GetOrderByIdAndAccountId(int orderId, int accountId);
+
     }
 }

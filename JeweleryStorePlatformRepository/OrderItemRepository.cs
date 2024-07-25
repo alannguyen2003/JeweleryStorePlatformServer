@@ -37,5 +37,9 @@ namespace JeweleryStorePlatformRepository
         {
             return await OrderItemDAO.Instance.Delete(orderItemId);
         }
+        public async Task<OrderItem> Update(OrderItem orderitem)
+        {
+            return await OrderItemDAO.Instance.Update(orderitem);
+        }
     }
 }
