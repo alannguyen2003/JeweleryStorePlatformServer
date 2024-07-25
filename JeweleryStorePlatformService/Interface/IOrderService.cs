@@ -14,5 +14,6 @@ namespace JeweleryStorePlatformService.Interface
         Task<Order> GetById(int orderId);
         Task<int> Create(OrderDTO request);
         Task<int> Delete(int orderId);
+        Task<int> ChangStatus(int orderId, int status);
     }
 }

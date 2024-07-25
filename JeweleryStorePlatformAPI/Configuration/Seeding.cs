@@ -3,6 +3,7 @@ using JeweleryStorePlatformBusinessObject.Account;
 using JeweleryStorePlatformBusinessObject.Constant;
 using JeweleryStorePlatformBusinessObject.Diamond;
 using JeweleryStorePlatformBusinessObject.Jewelery;
+using JeweleryStorePlatformBusinessObject.Transaction;
 using JeweleryStorePlatformRepository.Interface;
 using JeweleryStorePlatformService;
 using JeweleryStorePlatformService.Interface;
@@ -23,10 +24,11 @@ public class Seeding
     private readonly IJeweleryCaseService _jeweleryCaseService;
     private readonly IColorService _colorService;
     private readonly IMaterialService _materialService;
+    private readonly IPaymentMethodRepository _paymentMethodRepository;
 
     public Seeding(IAccountService accountService, IJeweleryTypeService jeweleryTypeService, 
         IRoleService roleService, IDataService dataService, IDiamondService diamondService, IGIAReportService gIAReportService, IProvinceService provinceService, IJeweleryCaseService jeweleryCaseService,
-        IColorService colorService, IMaterialService materialService)
+        IColorService colorService, IMaterialService materialService, IPaymentMethodRepository paymentMethodRepository)
     {
         _accountService = accountService;
         _jeweleryTypeService = jeweleryTypeService;
@@ -38,6 +40,7 @@ public class Seeding
         _jeweleryCaseService = jeweleryCaseService;
         _colorService = colorService;
         _materialService = materialService;
+        _paymentMethodRepository = paymentMethodRepository;
     }
 
     public async Task MigrationAsync()
@@ -471,6 +474,24 @@ public class Seeding
         };
 
         await _jeweleryCaseService.AddRange(jeweleryCasesToAdd);
+    }
+    public async Task SeedingPaymentMethod()
+    {
+        var paymentmedthod = await _paymentMethodRepository.GetAllPaymentMethods();
+        if (paymentmedthod.Any())
+        {
+            return;
+        }
+
+        paymentmedthod = new List<PaymentMethod>()
+    {
+        new PaymentMethod()
+        {
+            PaymentMethodName = "PayOs"
+        },
+        
+    };
+        await _paymentMethodRepository.AddRange(paymentmedthod);
     }
 
 }

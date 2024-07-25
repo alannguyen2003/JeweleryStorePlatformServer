@@ -10,10 +10,9 @@ namespace JeweleryStorePlatformDataTransfer.Request.OrdersDTO
     {
         public int Price { get; set; }
         public int AddressId { get; set; }
-        public int Status { get; set; }
-        public DateTime StartDateTime { get; set; }
-        public DateTime FinishedTime { get; set; }
-        public int AccountId { get; set; }
+        //public DateTime FinishedTime { get; set; }
         public string PromotionCode { get; set; }
+        public int Amount { get; set; }
+        public int PaymentMethodId { get; set; }
     }
 }

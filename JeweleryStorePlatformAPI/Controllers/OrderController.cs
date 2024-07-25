@@ -61,5 +61,18 @@ namespace JeweleryStorePlatformAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpPut("ChangStatus{orderId}")]
+        public async Task<ActionResult<int>> ChangStatus(int orderId, int status)
+        {
+            try
+            {
+                var result = await _orderService.ChangStatus(orderId, status);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }

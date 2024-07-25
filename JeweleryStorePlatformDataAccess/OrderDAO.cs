@@ -1,4 +1,5 @@
-﻿using JeweleryStorePlatformBusinessObject.Order;
+﻿using JeweleryStorePlatformBusinessObject.Diamond;
+using JeweleryStorePlatformBusinessObject.Order;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -61,6 +62,18 @@ namespace JeweleryStorePlatformDataAccess
 
             _context.Orders.Remove(order);
             return await _context.SaveChangesAsync();
+        }
+        public async Task<Order> Update(Order order)
+        {
+            var existingOrder = await _context.Set<Order>().FindAsync(order.Id);
+            if (existingOrder == null)
+            {
+                return null;
+            }
+
+            _context.Entry(existingOrder).CurrentValues.SetValues(order);
+            await _context.SaveChangesAsync();
+            return existingOrder;
         }
     }
 }
