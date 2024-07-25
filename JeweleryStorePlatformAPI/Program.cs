@@ -86,6 +86,7 @@ try
     await context.SeedingColor();
     await context.SeedingJeweleryCases();
     await context.SeedingPaymentMethod();
+    await context.SeedingPromotion();
 }
 catch (Exception ex)
 {

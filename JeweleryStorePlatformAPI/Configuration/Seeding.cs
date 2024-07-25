@@ -3,6 +3,7 @@ using JeweleryStorePlatformBusinessObject.Account;
 using JeweleryStorePlatformBusinessObject.Constant;
 using JeweleryStorePlatformBusinessObject.Diamond;
 using JeweleryStorePlatformBusinessObject.Jewelery;
+using JeweleryStorePlatformBusinessObject.Promotion;
 using JeweleryStorePlatformBusinessObject.Transaction;
 using JeweleryStorePlatformRepository.Interface;
 using JeweleryStorePlatformService;
@@ -26,13 +27,14 @@ public class Seeding
     private readonly IMaterialService _materialService;
     private readonly IPaymentMethodRepository _paymentMethodRepository;
     private readonly IAccountRoleService _accountRoleService;
+    private readonly IPromotionService _promotionService;
 
-    public Seeding(IAccountService accountService, IJeweleryTypeService jeweleryTypeService, 
-        IRoleService roleService, IDataService dataService, IDiamondService diamondService, 
-        IGIAReportService gIAReportService, 
+    public Seeding(IAccountService accountService, IJeweleryTypeService jeweleryTypeService,
+        IRoleService roleService, IDataService dataService, IDiamondService diamondService,
+        IGIAReportService gIAReportService,
         IProvinceService provinceService, IJeweleryCaseService jeweleryCaseService,
-        IColorService colorService, IMaterialService materialService, 
-        IPaymentMethodRepository paymentMethodRepository, IAccountRoleService accountRoleService)
+        IColorService colorService, IMaterialService materialService,
+        IPaymentMethodRepository paymentMethodRepository, IAccountRoleService accountRoleService, IPromotionService promotionService)
     {
         _accountService = accountService;
         _jeweleryTypeService = jeweleryTypeService;
@@ -46,13 +48,14 @@ public class Seeding
         _materialService = materialService;
         _paymentMethodRepository = paymentMethodRepository;
         _accountRoleService = accountRoleService;
+        _promotionService = promotionService;
     }
 
     public async Task MigrationAsync()
     {
         await _dataService.MigrationAsync();
     }
-    
+
     public async Task AccountSeeding()
     {
         var account = await _accountService.GetAllAccounts();
@@ -329,11 +332,11 @@ public class Seeding
     {
         var request = new GetDiamondsRequest
         {
-            Page = 1, 
-            Size = 1, 
-            SearchTerm = null, 
-            SortBy = "Id", 
-            SortOrder = "asc" 
+            Page = 1,
+            Size = 1,
+            SearchTerm = null,
+            SortBy = "Id",
+            SortOrder = "asc"
         };
         var diamondsResponse = await _diamondService.GetAllDiamonds(request);
         if (diamondsResponse.Items.Any())
@@ -351,7 +354,7 @@ public class Seeding
             ClarityType = ClarityTypeConstant.IF,
             DiamondOrigin = DiamondOriginConstant.NATURAL,
             PreviewImage = "https://product.hstatic.net/1000381168/product/upload_17785375e47c4a1089ba2cbf703f7e75_1024x1024.jpg",
-            IsMainDiamond = true 
+            IsMainDiamond = true
         },
         new Diamond
         {
@@ -362,7 +365,7 @@ public class Seeding
             ClarityType = ClarityTypeConstant.VVS1,
             DiamondOrigin = DiamondOriginConstant.NATURAL,
             PreviewImage = "https://product.hstatic.net/1000381168/product/upload_17785375e47c4a1089ba2cbf703f7e75_1024x1024.jpg",
-            IsMainDiamond = false 
+            IsMainDiamond = false
         },
         new Diamond
         {
@@ -388,7 +391,7 @@ public class Seeding
         }
     };
 
-         await _diamondService.AddRangeDiamonds(sampleDiamonds);
+        await _diamondService.AddRangeDiamonds(sampleDiamonds);
 
         var addedDiamonds = await _diamondService.GetAllDiamonds(new GetDiamondsRequest
         {
@@ -541,9 +544,57 @@ public class Seeding
         {
             PaymentMethodName = "PayOs"
         },
-        
+
     };
         await _paymentMethodRepository.AddRange(paymentmedthod);
     }
+    public async Task SeedingPromotion()
+    {
+        var promotions = await _promotionService.GetAllPromotions();
+        if (promotions.Any())
+        {
+            return;
+        }
 
+        promotions = new List<Promotion>
+    {
+        new Promotion
+        {
+            PromotionName = "Summer Sale",
+            PromotionContent = "Get 20% off on all diamond jewelry.",
+            Amount = 10000,
+            Percentage = 20
+        },
+        new Promotion
+        {
+            PromotionName = "Winter Discount",
+            PromotionContent = "Enjoy a 15% discount on diamond rings.",
+            Amount = 15000,
+            Percentage = 15
+        },
+        new Promotion
+        {
+            PromotionName = "Black Friday",
+            PromotionContent = "Exclusive 25% off on diamond necklaces.",
+            Amount = 20000,
+            Percentage = 25
+        },
+        new Promotion
+        {
+            PromotionName = "New Year Offer",
+            PromotionContent = "Celebrate with a 30% discount on all diamond earrings.",
+            Amount = 25000,
+            Percentage = 30
+        },
+        new Promotion
+        {
+            PromotionName = "Valentine's Day Special",
+            PromotionContent = "Get 10% off on diamond heart-shaped pendants.",
+            Amount = 5000,
+            Percentage = 10
+        }
+    };
+
+        await _promotionService.AddRange(promotions);
+    }
 }

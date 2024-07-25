@@ -14,5 +14,6 @@ namespace JeweleryStorePlatformService.Interface
         Task<Promotion> UpdatePromotion(Promotion promotion);
         Task<bool> DeletePromotion(int promotionId);
         Task<Promotion> GetPromotionById(int promotionId);
+        Task AddRange(List<Promotion> promotions);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using JeweleryStorePlatformBusinessObject.Promotion;
+using JeweleryStorePlatformBusinessObject.Transaction;
 using JeweleryStorePlatformDataAccess;
 using JeweleryStorePlatformRepository.Interface;
 using System.Collections.Generic;
@@ -31,6 +32,11 @@ namespace JeweleryStorePlatformRepository
         public async Task<Promotion> GetPromotionById(int promotionId)
         {
             return await PromotionDAO.Instance.GetPromotionById(promotionId);
+        }
+        public async Task AddRange(IEnumerable<Promotion> promotions)
+        {
+            await PromotionDAO.Instance.AddRange(promotions);
+
         }
     }
 }
