@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using JeweleryStorePlatformDataAccess;
+using JeweleryStorePlatformDataTransfer.Request.AccountDTO;
 
 namespace JeweleryStorePlatformService
 {
@@ -90,6 +91,10 @@ namespace JeweleryStorePlatformService
         public async Task<int> GetRoleIdByAccountId(int accountId)
         {
             return await _accountRepository.GetRoleIdByAccountId(accountId);
+        }
+        public async Task<Account> RegisterNewUser(SignUpRequest request)
+        {
+            return await _accountRepository.RegisterNewAccount(request);
         }
     }
 }
