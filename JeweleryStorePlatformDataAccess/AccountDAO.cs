@@ -33,10 +33,11 @@ namespace JeweleryStorePlatformDataAccess
             return await _context.Accounts.ToListAsync();
         }
 
-        public async Task AddNewAccount(Account account)
+        public async Task<Account> AddNewAccount(Account account)
         {
             await _context.Accounts.AddAsync(account);
             await _context.SaveChangesAsync();
+            return account;
         }
 
         public async Task AddRangeAccount(List<Account> accounts)

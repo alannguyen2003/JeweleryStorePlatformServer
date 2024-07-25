@@ -1,6 +1,7 @@
 ﻿using JeweleryStorePlatformBusinessObject.Order;
 using JeweleryStorePlatformDataTransfer.Request.OrderItemsDTO;
 using JeweleryStorePlatformDataTransfer.Request.OrdersDTO;
+using JeweleryStorePlatformDataTransfer.Responses;
 using JeweleryStorePlatformService;
 using JeweleryStorePlatformService.Interface;
 using Microsoft.AspNetCore.Authorization;
@@ -73,7 +74,12 @@ public class OrderController : ControllerBase
             if (orderId == 0)
                 return BadRequest();
             // Return a URI with the ID of the created jewelery
-            return CreatedAtAction(nameof(GetAll), new { orderId = orderId }, null);
+            return Ok(new Result<int>()
+            {
+                Succeeded = true,
+                Message = "Create new order successful!",
+                Data = orderId
+            });
         }
         catch (Exception ex)
         {
@@ -106,5 +112,12 @@ public class OrderController : ControllerBase
         {
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
+    }
+
+    [Authorize]
+    [HttpGet("accepted-order")]
+    public async Task<IActionResult> AcceptedOrder(int orderId)
+    {
+        return Ok();
     }
 }
