@@ -497,35 +497,40 @@ public class Seeding
                 CaseName = "Vỏ nhẫn kim cương",
                 PreviewImage = "https://locphuc.com.vn/Content/Images/082022/K1B.DMR0035R-WG/vo-nhan-nam-kim-cuong-K1B-DMR0035R-WG-g1.jpg",
                 ColorId = colorIds[0],
-                MaterialId = materialIds[1]
+                MaterialId = materialIds[1],
+                Price = 12530000
             },
             new JeweleryCase()
             {
                 CaseName = "Vỏ nhẫn kim cương",
                 PreviewImage = "https://locphuc.com.vn/Content/Images/112022/DMR0114ARM.WG22A/DMR0114ARM-WG22A-hover.jpg",
                 ColorId = colorIds[1],
-                MaterialId = materialIds[2]
+                MaterialId = materialIds[2],
+                Price = 7450000
             },
             new JeweleryCase()
             {
                 CaseName = "Vỏ nhẫn kim cương",
                 PreviewImage = "https://locphuc.com.vn/Content/Images/042024/K1B.DSR0175BR/K1B-DSR0175BR-WG-W-hover.jpg",
                 ColorId = colorIds[2],
-                MaterialId = materialIds[0]
+                MaterialId = materialIds[0],
+                Price = 15250000
             },
             new JeweleryCase()
             {
                 CaseName = "Vỏ nhẫn kim cương",
                 PreviewImage = "https://locphuc.com.vn/Content/Images/042023/DSR0896BRW.WG01A/DSR0896BRW-WG01A-hover.jpg",
                 ColorId = colorIds[0],
-                MaterialId = materialIds[2]
+                MaterialId = materialIds[2],
+                Price = 13750000
             },
             new JeweleryCase()
             {
                 CaseName = "Vỏ nhẫn kim cương",
                 PreviewImage = "https://locphuc.com.vn/Content/Images/042023/DSR1046ARW.WG01A/DSR1046ARW-WG01A-hover.jpg",
                 ColorId = colorIds[2],
-                MaterialId = materialIds[1]
+                MaterialId = materialIds[1],
+                Price = 10000000
             }
         };
         await _jeweleryCaseService.AddRange(jeweleryCasesToAdd);

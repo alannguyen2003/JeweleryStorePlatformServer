@@ -9,6 +9,7 @@ public class Transaction : BaseEntity
 {
     public int TransactionStatus { get; set; }
     public int Amount { get; set; }
+    public DateTime DateTime { get; set; }
     [ForeignKey("OrderId")]
     public int OrderId { get; set; }
     public virtual Order.Order Order { get; set; }

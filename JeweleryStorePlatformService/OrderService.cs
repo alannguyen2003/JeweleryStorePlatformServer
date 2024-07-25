@@ -75,6 +75,7 @@ namespace JeweleryStorePlatformService
                     OrderId = orderId,
                     AccountId = accountId,
                     Amount = request.Price,
+                    DateTime = DateTime.Now,
                     PaymentMethodId = (int)TransactionConstant.BANK_TRANSFER,
                     TransactionStatus = (int)TransactionStatusConstant.PENDING
                 };
@@ -143,6 +144,11 @@ namespace JeweleryStorePlatformService
         public async Task<Order> GetOrderByIdAndAccountId(int orderId, int accountId)
         {
             return await _orderRepository.GetOrderByIdAndAccountId(orderId, accountId);
+        }
+
+        public async Task AcceptedOrder(int orderId)
+        {
+            await _orderRepository.AcceptOrder(orderId);
         }
     }
 }
