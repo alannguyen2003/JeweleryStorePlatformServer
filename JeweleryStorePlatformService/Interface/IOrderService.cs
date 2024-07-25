@@ -19,5 +19,6 @@ namespace JeweleryStorePlatformService.Interface
         Task<int> ChangStatus(int orderId, int status);
         Task<List<Order>> GetOrderByAccountId(int accountId);
         Task<Order> GetOrderByIdAndAccountId(int orderId, int accountId);
+        public Task AcceptedOrder(int orderId);
     }
 }
