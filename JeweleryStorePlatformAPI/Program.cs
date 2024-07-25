@@ -79,6 +79,7 @@ try
     await context.AccountSeeding();
     await context.SeedingJeweleryTypes();
     await context.SeedingRole();
+    await context.SeedingAccountRole();
     await context.SeedingDiamond();
     await context.SeedingAddress();
     await context.SeedingMaterial();

@@ -238,6 +238,7 @@ public class Seeding
                 RoleId = 1
             },
         };
+        await _accountRoleService.AddRangeAccountRole(accountRoles);
     }
 
     public async Task SeedingJeweleryTypes()
