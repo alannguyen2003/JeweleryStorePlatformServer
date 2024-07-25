@@ -61,5 +61,18 @@ namespace JeweleryStorePlatformAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpPut("SetDesignFee{orderitemId}")]
+        public async Task<ActionResult<int>> SetDesignFee(int orderitemId, int designfee)
+        {
+            try
+            {
+                var result = await _orderItemService.SetDesignFee(orderitemId, designfee);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }
