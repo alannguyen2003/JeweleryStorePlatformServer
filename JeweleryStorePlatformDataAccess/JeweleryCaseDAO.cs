@@ -36,9 +36,9 @@ namespace JeweleryStorePlatformDataAccess
             }
         }
 
-        public async Task<JeweleryCase> GetById(int jewelerycaseid)
+        public async Task<JeweleryCase?> GetById(int jeweleryCaseId)
         {
-            return await _context.JeweleryCases.FindAsync(jewelerycaseid);
+            return await _context.JeweleryCases.FindAsync(jeweleryCaseId);
         }
 
         public async Task Add(JeweleryCase jewelry)

@@ -31,12 +31,12 @@ namespace JeweleryStorePlatformAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpGet("{jewelerycaseId}")]
-        public async Task<ActionResult<JeweleryCase>> GetById(int jeweleryId)
+        [HttpGet("{jeweleryCaseId}")]
+        public async Task<ActionResult<JeweleryCase>> GetById(int jeweleryCaseId)
         {
             try
             {
-                var jewelery = await _jeweleryCaseService.GetById(jeweleryId);
+                var jewelery = await _jeweleryCaseService.GetById(jeweleryCaseId);
                 if (jewelery == null)
                 {
                     return BadRequest("Cannot find jewelery case");

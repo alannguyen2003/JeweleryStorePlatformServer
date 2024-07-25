@@ -18,6 +18,13 @@ public static class DependencyInjection
         services.AddScoped<IOrderItemRepository, OrderItemRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<IJeweleryCaseRepository, JeweleryCaseRepository>();
+        services.AddTransient<ICityRepository, CityRepository>();
+        services.AddTransient<IDistrictRepository, DistrictRepository>();
+        services.AddTransient<IAddressRepository, AddressRepository>();
+        services.AddTransient<IColorRepository, ColorRepository>();
+        services.AddTransient<IMaterialRepository, MaterialRepository>();
+        services.AddTransient<ITransactionRepository, TransactionRepository>();
+        services.AddTransient<IPaymentMethodRepository, PaymentMethodRepository>();
         return services;
     }
 
