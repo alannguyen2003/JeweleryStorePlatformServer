@@ -31,6 +31,7 @@ public static class DependencyInjection
         services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<IJeweleryCaseService, JeweleryCaseService>();
         services.AddScoped<IImageService, ImageService>();
+        services.AddScoped<IAccountRoleService, AccountRoleService>();
         return services;
     }
 }

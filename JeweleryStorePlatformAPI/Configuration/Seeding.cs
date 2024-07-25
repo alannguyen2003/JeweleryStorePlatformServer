@@ -25,10 +25,12 @@ public class Seeding
     private readonly IColorService _colorService;
     private readonly IMaterialService _materialService;
     private readonly IPaymentMethodRepository _paymentMethodRepository;
+    private readonly IAccountRoleService _accountRoleService;
 
     public Seeding(IAccountService accountService, IJeweleryTypeService jeweleryTypeService, 
         IRoleService roleService, IDataService dataService, IDiamondService diamondService, IGIAReportService gIAReportService, IProvinceService provinceService, IJeweleryCaseService jeweleryCaseService,
-        IColorService colorService, IMaterialService materialService, IPaymentMethodRepository paymentMethodRepository)
+        IColorService colorService, IMaterialService materialService, 
+        IPaymentMethodRepository paymentMethodRepository, IAccountRoleService accountRoleService)
     {
         _accountService = accountService;
         _jeweleryTypeService = jeweleryTypeService;
@@ -41,6 +43,7 @@ public class Seeding
         _colorService = colorService;
         _materialService = materialService;
         _paymentMethodRepository = paymentMethodRepository;
+        _accountRoleService = accountRoleService;
     }
 
     public async Task MigrationAsync()
@@ -58,7 +61,7 @@ public class Seeding
 
         var accounts = new List<Account>()
         {
-            new Account()
+            new Account() //1
             {
                 Email = "nguyenho30112003@gmail.com",
                 FirstName = "Ho Duong",
@@ -71,7 +74,7 @@ public class Seeding
                 DateOfBirth = DateTime.Now,
                 Password = "12345"
             },
-            new Account()
+            new Account() //2
             {
                 Email = "honhungoc@gmail.com",
                 FirstName = "Ho Nhu",
@@ -84,7 +87,7 @@ public class Seeding
                 DateOfBirth = DateTime.Now,
                 Password = "12345"
             },
-            new Account()
+            new Account()//3
             {
                 Email = "minhnguyet@gmail.com",
                 FirstName = "Minh",
@@ -97,86 +100,144 @@ public class Seeding
                 DateOfBirth = DateTime.Now,
                 Password = "12345"
             },
-            new Account()
+            new Account()//4
             {
-                Email = "nguyenho30112003@gmail.com",
-                FirstName = "Ho Duong",
+                Email = "nguyenbaoquoc@gmail.com",
+                FirstName = "Nguyen",
                 MiddleName = "",
                 ProfileImage = "",
-                LastName = "Trung Nguyen",
+                LastName = "Bao Quoc",
+                EmailConfirmed = true,
+                PhoneNumber = "0123872389",
+                Points = 0,
+                DateOfBirth = DateTime.Now,
+                Password = "12345"
+            },
+            new Account()//5
+            {
+                Email = "trungson@gmail.com",
+                FirstName = "Vo Nguyen",
+                MiddleName = "",
+                ProfileImage = "",
+                LastName = "Trung Son",
+                EmailConfirmed = true,
+                PhoneNumber = "0871238982",
+                Points = 0,
+                DateOfBirth = DateTime.Now,
+                Password = "12345"
+            },
+            new Account()//6
+            {
+                Email = "lamdeptrai@gmail.com",
+                FirstName = "Nguyen",
+                MiddleName = "",
+                ProfileImage = "",
+                LastName = "Ngoc Lam",
+                EmailConfirmed = true,
+                PhoneNumber = "0912378293",
+                Points = 0,
+                DateOfBirth = DateTime.Now,
+                Password = "12345"
+            },
+            new Account()//7
+            {
+                Email = "baygiokemmuoi@gmail.com",
+                FirstName = "Bảy giờ",
+                MiddleName = "",
+                ProfileImage = "",
+                LastName = "Kém Mười",
+                EmailConfirmed = true,
+                PhoneNumber = "0912879832",
+                Points = 0,
+                DateOfBirth = DateTime.Now,
+                Password = "12345"
+            },
+            new Account()//8
+            {
+                Email = "trananhminh@gmail.com",
+                FirstName = "Tran",
+                MiddleName = "",
+                ProfileImage = "",
+                LastName = "Anh Minh",
                 EmailConfirmed = true,
                 PhoneNumber = "0847919292",
                 Points = 0,
                 DateOfBirth = DateTime.Now,
                 Password = "12345"
             },
-            new Account()
+            new Account()//9
             {
-                Email = "nguyenho30112003@gmail.com",
-                FirstName = "Ho Duong",
+                Email = "admin@gmail.com",
+                FirstName = "",
                 MiddleName = "",
                 ProfileImage = "",
-                LastName = "Trung Nguyen",
+                LastName = "Administrator",
                 EmailConfirmed = true,
-                PhoneNumber = "0847919292",
-                Points = 0,
-                DateOfBirth = DateTime.Now,
-                Password = "12345"
-            },
-            new Account()
-            {
-                Email = "nguyenho30112003@gmail.com",
-                FirstName = "Ho Duong",
-                MiddleName = "",
-                ProfileImage = "",
-                LastName = "Trung Nguyen",
-                EmailConfirmed = true,
-                PhoneNumber = "0847919292",
-                Points = 0,
-                DateOfBirth = DateTime.Now,
-                Password = "12345"
-            },
-            new Account()
-            {
-                Email = "nguyenho30112003@gmail.com",
-                FirstName = "Ho Duong",
-                MiddleName = "",
-                ProfileImage = "",
-                LastName = "Trung Nguyen",
-                EmailConfirmed = true,
-                PhoneNumber = "0847919292",
-                Points = 0,
-                DateOfBirth = DateTime.Now,
-                Password = "12345"
-            },
-            new Account()
-            {
-                Email = "nguyenho30112003@gmail.com",
-                FirstName = "Ho Duong",
-                MiddleName = "",
-                ProfileImage = "",
-                LastName = "Trung Nguyen",
-                EmailConfirmed = true,
-                PhoneNumber = "0847919292",
-                Points = 0,
-                DateOfBirth = DateTime.Now,
-                Password = "12345"
-            },
-            new Account()
-            {
-                Email = "nguyenho30112003@gmail.com",
-                FirstName = "Ho Duong",
-                MiddleName = "",
-                ProfileImage = "",
-                LastName = "Trung Nguyen",
-                EmailConfirmed = true,
-                PhoneNumber = "0847919292",
+                PhoneNumber = "0123912382",
                 Points = 0,
                 DateOfBirth = DateTime.Now,
                 Password = "12345"
             }
         };
         await _accountService.AddRangeAccount(accounts);
+    }
+
+    public async Task SeedingAccountRole()
+    {
+        var accountRoles = await _accountRoleService.GetAllAccountRole();
+        if (accountRoles.Any())
+        {
+            return;
+        }
+
+        accountRoles = new List<AccountRole>()
+        {
+            new AccountRole()
+            {
+                AccountId = 6,
+                RoleId = 5
+            },
+            new AccountRole()
+            {
+                AccountId = 1,
+                RoleId = 1
+            },
+            new AccountRole()
+            {
+                AccountId = 2,
+                RoleId = 1
+            },
+            new AccountRole()
+            {
+                AccountId = 3,
+                RoleId = 1
+            },
+            new AccountRole()
+            {
+                AccountId = 4,
+                RoleId = 2
+            },
+            new AccountRole()
+            {
+                AccountId = 5,
+                RoleId = 3
+            },
+            new AccountRole()
+            {
+                AccountId = 7,
+                RoleId = 4
+            },
+            new AccountRole()
+            {
+                AccountId = 8,
+                RoleId = 1
+            },
+            new AccountRole()
+            {
+                AccountId = 9,
+                RoleId = 1
+            },
+        };
     }
 
     public async Task SeedingJeweleryTypes()
@@ -370,23 +431,15 @@ public class Seeding
     {
         new Color()
         {
-            ColorDescription = "Red"
+            ColorDescription = "Gold"
         },
         new Color()
         {
-            ColorDescription = "Blue"
+            ColorDescription = "Platinum"
         },
         new Color()
         {
-            ColorDescription = "Green"
-        },
-        new Color()
-        {
-            ColorDescription = "Yellow"
-        },
-        new Color()
-        {
-            ColorDescription = "Black"
+            ColorDescription = "White Gold"
         }
     };
         await _colorService.AddRange(colors);
@@ -400,28 +453,20 @@ public class Seeding
         }
 
         materials = new List<Material>()
-    {
-        new Material()
         {
-            MaterialDescription = "Gold"
-        },
-        new Material()
-        {
-            MaterialDescription = "Silver"
-        },
-        new Material()
-        {
-            MaterialDescription = "Platinum"
-        },
-        new Material()
-        {
-            MaterialDescription = "Palladium"
-        },
-        new Material()
-        {
-            MaterialDescription = "Titanium"
-        }
-    };
+            new Material()
+            {
+                MaterialDescription = "Gold"
+            },
+            new Material()
+            {
+                MaterialDescription = "Platinum"
+            },
+            new Material()
+            {
+                MaterialDescription = "White Gold"
+            }
+        };
         await _materialService.AddRange(materials);
     }
     public async Task SeedingJeweleryCases()
@@ -443,36 +488,40 @@ public class Seeding
         {
             new JeweleryCase()
             {
-                CaseName = "Luxury Gold Case",
+                CaseName = "Vỏ nhẫn kim cương",
+                PreviewImage = "https://locphuc.com.vn/Content/Images/082022/K1B.DMR0035R-WG/vo-nhan-nam-kim-cuong-K1B-DMR0035R-WG-g1.jpg",
                 ColorId = colorIds[0],
-                MaterialId = materialIds[0]
-            },
-            new JeweleryCase()
-            {
-                CaseName = "Elegant Silver Case",
-                ColorId = colorIds[1],
                 MaterialId = materialIds[1]
             },
             new JeweleryCase()
             {
-                CaseName = "Classic Wooden Case",
-                ColorId = colorIds[2],
+                CaseName = "Vỏ nhẫn kim cương",
+                PreviewImage = "https://locphuc.com.vn/Content/Images/112022/DMR0114ARM.WG22A/DMR0114ARM-WG22A-hover.jpg",
+                ColorId = colorIds[1],
                 MaterialId = materialIds[2]
             },
             new JeweleryCase()
             {
-                CaseName = "Modern Glass Case",
-                ColorId = colorIds[3],
-                MaterialId = materialIds[3]
+                CaseName = "Vỏ nhẫn kim cương",
+                PreviewImage = "https://locphuc.com.vn/Content/Images/042024/K1B.DSR0175BR/K1B-DSR0175BR-WG-W-hover.jpg",
+                ColorId = colorIds[2],
+                MaterialId = materialIds[0]
             },
             new JeweleryCase()
             {
-                CaseName = "Vintage Leather Case",
-                ColorId = colorIds[4],
-                MaterialId = materialIds[4]
+                CaseName = "Vỏ nhẫn kim cương",
+                PreviewImage = "https://locphuc.com.vn/Content/Images/042023/DSR0896BRW.WG01A/DSR0896BRW-WG01A-hover.jpg",
+                ColorId = colorIds[0],
+                MaterialId = materialIds[2]
+            },
+            new JeweleryCase()
+            {
+                CaseName = "Vỏ nhẫn kim cương",
+                PreviewImage = "https://locphuc.com.vn/Content/Images/042023/DSR1046ARW.WG01A/DSR1046ARW-WG01A-hover.jpg",
+                ColorId = colorIds[2],
+                MaterialId = materialIds[1]
             }
         };
-
         await _jeweleryCaseService.AddRange(jeweleryCasesToAdd);
     }
     public async Task SeedingPaymentMethod()

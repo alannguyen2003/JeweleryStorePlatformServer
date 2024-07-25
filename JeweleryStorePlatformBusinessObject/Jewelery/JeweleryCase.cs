@@ -6,6 +6,7 @@ namespace JeweleryStorePlatformBusinessObject.Jewelery;
 public class JeweleryCase : BaseEntity
 {
     public string CaseName { get; set; }
+    public string PreviewImage { get; set; }
     
     [ForeignKey("ColorId")]
     public int ColorId { get; set; }
