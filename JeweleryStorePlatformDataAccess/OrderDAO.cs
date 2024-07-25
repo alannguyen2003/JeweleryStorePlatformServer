@@ -62,5 +62,17 @@ namespace JeweleryStorePlatformDataAccess
             _context.Orders.Remove(order);
             return await _context.SaveChangesAsync();
         }
+
+        public async Task<List<Order>> GetOrderByAccountId(int accountId)
+        {
+            return await _context.Orders.Where(o => o.AccountId == accountId).ToListAsync();
+        }
+
+        public async Task<Order> GetOrderByIdAndAccountId(int orderId, int accountId)
+        {
+            return await _context.Orders
+                .Where(o => o.Id == orderId && o.AccountId == accountId)
+                .FirstOrDefaultAsync();
+        }
     }
 }

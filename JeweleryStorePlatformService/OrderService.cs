@@ -74,9 +74,20 @@ namespace JeweleryStorePlatformService
                 throw new Exception("An error occurred while creating the order", ex);
             }
         }
+
         public async Task<int> Delete(int orderId)
         {
             return await _orderRepository.Delete(orderId);
+        }
+
+        public async Task<List<Order>> GetOrderByAccountId(int accountId)
+        {
+            return await _orderRepository.GetOrderByAccountId(accountId);
+        }
+
+        public async Task<Order> GetOrderByIdAndAccountId(int orderId, int accountId)
+        {
+            return await _orderRepository.GetOrderByIdAndAccountId(orderId, accountId);
         }
     }
 }

@@ -61,5 +61,36 @@ namespace JeweleryStorePlatformAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpGet("GetByAccountId/{accountId}")]
+        public async Task<ActionResult<List<Order>>> GetByAccountId(int accountId)
+        {
+            try
+            {
+                var orders = await _orderService.GetOrderByAccountId(accountId);
+                return Ok(orders);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpGet("GetByIdAndAccountId/{orderId}/{accountId}")]
+        public async Task<ActionResult<Order>> GetByIdAndAccountId(int orderId, int accountId)
+        {
+            try
+            {
+                var order = await _orderService.GetOrderByIdAndAccountId(orderId, accountId);
+                if (order == null)
+                {
+                    return NotFound();
+                }
+                return Ok(order);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }
