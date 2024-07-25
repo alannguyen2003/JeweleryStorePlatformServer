@@ -14,7 +14,7 @@ public class OrderController : ControllerBase
     private readonly IOrderService _orderService;
     public OrderController(IOrderService orderService)
     {
-        _orderService = orderService; 
+        _orderService = orderService;
     }
 
     [HttpGet("GetAll")]
@@ -29,38 +29,39 @@ public class OrderController : ControllerBase
         {
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
-        [HttpGet("GetByAccountId/{accountId}")]
-        public async Task<ActionResult<List<Order>>> GetByAccountId(int accountId)
+    }
+    [HttpGet("GetByAccountId/{accountId}")]
+    public async Task<ActionResult<List<Order>>> GetByAccountId(int accountId)
+    {
+        try
         {
-            try
-            {
-                var orders = await _orderService.GetOrderByAccountId(accountId);
-                return Ok(orders);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            var orders = await _orderService.GetOrderByAccountId(accountId);
+            return Ok(orders);
         }
-
-        [HttpGet("GetByIdAndAccountId/{orderId}/{accountId}")]
-        public async Task<ActionResult<Order>> GetByIdAndAccountId(int orderId, int accountId)
+        catch (Exception ex)
         {
-            try
-            {
-                var order = await _orderService.GetOrderByIdAndAccountId(orderId, accountId);
-                if (order == null)
-                {
-                    return NotFound();
-                }
-                return Ok(order);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
+
+    [HttpGet("GetByIdAndAccountId/{orderId}/{accountId}")]
+    public async Task<ActionResult<Order>> GetByIdAndAccountId(int orderId, int accountId)
+    {
+        try
+        {
+            var order = await _orderService.GetOrderByIdAndAccountId(orderId, accountId);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            return Ok(order);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
+
     [HttpPost("Create")]
     public async Task<ActionResult<int>> Create([FromBody] OrderDTO request)
     {

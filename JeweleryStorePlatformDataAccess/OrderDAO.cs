@@ -88,6 +88,6 @@ namespace JeweleryStorePlatformDataAccess
             return await _context.Orders
                 .Where(o => o.Id == orderId && o.AccountId == accountId)
                 .FirstOrDefaultAsync();
-
         }
     }
+}
