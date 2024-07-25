@@ -2,6 +2,7 @@
 using JeweleryStorePlatformDataTransfer.Request.AccountDTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JeweleryStorePlatformDataTransfer.Request.AccountDTO;
 
 namespace JeweleryStorePlatformRepository.Interface
 {

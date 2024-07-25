@@ -34,7 +34,6 @@ namespace JeweleryStorePlatformDataAccess
         public async Task<List<Order>> GetAllOrder()
         {
             return await _context.Orders
-                .Include(o => o.Account)
                 .Include(o => o.Address)
                 .ToListAsync();
         }
