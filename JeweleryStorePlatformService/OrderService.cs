@@ -27,13 +27,19 @@ namespace JeweleryStorePlatformService
         private readonly IAddressRepository _addressRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper _mapper;
-        public OrderService(IOrderRepository orderRepository, ITransactionRepository transactionRepository, IAddressRepository addressRepository, IHttpContextAccessor httpContextAccessor, IMapper mapper)
+        private readonly IOrderItemRepository _orderItemRepository;
+
+        public OrderService(IOrderRepository orderRepository,
+            ITransactionRepository transactionRepository, IAddressRepository addressRepository,
+            IHttpContextAccessor httpContextAccessor, IMapper mapper,
+            IOrderItemRepository orderItemRepository)
         {
             _orderRepository = orderRepository;
             _transactionRepository = transactionRepository;
             _addressRepository = addressRepository;
             _httpContextAccessor = httpContextAccessor;
             _mapper = mapper;
+            _orderItemRepository = orderItemRepository;
         }
         public async Task<List<Order>> GetAll()
         {
@@ -69,12 +75,20 @@ namespace JeweleryStorePlatformService
                     AccountId = accountId
                 };
                 var orderId = await _orderRepository.Add(order);
-                var orderItems = new List<OrderItemRepository>();
+                var orderItems = new List<OrderItem>();
                 foreach (var item in request.OrderItems)
                 {
-                    
+                    OrderItem orderItem = new OrderItem()
+                    {
+                        DiamondId = item.DiamondId,
+                        Size = item.Size,
+                        JeweleryCaseId = item.CaseId,
+                        OrderId = orderId
+                    };
+                    orderItems.Add(orderItem);
                 }
-                return 1;
+                await _orderItemRepository.AddRange(orderItems);
+                return orderId;
             }
             catch (Exception ex)
             {
