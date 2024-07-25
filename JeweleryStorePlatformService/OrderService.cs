@@ -12,8 +12,11 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using JeweleryStorePlatformBusinessObject.Address;
+using JeweleryStorePlatformBusinessObject.Constant;
 
 namespace JeweleryStorePlatformService
 {
@@ -49,50 +52,29 @@ namespace JeweleryStorePlatformService
 
             try
             {
-                var address = await _addressRepository.GetAddressById(request.AddressId);
-                if (address == null)
+                var identity = _httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+                var accountId = Int32.Parse(identity.FindFirst("AccountId").Value);
+                Address address = new Address()
                 {
-                    throw new InvalidOperationException($"Address with ID {request.AddressId} does not exist.");
-                }
-
-                var user = _httpContextAccessor.HttpContext.User;
-                var accountIdClaim = user.FindFirst("AccountId");
-
-                if (accountIdClaim == null)
-                {
-                    throw new InvalidOperationException("User is not authenticated or AccountId claim is missing.");
-                }
-
-                var accountId = int.Parse(accountIdClaim.Value);
-
-                var order = new Order
-                {
-                    Price = request.Price,
-                    AddressId = request.AddressId,
-                    Status = 1,
-                    StartDateTime = DateTime.UtcNow,
-                    FinishedTime = DateTime.UtcNow,
-                    AccountId = accountId,
-                    PromotionCode = request.PromotionCode,
+                    DistrictId = request.DistrictId,
+                    AddressString = request.Address
                 };
-
-                await _orderRepository.Add(order);
-
-                if (request.Amount > 0 && request.PaymentMethodId > 0)
+                var addressId = await _addressRepository.AddNewAddress(address);
+                Order order = new Order()
                 {
-                    var transaction = new Transaction
-                    {
-                        TransactionStatus = 1, 
-                        Amount = request.Amount,
-                        OrderId = order.Id,
-                        AccountId = accountId,
-                        PaymentMethodId = request.PaymentMethodId
-                    };
-
-                    await _transactionRepository.CreateTransaction(transaction);
+                    Status = (int)OrderStatusConstant.PENDING,
+                    AddressId = addressId,
+                    StartDateTime = DateTime.Now,
+                    Price = request.Price,
+                    AccountId = accountId
+                };
+                var orderId = await _orderRepository.Add(order);
+                var orderItems = new List<OrderItemRepository>();
+                foreach (var item in request.OrderItems)
+                {
+                    
                 }
-
-                return order.Id;
+                return 1;
             }
             catch (Exception ex)
             {

@@ -171,7 +171,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Roles", x => x.Id);
                 });
-            
+
             migrationBuilder.CreateTable(
                 name: "Districts",
                 columns: table => new
@@ -361,9 +361,9 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     AddressId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     StartDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FinishedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FinishedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AccountId = table.Column<int>(type: "int", nullable: false),
-                    PromotionCode = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PromotionCode = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -388,12 +388,13 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    JeweleryCaseId = table.Column<int>(type: "int", nullable: false),
-                    JeweleryId = table.Column<int>(type: "int", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    DiamondId = table.Column<int>(type: "int", nullable: false),
-                    JeweleryDesignId = table.Column<int>(type: "int", nullable: false),
-                    DesignFee = table.Column<int>(type: "int", nullable: false)
+                    JeweleryCaseId = table.Column<int>(type: "int", nullable: true),
+                    JeweleryId = table.Column<int>(type: "int", nullable: true),
+                    OrderId = table.Column<int>(type: "int", nullable: true),
+                    DiamondId = table.Column<int>(type: "int", nullable: true),
+                    JeweleryDesignId = table.Column<int>(type: "int", nullable: true),
+                    DesignFee = table.Column<int>(type: "int", nullable: true),
+                    Size = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -456,7 +457,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Transactions_PaymentMethods_PaymentMethodId",
                         column: x => x.PaymentMethodId,
@@ -491,6 +492,26 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 name: "IX_Addresses_DistrictId",
                 table: "Addresses",
                 column: "DistrictId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId",
+                table: "AspNetUserRoles",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Districts_CityId",
@@ -588,6 +609,21 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "AccountRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
                 name: "GIAReports");

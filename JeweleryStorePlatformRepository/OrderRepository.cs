@@ -20,9 +20,9 @@ namespace JeweleryStorePlatformRepository
         {
             return await OrderDAO.Instance.GetById(orderId);
         }
-        public async Task Add(Order order)
+        public async Task<int> Add(Order order)
         {
-            await OrderDAO.Instance.Add(order);
+            return await OrderDAO.Instance.Add(order);
         }
 
         public async Task AddRange(List<Order> order)

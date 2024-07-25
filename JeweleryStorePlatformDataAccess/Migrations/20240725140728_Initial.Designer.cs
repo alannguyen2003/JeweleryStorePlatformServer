@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JeweleryStorePlatformDataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240725102054_Initial")]
+    [Migration("20240725140728_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -498,6 +498,9 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Size")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

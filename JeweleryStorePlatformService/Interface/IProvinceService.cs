@@ -13,5 +13,6 @@ namespace JeweleryStorePlatformService.Interface
         Task<List<City>> GetAllCities();
         Task<List<District>> GetAllDistricts();
         Task<List<Address>> GetAllAddresses();
+        public Task<List<District>> GetAllDistrictsByProvinceId(int provinceId);
     }
 }

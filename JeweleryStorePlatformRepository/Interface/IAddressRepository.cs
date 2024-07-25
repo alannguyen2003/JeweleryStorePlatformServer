@@ -13,5 +13,6 @@ namespace JeweleryStorePlatformRepository.Interface
         Task AddRange(IEnumerable<Address> address);
         Task<List<Address>> GetAllAddresses();
         Task<Address> GetAddressById(int id);
+        Task<int> AddNewAddress(Address address);
     }
 }

@@ -28,4 +28,5 @@ public class OrderItem : BaseEntity
     public virtual JeweleryDesign JeweleryDesign { get; set; }
     
     public int DesignFee { get; set; }
+    public int Size { get; set; }
 }

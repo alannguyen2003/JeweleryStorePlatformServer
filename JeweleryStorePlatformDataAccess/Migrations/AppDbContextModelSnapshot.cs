@@ -497,6 +497,9 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Size")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DiamondId");

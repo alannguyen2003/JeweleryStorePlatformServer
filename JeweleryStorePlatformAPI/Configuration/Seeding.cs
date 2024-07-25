@@ -28,7 +28,9 @@ public class Seeding
     private readonly IAccountRoleService _accountRoleService;
 
     public Seeding(IAccountService accountService, IJeweleryTypeService jeweleryTypeService, 
-        IRoleService roleService, IDataService dataService, IDiamondService diamondService, IGIAReportService gIAReportService, IProvinceService provinceService, IJeweleryCaseService jeweleryCaseService,
+        IRoleService roleService, IDataService dataService, IDiamondService diamondService, 
+        IGIAReportService gIAReportService, 
+        IProvinceService provinceService, IJeweleryCaseService jeweleryCaseService,
         IColorService colorService, IMaterialService materialService, 
         IPaymentMethodRepository paymentMethodRepository, IAccountRoleService accountRoleService)
     {
