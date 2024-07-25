@@ -1,5 +1,7 @@
 ﻿  using JeweleryStorePlatformBusinessObject.Account;
+using JeweleryStorePlatformBusinessObject.Constant;
 using JeweleryStorePlatformDataAccess;
+using JeweleryStorePlatformDataTransfer.Request.AccountDTO;
 using JeweleryStorePlatformRepository.Interface;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -50,7 +52,7 @@ namespace JeweleryStorePlatformRepository
         {
             return await AccountDAO.Instance.GetRoleIdByAccountId(accountId);
         }
-
+        
         public async Task<Account> RegisterNewAccount(SignUpRequest request)
         {
             Account account = new Account()
@@ -70,7 +72,7 @@ namespace JeweleryStorePlatformRepository
             await AccountRoleDAO.Instance.AddNewAccountRole(new AccountRole()
             {
                 AccountId = accountAdded.Id,
-                RoleId = (int) RoleConstant.CUSTOMER
+                RoleId = (int)RoleConstant.CUSTOMER
             });
             return accountAdded;
         }

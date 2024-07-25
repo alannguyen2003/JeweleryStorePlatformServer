@@ -71,7 +71,6 @@ public class AuthenticationController : ControllerBase
                 RoleId = 0
             });
         }
-        
         var account = await _accountService.RegisterNewUser(request);
         if (account == null)
         {
@@ -83,7 +82,6 @@ public class AuthenticationController : ControllerBase
                 RoleId = 0
             });
         }
-        
         var token = _accountService.GenerateJwtToken(account);
         var roleId = await _accountService.GetRoleIdByAccountId(account.Id);
         return Ok(new ApiResponse

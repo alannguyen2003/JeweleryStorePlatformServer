@@ -15,6 +15,6 @@ namespace JeweleryStorePlatformService.Interface
         Task<bool> DeleteAccount(int accountId);
         Task<Account> GetAccountById(int accountId);
         Task<int> GetRoleIdByAccountId(int accountId);
-        public Task<Account> RegisterNewUser(SignUpRequest request);
+        Task<Account> RegisterNewUser(SignUpRequest request);
     }
 }

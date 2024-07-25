@@ -1,4 +1,5 @@
 ﻿using JeweleryStorePlatformBusinessObject.Account;
+using JeweleryStorePlatformDataTransfer.Request.AccountDTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using JeweleryStorePlatformDataTransfer.Request.AccountDTO;
@@ -15,6 +16,6 @@ namespace JeweleryStorePlatformRepository.Interface
         Task<bool> DeleteAccount(int accountId);
         Task<Account> GetAccountById(int accountId);
         Task<int> GetRoleIdByAccountId(int accountId);
-        public Task<Account> RegisterNewAccount(SignUpRequest request);
+        Task<Account> RegisterNewAccount(SignUpRequest request);
     }
 }

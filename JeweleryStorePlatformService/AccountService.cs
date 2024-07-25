@@ -92,7 +92,6 @@ namespace JeweleryStorePlatformService
         {
             return await _accountRepository.GetRoleIdByAccountId(accountId);
         }
-
         public async Task<Account> RegisterNewUser(SignUpRequest request)
         {
             return await _accountRepository.RegisterNewAccount(request);
