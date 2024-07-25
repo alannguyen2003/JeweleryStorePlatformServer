@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JeweleryStorePlatformDataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240725140728_Initial")]
+    [Migration("20240725182809_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -443,20 +443,19 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AccountId")
+                    b.Property<int?>("AccountId")
                         .HasColumnType("int");
 
-                    b.Property<int>("AddressId")
+                    b.Property<int?>("AddressId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FinishedTime")
+                    b.Property<DateTime?>("FinishedTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
                     b.Property<string>("PromotionCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDateTime")
@@ -482,25 +481,25 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DesignFee")
+                    b.Property<int?>("DesignFee")
                         .HasColumnType("int");
 
-                    b.Property<int>("DiamondId")
+                    b.Property<int?>("DiamondId")
                         .HasColumnType("int");
 
-                    b.Property<int>("JeweleryCaseId")
+                    b.Property<int?>("JeweleryCaseId")
                         .HasColumnType("int");
 
-                    b.Property<int>("JeweleryDesignId")
+                    b.Property<int?>("JeweleryDesignId")
                         .HasColumnType("int");
 
-                    b.Property<int>("JeweleryId")
+                    b.Property<int?>("JeweleryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Size")
+                    b.Property<int?>("Size")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -597,6 +596,9 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
@@ -818,15 +820,11 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 {
                     b.HasOne("JeweleryStorePlatformBusinessObject.Account.Account", "Account")
                         .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AccountId");
 
                     b.HasOne("JeweleryStorePlatformBusinessObject.Address.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AddressId");
 
                     b.Navigation("Account");
 
@@ -837,33 +835,23 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 {
                     b.HasOne("JeweleryStorePlatformBusinessObject.Diamond.Diamond", "Diamond")
                         .WithMany()
-                        .HasForeignKey("DiamondId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DiamondId");
 
                     b.HasOne("JeweleryStorePlatformBusinessObject.Jewelery.JeweleryCase", "JeweleryCase")
                         .WithMany()
-                        .HasForeignKey("JeweleryCaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("JeweleryCaseId");
 
                     b.HasOne("JeweleryStorePlatformBusinessObject.Design.JeweleryDesign", "JeweleryDesign")
                         .WithMany()
-                        .HasForeignKey("JeweleryDesignId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("JeweleryDesignId");
 
                     b.HasOne("JeweleryStorePlatformBusinessObject.Jewelery.Jewelery", "Jewelery")
                         .WithMany()
-                        .HasForeignKey("JeweleryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("JeweleryId");
 
                     b.HasOne("JeweleryStorePlatformBusinessObject.Order.Order", "Order")
                         .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
 
                     b.Navigation("Diamond");
 
