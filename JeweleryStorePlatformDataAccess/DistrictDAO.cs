@@ -38,5 +38,12 @@ namespace JeweleryStorePlatformDataAccess
         {
             return await _context.Districts.ToListAsync();
         }
+
+        public async Task<List<District>> GetAllDistrictsByProvinceId(int provinceId)
+        {
+            return await _context.Districts
+                .Where(item => item.CityId == provinceId)
+                .ToListAsync(); 
+        }
     }
 }

@@ -68,5 +68,10 @@ namespace JeweleryStorePlatformService
         {
             return await _addressRepository.GetAllAddresses();
         }
+
+        public async Task<List<District>> GetAllDistrictsByProvinceId(int provinceId)
+        {
+            return await _districtRepository.GetAllDistrictsByProvinceId(provinceId);
+        }
     }
 }

@@ -42,10 +42,11 @@ namespace JeweleryStorePlatformDataAccess
         {
             return await _context.Orders.FindAsync(orderId);
         }
-        public async Task Add(Order order)
+        public async Task<int> Add(Order order)
         {
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
+            return order.Id;
         }
         public async Task AddRange(List<Order> order)
         {

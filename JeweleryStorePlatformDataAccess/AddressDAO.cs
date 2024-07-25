@@ -30,6 +30,13 @@ namespace JeweleryStorePlatformDataAccess
                 return instance;
             }
         }
+
+        public async Task<int> AddNewAddress(Address address)
+        {
+            await _context.Addresses.AddAsync(address);
+            await _context.SaveChangesAsync();
+            return address.Id;
+        }
         public async Task AddRange(IEnumerable<Address> addresses)
         {
             await _context.Addresses.AddRangeAsync(addresses);

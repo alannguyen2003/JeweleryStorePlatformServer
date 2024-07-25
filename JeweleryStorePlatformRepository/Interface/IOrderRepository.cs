@@ -12,7 +12,7 @@ namespace JeweleryStorePlatformRepository.Interface
     {
         Task<List<Order>> GetAll();
         Task<Order> GetById(int orderId);
-        Task Add(Order order);
+        Task<int> Add(Order order);
         Task AddRange(List<Order> order);
         Task<int> Delete(int orderId);
         Task<Order> Update(Order order);
