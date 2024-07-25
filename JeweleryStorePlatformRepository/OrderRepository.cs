@@ -1,4 +1,5 @@
-﻿using JeweleryStorePlatformBusinessObject.Order;
+﻿using JeweleryStorePlatformBusinessObject.Diamond;
+using JeweleryStorePlatformBusinessObject.Order;
 using JeweleryStorePlatformDataAccess;
 using JeweleryStorePlatformRepository.Interface;
 using System;
@@ -31,6 +32,10 @@ namespace JeweleryStorePlatformRepository
         public async Task<int> Delete(int orderId)
         {
             return await OrderDAO.Instance.Delete(orderId);
+        }
+        public async Task<Order> Update(Order order)
+        {
+            return await OrderDAO.Instance.Update(order);
         }
     }
 }

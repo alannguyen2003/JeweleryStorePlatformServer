@@ -57,6 +57,7 @@ namespace JeweleryStorePlatformService
                 {
                 new Claim(ClaimTypes.Email, account.Email),
                 new Claim("RoleId", roleId.ToString()),
+                new Claim("AccountId", account.Id.ToString()),
                 },
                 expires: DateTime.Now.AddMinutes(120),
                 signingCredentials: credentials

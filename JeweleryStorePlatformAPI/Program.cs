@@ -19,7 +19,8 @@ builder.Services.AddScoped<IPromotionRepository, PromotionRepository>();
 builder.Services.AddScoped<IPromotionService, PromotionService>();
 builder.Services.AddScoped<IColorService, ColorService>();
 builder.Services.AddScoped<IMaterialService, MaterialService>();
-
+builder.Services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -30,6 +31,7 @@ builder.Services.AddRepository();
 builder.Services.AddService();
 builder.Services.AddAutoMapper();
 builder.Services.AddSeeding();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddCloudinarySetting(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddScoped<IDiamondService, DiamondService>();
@@ -47,6 +49,8 @@ builder.Services.AddTransient<IProvinceService, ProvinceService>();
 builder.Services.AddTransient<IGIAReportService, GIAReportService>();
 builder.Services.AddTransient<IColorRepository, ColorRepository>();
 builder.Services.AddTransient<IMaterialRepository, MaterialRepository>();
+builder.Services.AddTransient<ITransactionRepository, TransactionRepository>();
+builder.Services.AddTransient<IPaymentMethodRepository, PaymentMethodRepository>();
 
 
 var app = builder.Build();
@@ -79,6 +83,7 @@ try
     await context.SeedingMaterial();
     await context.SeedingColor();
     await context.SeedingJeweleryCases();
+    await context.SeedingPaymentMethod();
 }
 catch (Exception ex)
 {
