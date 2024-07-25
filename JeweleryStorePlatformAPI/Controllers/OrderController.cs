@@ -141,4 +141,10 @@ public class OrderController : ControllerBase
             return Ok(ex.InnerException);
         }
     }
+
+    [HttpGet("create-payment-link")]
+    public async Task<IActionResult> CreatePaymentLink(int orderId)
+    {
+        return Ok();
+    }
 }

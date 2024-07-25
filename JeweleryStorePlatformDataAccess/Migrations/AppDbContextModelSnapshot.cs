@@ -389,6 +389,9 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ColorId");
