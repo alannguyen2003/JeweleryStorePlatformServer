@@ -49,16 +49,11 @@ namespace JeweleryStorePlatformService
         {
             return await _orderRepository.GetById(orderId);
         }
-        public async Task<int> Create(OrderDTO request)
+        public async Task<int> Create(ClaimsPrincipal claims, OrderDTO request)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
             try
             {
-                var identity = _httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+                var identity = claims.Identity as ClaimsIdentity;
                 var accountId = Int32.Parse(identity.FindFirst("AccountId").Value);
                 Address address = new Address()
                 {
@@ -75,6 +70,15 @@ namespace JeweleryStorePlatformService
                     AccountId = accountId
                 };
                 var orderId = await _orderRepository.Add(order);
+                Transaction transaction = new Transaction()
+                {
+                    OrderId = orderId,
+                    AccountId = accountId,
+                    Amount = request.Price,
+                    PaymentMethodId = (int)TransactionConstant.BANK_TRANSFER,
+                    TransactionStatus = (int)TransactionStatusConstant.PENDING
+                };
+                await _transactionRepository.CreateTransaction(transaction);
                 var orderItems = new List<OrderItem>();
                 foreach (var item in request.OrderItems)
                 {
@@ -92,7 +96,7 @@ namespace JeweleryStorePlatformService
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while creating the order", ex);
+                throw new Exception("An error occurred while creating the order", ex.InnerException);
             }
         }
 

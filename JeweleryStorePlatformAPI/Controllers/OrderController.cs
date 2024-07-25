@@ -3,6 +3,7 @@ using JeweleryStorePlatformDataTransfer.Request.OrderItemsDTO;
 using JeweleryStorePlatformDataTransfer.Request.OrdersDTO;
 using JeweleryStorePlatformService;
 using JeweleryStorePlatformService.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JeweleryStorePlatformAPI.Controllers;
@@ -63,21 +64,21 @@ public class OrderController : ControllerBase
     }
 
     [HttpPost("Create")]
-    public async Task<ActionResult<int>> Create([FromBody] OrderDTO request)
+    [Authorize]
+    public async Task<IActionResult> Create([FromBody] OrderDTO request)
     {
         try
         {
-            var orderId = await _orderService.Create(request);
+            var orderId = await _orderService.Create(HttpContext.User, request);
             if (orderId == 0)
                 return BadRequest();
-
             // Return a URI with the ID of the created jewelery
             return CreatedAtAction(nameof(GetAll), new { orderId = orderId }, null);
         }
         catch (Exception ex)
         {
             // Handle exceptions and return error
-            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.InnerException);
         }
     }
     [HttpDelete("{orderId}")]

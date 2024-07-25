@@ -3,8 +3,10 @@ using JeweleryStorePlatformDataTransfer.Request.OrdersDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace JeweleryStorePlatformService.Interface
 {
@@ -12,7 +14,7 @@ namespace JeweleryStorePlatformService.Interface
     {
         Task<List<Order>> GetAll();
         Task<Order> GetById(int orderId);
-        Task<int> Create(OrderDTO request);
+        Task<int> Create(ClaimsPrincipal claims, OrderDTO request);
         Task<int> Delete(int orderId);
         Task<int> ChangStatus(int orderId, int status);
         Task<List<Order>> GetOrderByAccountId(int accountId);
