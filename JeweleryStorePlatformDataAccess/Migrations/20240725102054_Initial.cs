@@ -260,6 +260,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CaseName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PreviewImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ColorId = table.Column<int>(type: "int", nullable: false),
                     MaterialId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -329,7 +330,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-            
+
             migrationBuilder.CreateTable(
                 name: "Addresses",
                 columns: table => new
@@ -490,7 +491,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                 name: "IX_Addresses_DistrictId",
                 table: "Addresses",
                 column: "DistrictId");
-            
+
             migrationBuilder.CreateIndex(
                 name: "IX_Districts_CityId",
                 table: "Districts",
