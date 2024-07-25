@@ -92,7 +92,7 @@ namespace JeweleryStorePlatformService
             catch (Exception ex)
             {
                 // Log the exception here if a logging framework is in place
-                throw new Exception("An error occurred while creating the order item", ex);
+                throw new Exception("An error occurred while creating the order item", ex.InnerException);
             }
         }
 

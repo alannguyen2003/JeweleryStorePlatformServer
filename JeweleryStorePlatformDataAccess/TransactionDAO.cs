@@ -31,6 +31,7 @@ namespace JeweleryStorePlatformDataAccess
         }
         public async Task<Transaction> CreateTransaction(Transaction transaction)
         {
+            _context.ChangeTracker.Clear();
             _context.Set<Transaction>().Add(transaction);
             await _context.SaveChangesAsync();
             return transaction;

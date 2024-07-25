@@ -44,6 +44,7 @@ namespace JeweleryStorePlatformDataAccess
         }
         public async Task<int> Add(Order order)
         {
+            _context.ChangeTracker.Clear();
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
             return order.Id;
