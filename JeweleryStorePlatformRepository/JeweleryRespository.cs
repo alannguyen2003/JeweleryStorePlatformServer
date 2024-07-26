@@ -8,34 +8,41 @@ namespace JeweleryStorePlatformRepository
 {
     public class JeweleryRepository : IJeweleryRepository
     {
+        private readonly JeweleryDAO _jeweleryDAO;
+
         public async Task<List<Jewelery>> GetAll()
         {
-            return await JeweleryDAO.Instance.GetAllJewelery();
+            return await _jeweleryDAO.GetAllJewelery();
         }
 
         public async Task<Jewelery> GetById(int jeweleryId)
         {
-            return await JeweleryDAO.Instance.GetById(jeweleryId);
+            return await _jeweleryDAO.GetById(jeweleryId);
         }
 
         public async Task Add(Jewelery jewelery)
         {
-            await JeweleryDAO.Instance.Add(jewelery);
+            await _jeweleryDAO.Add(jewelery);
         }
 
         public async Task AddRange(List<Jewelery> jewelery)
         {
-            await JeweleryDAO.Instance.AddRange(jewelery);
+            await _jeweleryDAO.AddRange(jewelery);
         }
 
         public async Task<int> Update(Jewelery jewelery)
         {
-            return await JeweleryDAO.Instance.Update(jewelery); // Ensure it accepts JeweleryEntity
-        }   
+            return await _jeweleryDAO.Update(jewelery);
+        }
 
         public async Task<int> Delete(int jeweleryId)
         {
-            return await JeweleryDAO.Instance.Delete(jeweleryId);
+            return await _jeweleryDAO.Delete(jeweleryId);
+        }
+
+        public async Task<JeweleryType> GetJeweleryTypeById(int typeId)
+        {
+            return await _jeweleryDAO.GetJeweleryTypeById(typeId);
         }
     }
 }
