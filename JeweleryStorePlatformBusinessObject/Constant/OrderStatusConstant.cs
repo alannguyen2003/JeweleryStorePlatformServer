@@ -6,5 +6,6 @@ public enum OrderStatusConstant
     ACCEPTED = 2,
     PAID = 3,
     ON_SHIPPING = 4,
-    FINISHED = 5
+    FINISHED = 5,
+    REJECTED = 6
 }

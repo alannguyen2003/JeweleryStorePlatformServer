@@ -20,5 +20,9 @@ namespace JeweleryStorePlatformService.Interface
         Task<List<Order>> GetOrderByAccountId(int accountId);
         Task<Order> GetOrderByIdAndAccountId(int orderId, int accountId);
         public Task AcceptedOrder(int orderId);
+        public Task RejectOrder(int orderId);
+        public Task ChangeToShipOrder(int orderId);
+        public Task ChangeToPaid(int orderId);
+        public Task FinishOrder(int orderId);
     }
 }

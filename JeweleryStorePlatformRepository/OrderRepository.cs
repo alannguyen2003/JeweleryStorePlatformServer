@@ -59,5 +59,33 @@ namespace JeweleryStorePlatformRepository
             order.Status = (int)OrderStatusConstant.ACCEPTED;
             await OrderDAO.Instance.Update(order);
         }
+
+        public async Task RejectOrder(int orderId)
+        {
+            var order = await OrderDAO.Instance.GetById(orderId);
+            order.Status = (int)OrderStatusConstant.REJECTED;
+            await OrderDAO.Instance.Update(order);
+        }
+
+        public async Task ChangeToShipOrder(int orderId)
+        {
+            var order = await OrderDAO.Instance.GetById(orderId);
+            order.Status = (int)OrderStatusConstant.ON_SHIPPING;
+            await OrderDAO.Instance.Update(order);
+        }
+
+        public async Task ChangeToPaid(int orderId)
+        {
+            var order = await OrderDAO.Instance.GetById(orderId);
+            order.Status = (int)OrderStatusConstant.PAID;
+            await OrderDAO.Instance.Update(order);
+        }
+
+        public async Task FinishOrder(int orderId)
+        {
+            var order = await OrderDAO.Instance.GetById(orderId);
+            order.Status = (int)OrderStatusConstant.FINISHED;
+            await OrderDAO.Instance.Update(order);
+        }
     }
 }
