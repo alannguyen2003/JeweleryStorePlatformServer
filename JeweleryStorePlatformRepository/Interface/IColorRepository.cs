@@ -1,4 +1,5 @@
 ﻿using JeweleryStorePlatformBusinessObject.Address;
+using JeweleryStorePlatformBusinessObject.Design;
 using JeweleryStorePlatformBusinessObject.Jewelery;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,6 @@ namespace JeweleryStorePlatformRepository.Interface
     {
         Task AddRange(IEnumerable<Color> colors);
         Task<List<Color>> GetAllColors();
+        Task<Color?> GetById(int color);
     }
 }

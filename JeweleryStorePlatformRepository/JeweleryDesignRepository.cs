@@ -17,6 +17,9 @@ public class JeweleryDesignRepository : IJeweleryDesignRepository
         await JeweleryDesignDAO.Instance.AddNewJeweleryDesign(jeweleryDesign);
         return jeweleryDesign;
     }
-
+    public async Task<JeweleryDesign?> GetById(int jeweleryId)
+    {
+        return await JeweleryDesignDAO.Instance.GetById(jeweleryId);
+    }
 
 }

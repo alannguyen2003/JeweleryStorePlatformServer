@@ -36,5 +36,8 @@ public class JeweleryDesignDAO
         await _context.SaveChangesAsync();
         return jeweleryDesign;
     }
-
+    public async Task<JeweleryDesign?> GetById(int jeweleryId)
+    {
+        return await _context.JeweleryDesigns.FindAsync(jeweleryId);
+    }
 }
