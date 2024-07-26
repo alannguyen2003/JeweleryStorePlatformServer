@@ -9,31 +9,27 @@ namespace JeweleryStorePlatformDataAccess
     {
         private readonly AppDbContext _context;
         private static JeweleryDAO instance;
-        private static readonly object padlock = new object();
 
-        public JeweleryDAO(AppDbContext context)
+        public JeweleryDAO()
         {
-            _context = context;
+            _context = new AppDbContext();
         }
 
-        public static JeweleryDAO Instance(AppDbContext context)
+        public static JeweleryDAO Instance
         {
-            if (instance == null)
+            get
             {
-                lock (padlock)
+                if (instance == null)
                 {
-                    if (instance == null)
-                    {
-                        instance = new JeweleryDAO(context);
-                    }
+                    instance = new JeweleryDAO();
                 }
+                return instance;
             }
-            return instance;
         }
 
         public async Task<List<Jewelery>> GetAllJewelery()
         {
-            return await _context.Jeweleries.Include(j => j.JeweleryType).ToListAsync();
+            return await _context.Jeweleries.ToListAsync();
         }
 
         public async Task<Jewelery> GetById(int jewelryId)

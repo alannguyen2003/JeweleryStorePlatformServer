@@ -1,4 +1,5 @@
-﻿using JeweleryStorePlatformBusinessObject.Jewelery;
+﻿using JeweleryStorePlatformBusinessObject.Design;
+using JeweleryStorePlatformBusinessObject.Jewelery;
 using JeweleryStorePlatformDataAccess;
 using JeweleryStorePlatformRepository.Interface;
 using System.Collections.Generic;
@@ -8,41 +9,40 @@ namespace JeweleryStorePlatformRepository
 {
     public class JeweleryRepository : IJeweleryRepository
     {
-        private readonly JeweleryDAO _jeweleryDAO;
 
         public async Task<List<Jewelery>> GetAll()
         {
-            return await _jeweleryDAO.GetAllJewelery();
+            return await JeweleryDAO.Instance.GetAllJewelery();
         }
 
         public async Task<Jewelery> GetById(int jeweleryId)
         {
-            return await _jeweleryDAO.GetById(jeweleryId);
+            return await JeweleryDAO.Instance.GetById(jeweleryId);
         }
 
         public async Task Add(Jewelery jewelery)
         {
-            await _jeweleryDAO.Add(jewelery);
+            await JeweleryDAO.Instance.Add(jewelery);
         }
 
         public async Task AddRange(List<Jewelery> jewelery)
         {
-            await _jeweleryDAO.AddRange(jewelery);
+            await JeweleryDAO.Instance.AddRange(jewelery);
         }
 
         public async Task<int> Update(Jewelery jewelery)
         {
-            return await _jeweleryDAO.Update(jewelery);
+            return await JeweleryDAO.Instance.Update(jewelery);
         }
 
         public async Task<int> Delete(int jeweleryId)
         {
-            return await _jeweleryDAO.Delete(jeweleryId);
+            return await JeweleryDAO.Instance.Delete(jeweleryId);
         }
 
         public async Task<JeweleryType> GetJeweleryTypeById(int typeId)
         {
-            return await _jeweleryDAO.GetJeweleryTypeById(typeId);
+            return await JeweleryDAO.Instance.GetJeweleryTypeById(typeId);
         }
     }
 }

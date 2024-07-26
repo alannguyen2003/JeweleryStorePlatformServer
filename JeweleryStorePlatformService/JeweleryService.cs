@@ -47,7 +47,6 @@ namespace JeweleryStorePlatformService
                 {
                     JeweleryName = request.JeweleryName,
                     JeweleryTypeId = request.TypeId,
-                    JeweleryType = jeweleryType // Set the JeweleryType from DB
                 };
 
                 // Add the new Jewelery entity

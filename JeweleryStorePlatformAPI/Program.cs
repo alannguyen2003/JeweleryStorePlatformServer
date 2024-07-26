@@ -17,7 +17,7 @@ builder.Services.AddControllers();
 builder.Services.AddRepository();
 builder.Services.AddService();
 builder.Services.AddAutoMapper();
-builder.Services.AddDbContext<AppDbContext>();
+//builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddSeeding();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddCloudinarySetting(builder.Configuration);
