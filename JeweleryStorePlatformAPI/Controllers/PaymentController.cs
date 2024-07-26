@@ -39,9 +39,9 @@ public class PaymentController : ControllerBase
         var transaction = await _transactionService.GetLatestTransactionByOrderId(userId, orderId);
         var listItem = new List<ItemData>()
         {
-            new ItemData("Thanh toán đơn hàng", 1, transaction.Amount)
+            new ItemData("Thanh toán đơn hàng", 1, 20000)
         };
-        PaymentData paymentData = new PaymentData(orderId, transaction.Amount,
+        PaymentData paymentData = new PaymentData(orderId, 20000,
             "Cửa hàng Kim Cương", listItem,
             "http://localhost:3000/cancel-payment?transactionId=" + transaction.Id,
             "http://localhost:3000/success-payment?transactionId=" + transaction.Id);
