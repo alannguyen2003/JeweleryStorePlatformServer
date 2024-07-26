@@ -115,5 +115,10 @@ namespace JeweleryStorePlatformService
             await _orderItemRepository.Update(orderitem);
             return orderitem.Id;
         }
+
+        public async Task<List<OrderItem>> GetAllOrderItemByOrderId(int orderId)
+        {
+            return await _orderItemRepository.GetAllOrderItemByOrderId(orderId);
+        }
     }
 }

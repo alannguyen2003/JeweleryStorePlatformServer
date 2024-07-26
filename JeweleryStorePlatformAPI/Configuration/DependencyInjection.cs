@@ -55,6 +55,7 @@ public static class DependencyInjection
         services.AddScoped<IJeweleryService, JeweleryService>();
         services.AddScoped<IDiamondService, DiamondService>();
         services.AddScoped<IJeweleryDesignService, JeweleryDesignService>();
+        services.AddScoped<ITransactionService, TransactionService>();
         services.AddSingleton<HttpClientHelper>();
         services.AddTransient<ApiService>();
         

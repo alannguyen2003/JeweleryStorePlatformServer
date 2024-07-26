@@ -38,6 +38,13 @@ namespace JeweleryStorePlatformDataAccess
                 .ToListAsync();
         }
 
+        public async Task<List<OrderItem>> GetAllOrderItemByOrderId(int orderId)
+        {
+            return await _context.OrderItems
+                .Where(item => item.OrderId == orderId)
+                .ToListAsync();
+        }
+
         public async Task<OrderItem> GetById(int orderitemId)
         {
             return await _context.OrderItems.FindAsync(orderitemId);
