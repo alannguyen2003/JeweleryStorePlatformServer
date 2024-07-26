@@ -34,7 +34,6 @@ namespace JeweleryStorePlatformDataAccess
         public async Task<List<Order>> GetAllOrder()
         {
             return await _context.Orders
-                .Include(o => o.Account)
                 .Include(o => o.Address)
                 .ToListAsync();
         }
@@ -44,6 +43,7 @@ namespace JeweleryStorePlatformDataAccess
         }
         public async Task<int> Add(Order order)
         {
+            _context.ChangeTracker.Clear();
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
             return order.Id;

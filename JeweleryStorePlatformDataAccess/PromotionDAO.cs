@@ -1,4 +1,5 @@
 ﻿using JeweleryStorePlatformBusinessObject.Promotion;
+using JeweleryStorePlatformBusinessObject.Transaction;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -66,6 +67,11 @@ namespace JeweleryStorePlatformDataAccess
         public async Task<Promotion> GetPromotionById(int promotionId)
         {
             return await _context.Promotions.FindAsync(promotionId);
+        }
+        public async Task AddRange(IEnumerable<Promotion> promotion)
+        {
+            await _context.Promotions.AddRangeAsync(promotion);
+            await _context.SaveChangesAsync();
         }
     }
 }

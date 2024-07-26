@@ -7,6 +7,7 @@ public class JeweleryCase : BaseEntity
 {
     public string CaseName { get; set; }
     public string PreviewImage { get; set; }
+    public int Price { get; set; }
     
     [ForeignKey("ColorId")]
     public int ColorId { get; set; }

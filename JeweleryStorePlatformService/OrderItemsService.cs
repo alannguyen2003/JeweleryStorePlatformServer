@@ -16,12 +16,21 @@ namespace JeweleryStorePlatformService
     public class OrderItemsService : IOrderItemService
     {
         private readonly IOrderItemRepository _orderItemRepository;
-        private readonly AppDbContext _context;
+        private readonly IJeweleryCaseRepository _jeweleryCaseRepository;
+        private readonly IJeweleryRepository  _jeweleryRepository;
+        private readonly IJeweleryDesignRepository _jeweleryDesignRepository;
+        private readonly IOrderRepository _orderRepository;
+        private readonly IDiamondRepository _diamondRepository;
 
-        public OrderItemsService(IOrderItemRepository orderItemRepository, AppDbContext context)
+        public OrderItemsService(IOrderItemRepository orderItemRepository, IJeweleryCaseRepository jeweleryCaseRepository, IJeweleryRepository jeweleryRepository, IJeweleryDesignRepository jeweleryDesignRepository,
+            IOrderRepository orderRepository, IDiamondRepository diamondRepository)
         {
             _orderItemRepository = orderItemRepository;
-            _context = context;
+            _jeweleryCaseRepository = jeweleryCaseRepository;
+            _jeweleryRepository = jeweleryRepository;
+            _orderRepository = orderRepository;
+            _diamondRepository = diamondRepository;
+            _jeweleryDesignRepository = jeweleryDesignRepository;
             
         }
 
@@ -43,31 +52,31 @@ namespace JeweleryStorePlatformService
 
             try
             {
-                var jeweleryCase = await _context.JeweleryCases.FindAsync(request.JeweleryCaseId);
+                var jeweleryCase = await _jeweleryCaseRepository.GetById(request.JeweleryCaseId);
                 if (jeweleryCase == null)
                 {
                     throw new InvalidOperationException($"JeweleryCase with ID {request.JeweleryCaseId} does not exist.");
                 }
 
-                var jewelery = await _context.Jeweleries.FindAsync(request.JeweleryId);
+                var jewelery = await _jeweleryRepository.GetById(request.JeweleryId);
                 if (jewelery == null)
                 {
                     throw new InvalidOperationException($"Jewelery with ID {request.JeweleryId} does not exist.");
                 }
 
-                var order = await _context.Orders.FindAsync(request.OrderId);
+                var order = await _orderRepository.GetById(request.OrderId);
                 if (order == null)
                 {
                     throw new InvalidOperationException($"Order with ID {request.OrderId} does not exist.");
                 }
 
-                var diamond = await _context.Diamonds.FindAsync(request.DiamondId);
+                var diamond = await _diamondRepository.GetDiamondById(request.DiamondId);
                 if (diamond == null)
                 {
                     throw new InvalidOperationException($"Diamond with ID {request.DiamondId} does not exist.");
                 }
 
-                var jeweleryDesign = await _context.JeweleryDesigns.FindAsync(request.JeweleryDesignId);
+                var jeweleryDesign = await _jeweleryDesignRepository.GetById(request.JeweleryDesignId);
                 if (jeweleryDesign == null)
                 {
                     throw new InvalidOperationException($"JeweleryDesign with ID {request.JeweleryDesignId} does not exist.");
@@ -83,16 +92,14 @@ namespace JeweleryStorePlatformService
                     DesignFee = request.DesignFee,
                 };
 
-                _context.OrderItems.Add(orderItem);
-                await _context.SaveChangesAsync();
-
+                await _orderItemRepository.Add(orderItem);
                 return orderItem.Id;
                 
             }
             catch (Exception ex)
             {
                 // Log the exception here if a logging framework is in place
-                throw new Exception("An error occurred while creating the order item", ex);
+                throw new Exception("An error occurred while creating the order item", ex.InnerException);
             }
         }
 

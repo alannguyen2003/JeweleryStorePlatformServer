@@ -35,11 +35,6 @@ namespace JeweleryStorePlatformDataAccess
         public async Task<List<OrderItem>> GetAllOrderItem()
         {
             return await _context.OrderItems
-                .Include(o => o.JeweleryCase)
-                .Include(o => o.Order)
-                .Include(o => o.JeweleryDesign)
-                .Include(o => o.Jewelery)
-                .Include(o => o.Diamond)
                 .ToListAsync();
         }
 
@@ -56,6 +51,7 @@ namespace JeweleryStorePlatformDataAccess
 
         public async Task AddRange(List<OrderItem> orderItem)
         {
+            _context.ChangeTracker.Clear();
             await _context.OrderItems.AddRangeAsync(orderItem);
             await _context.SaveChangesAsync();
         }

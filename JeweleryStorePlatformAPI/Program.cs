@@ -10,43 +10,18 @@ using JeweleryStorePlatformRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddScoped<IJeweleryRepository, JeweleryRepository>();
-builder.Services.AddScoped<IJeweleryService, JeweleryService>();
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IPromotionRepository, PromotionRepository>();
-builder.Services.AddScoped<IPromotionService, PromotionService>();
-builder.Services.AddScoped<IColorService, ColorService>();
-builder.Services.AddScoped<IMaterialService, MaterialService>();
-builder.Services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
-builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerAuthorization();
 builder.Services.AddControllers();
-builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddRepository();
 builder.Services.AddService();
 builder.Services.AddAutoMapper();
+builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddSeeding();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddCloudinarySetting(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
-builder.Services.AddScoped<IDiamondService, DiamondService>();
-builder.Services.AddScoped<IDiamondRepository, DiamondRepository>();
-builder.Services.AddScoped<IGIAReportRepository, GIAReportRepository>();
-builder.Services.AddScoped<IJeweleryDesignService, JeweleryDesignService>();
-builder.Services.AddScoped<IJeweleryDesignRepository, JeweleryDesignRepository>();
-builder.Services.AddScoped<IJeweleryDesignImageRepository, JeweleryDesignImageRepository>();
-builder.Services.AddSingleton<HttpClientHelper>();
-builder.Services.AddTransient<ApiService>();
-
-builder.Services.AddTransient<IProvinceService, ProvinceService>();
-builder.Services.AddTransient<IGIAReportService, GIAReportService>();
-
-
 
 var app = builder.Build();
 
@@ -86,6 +61,7 @@ try
     await context.SeedingColor();
     await context.SeedingJeweleryCases();
     await context.SeedingPaymentMethod();
+    await context.SeedingPromotion();
 }
 catch (Exception ex)
 {

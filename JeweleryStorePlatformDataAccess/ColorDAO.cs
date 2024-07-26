@@ -1,4 +1,5 @@
 ﻿using JeweleryStorePlatformBusinessObject.Address;
+using JeweleryStorePlatformBusinessObject.Design;
 using JeweleryStorePlatformBusinessObject.Jewelery;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -38,6 +39,10 @@ namespace JeweleryStorePlatformDataAccess
         public async Task<List<Color>> GetAllColors()
         {
             return await _context.Colors.ToListAsync();
+        }
+        public async Task<Color?> GetById(int color)
+        {
+            return await _context.Colors.FindAsync(color);
         }
     }
 }

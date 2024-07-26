@@ -33,6 +33,7 @@ namespace JeweleryStorePlatformDataAccess
 
         public async Task<int> AddNewAddress(Address address)
         {
+            _context.ChangeTracker.Clear();
             await _context.Addresses.AddAsync(address);
             await _context.SaveChangesAsync();
             return address.Id;

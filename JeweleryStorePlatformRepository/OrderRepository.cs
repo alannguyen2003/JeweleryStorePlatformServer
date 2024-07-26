@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JeweleryStorePlatformBusinessObject.Constant;
 
 namespace JeweleryStorePlatformRepository
 {
@@ -52,5 +53,11 @@ namespace JeweleryStorePlatformRepository
             return await OrderDAO.Instance.GetOrderByIdAndAccountId(orderId, accountId);
         }
 
+        public async Task AcceptOrder(int orderId)
+        {
+            var order = await OrderDAO.Instance.GetById(orderId);
+            order.Status = (int)OrderStatusConstant.ACCEPTED;
+            await OrderDAO.Instance.Update(order);
+        }
     }
 }

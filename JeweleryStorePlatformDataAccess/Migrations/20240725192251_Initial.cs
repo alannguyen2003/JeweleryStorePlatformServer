@@ -261,6 +261,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CaseName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PreviewImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
                     ColorId = table.Column<int>(type: "int", nullable: false),
                     MaterialId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -358,11 +359,11 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Price = table.Column<int>(type: "int", nullable: false),
-                    AddressId = table.Column<int>(type: "int", nullable: false),
+                    AddressId = table.Column<int>(type: "int", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     StartDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FinishedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AccountId = table.Column<int>(type: "int", nullable: false),
+                    AccountId = table.Column<int>(type: "int", nullable: true),
                     PromotionCode = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -372,14 +373,12 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         name: "FK_Orders_Accounts_AccountId",
                         column: x => x.AccountId,
                         principalTable: "Accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Orders_Addresses_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Addresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -394,7 +393,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                     DiamondId = table.Column<int>(type: "int", nullable: true),
                     JeweleryDesignId = table.Column<int>(type: "int", nullable: true),
                     DesignFee = table.Column<int>(type: "int", nullable: true),
-                    Size = table.Column<int>(type: "int", nullable: false)
+                    Size = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -403,32 +402,27 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         name: "FK_OrderItems_Diamonds_DiamondId",
                         column: x => x.DiamondId,
                         principalTable: "Diamonds",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_OrderItems_Jeweleries_JeweleryId",
                         column: x => x.JeweleryId,
                         principalTable: "Jeweleries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_OrderItems_JeweleryCases_JeweleryCaseId",
                         column: x => x.JeweleryCaseId,
                         principalTable: "JeweleryCases",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_OrderItems_JeweleryDesigns_JeweleryDesignId",
                         column: x => x.JeweleryDesignId,
                         principalTable: "JeweleryDesigns",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_OrderItems_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -439,6 +433,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TransactionStatus = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: false),
                     AccountId = table.Column<int>(type: "int", nullable: false),
                     PaymentMethodId = table.Column<int>(type: "int", nullable: false)
@@ -457,7 +452,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Transactions_PaymentMethods_PaymentMethodId",
                         column: x => x.PaymentMethodId,
@@ -589,7 +584,7 @@ namespace JeweleryStorePlatformDataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "AccountRoles");
-
+            
             migrationBuilder.DropTable(
                 name: "GIAReports");
 
