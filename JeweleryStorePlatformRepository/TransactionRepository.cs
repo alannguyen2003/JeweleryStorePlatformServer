@@ -17,5 +17,10 @@ namespace JeweleryStorePlatformRepository
         {
             return await TransactionDAO.Instance.CreateTransaction(transaction);
         }
+
+        public async Task<Transaction?> GetLatestTransactionOfUser(int userId, int orderId)
+        {
+            return await TransactionDAO.Instance.GetLatestTransactionOfUser(userId, orderId);
+        }
     }
 }

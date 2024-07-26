@@ -41,5 +41,10 @@ namespace JeweleryStorePlatformRepository
         {
             return await OrderItemDAO.Instance.Update(orderitem);
         }
+
+        public async Task<List<OrderItem>> GetAllOrderItemByOrderId(int orderId)
+        {
+            return await OrderItemDAO.Instance.GetAllOrderItemByOrderId(orderId);
+        }
     }
 }

@@ -12,5 +12,6 @@ namespace JeweleryStorePlatformRepository.Interface
     public interface ITransactionRepository
     {
         Task<Transaction> CreateTransaction(Transaction transaction);
+        public Task<Transaction?> GetLatestTransactionOfUser(int userId, int orderId);
     }
 }

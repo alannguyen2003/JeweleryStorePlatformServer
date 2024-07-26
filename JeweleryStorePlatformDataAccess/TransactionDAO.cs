@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace JeweleryStorePlatformDataAccess
 {
@@ -35,6 +36,14 @@ namespace JeweleryStorePlatformDataAccess
             _context.Set<Transaction>().Add(transaction);
             await _context.SaveChangesAsync();
             return transaction;
+        }
+
+        public async Task<Transaction?> GetLatestTransactionOfUser(int userId, int orderId)
+        {
+            return await _context.Transactions
+                .Where(item => item.AccountId == userId && item.OrderId == orderId)
+                .OrderByDescending(item => item.Id)
+                .FirstOrDefaultAsync();
         }
     }
 }
