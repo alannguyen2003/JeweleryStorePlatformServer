@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace JeweleryStorePlatformBusinessObject.Jewelery;
 
@@ -10,5 +11,6 @@ public class Jewelery : BaseEntity
 
     [ForeignKey("JeweleryTypeId")]
     public int JeweleryTypeId { get; set; }
+    [JsonIgnore]
     public virtual JeweleryType? JeweleryType { get; set; }
 }

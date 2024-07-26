@@ -16,7 +16,8 @@ namespace JeweleryStorePlatformService
     public class JeweleryCaseService : IJeweleryCaseService
     {
         private readonly IJeweleryCaseRepository _jewelerycaseRepository;
-        private readonly AppDbContext _context;
+        private readonly IColorRepository _colorRepository;
+        private readonly IMaterialRepository _materialRepository;
 
         public async Task<List<JeweleryCase>> GetAll()
         {
@@ -27,10 +28,11 @@ namespace JeweleryStorePlatformService
         {
             return await _jewelerycaseRepository.GetById(jeweleryId);
         }
-        public JeweleryCaseService(AppDbContext context, IJeweleryCaseRepository jewelerycaseRepository)
+        public JeweleryCaseService(IJeweleryCaseRepository jewelerycaseRepository, IColorRepository colorRepository, IMaterialRepository materialRepository)
         {
-            _context = context;
             _jewelerycaseRepository = jewelerycaseRepository;
+            _colorRepository = colorRepository;
+            _materialRepository = materialRepository;
         }
 
         public async Task<int> Create(JeweleryCaseDTO request)
@@ -43,28 +45,23 @@ namespace JeweleryStorePlatformService
             try
             {
                 // Kiểm tra xem JeweleryType có tồn tại không
-                var color = await _context.Colors.FindAsync(request.ColorId);
+                var color = await _colorRepository.GetById(request.ColorId);
                 if (color == null)
                 {
                     throw new ArgumentException($"Color with ID {request.ColorId} does not exist.");
                 }
-                var material = await _context.Materials.FindAsync(request.MaterialId);
+                var material = await _materialRepository.GetById(request.MaterialId);
                 if (material == null)
                 {
                     throw new ArgumentException($"Material with ID {request.MaterialId} does not exist.");
                 }
-
-                // Tạo mới đối tượng Jewelery
                 var jewelery = new JeweleryCase
                 {
                     CaseName = request.CaseName,
                     ColorId = request.ColorId,
-                    MaterialId = request.MaterialId // Gán thể hiện của JeweleryType từ DB
+                    MaterialId = request.MaterialId
                 };
-
-                // Thêm Jewelery vào context và lưu vào cơ sở dữ liệu
-                _context.JeweleryCases.Add(jewelery);
-                await _context.SaveChangesAsync();
+                await _jewelerycaseRepository.Add(jewelery);
 
                 // Trả về id của Jewelery vừa được tạo
                 return jewelery.Id;

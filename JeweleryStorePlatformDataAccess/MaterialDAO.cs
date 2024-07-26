@@ -1,4 +1,5 @@
-﻿using JeweleryStorePlatformBusinessObject.Jewelery;
+﻿using JeweleryStorePlatformBusinessObject.Design;
+using JeweleryStorePlatformBusinessObject.Jewelery;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,10 @@ namespace JeweleryStorePlatformDataAccess
         public async Task<List<Material>> GetAllMaterials()
         {
             return await _context.Materials.ToListAsync();
+        }
+        public async Task<Material?> GetById(int material)
+        {
+            return await _context.Materials.FindAsync(material);
         }
     }
 }

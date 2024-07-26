@@ -1,4 +1,5 @@
-﻿using JeweleryStorePlatformBusinessObject.Jewelery;
+﻿using JeweleryStorePlatformBusinessObject.Design;
+using JeweleryStorePlatformBusinessObject.Jewelery;
 using JeweleryStorePlatformDataAccess;
 using JeweleryStorePlatformRepository.Interface;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ namespace JeweleryStorePlatformRepository
 {
     public class JeweleryRepository : IJeweleryRepository
     {
+
         public async Task<List<Jewelery>> GetAll()
         {
             return await JeweleryDAO.Instance.GetAllJewelery();
@@ -30,12 +32,17 @@ namespace JeweleryStorePlatformRepository
 
         public async Task<int> Update(Jewelery jewelery)
         {
-            return await JeweleryDAO.Instance.Update(jewelery); // Ensure it accepts JeweleryEntity
-        }   
+            return await JeweleryDAO.Instance.Update(jewelery);
+        }
 
         public async Task<int> Delete(int jeweleryId)
         {
             return await JeweleryDAO.Instance.Delete(jeweleryId);
+        }
+
+        public async Task<JeweleryType> GetJeweleryTypeById(int typeId)
+        {
+            return await JeweleryDAO.Instance.GetJeweleryTypeById(typeId);
         }
     }
 }

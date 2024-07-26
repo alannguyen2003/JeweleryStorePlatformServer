@@ -8,28 +8,28 @@ namespace JeweleryStorePlatformDataAccess
     public class JeweleryDAO
     {
         private readonly AppDbContext _context;
-        private static JeweleryDAO _instance;
+        private static JeweleryDAO instance;
 
-        private JeweleryDAO()
+        public JeweleryDAO()
         {
-            _context = new AppDbContext(); // Ensure you have a parameterless constructor or configure DI
-        }
-
-        public async Task<List<Jewelery>> GetAllJewelery()
-        {
-            return await _context.Jeweleries.Include(j => j.JeweleryType).ToListAsync();
+            _context = new AppDbContext();
         }
 
         public static JeweleryDAO Instance
         {
             get
             {
-                if (_instance == null)
+                if (instance == null)
                 {
-                    _instance = new JeweleryDAO();
+                    instance = new JeweleryDAO();
                 }
-                return _instance;
+                return instance;
             }
+        }
+
+        public async Task<List<Jewelery>> GetAllJewelery()
+        {
+            return await _context.Jeweleries.ToListAsync();
         }
 
         public async Task<Jewelery> GetById(int jewelryId)
@@ -77,5 +77,11 @@ namespace JeweleryStorePlatformDataAccess
             _context.Jeweleries.Remove(jewelry);
             return await _context.SaveChangesAsync(); // This will return the number of affected rows
         }
+
+        public async Task<JeweleryType> GetJeweleryTypeById(int typeId)
+        {
+            return await _context.JeweleryTypes.FindAsync(typeId);
+        }
+
     }
 }

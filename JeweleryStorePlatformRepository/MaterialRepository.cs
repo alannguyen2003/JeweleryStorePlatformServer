@@ -1,4 +1,5 @@
 ﻿using JeweleryStorePlatformBusinessObject.Address;
+using JeweleryStorePlatformBusinessObject.Design;
 using JeweleryStorePlatformBusinessObject.Jewelery;
 using JeweleryStorePlatformDataAccess;
 using JeweleryStorePlatformRepository.Interface;
@@ -19,6 +20,10 @@ namespace JeweleryStorePlatformRepository
         public async Task<List<Material>> GetAllMaterials()
         {
             return await MaterialDAO.Instance.GetAllMaterials();
+        }
+        public async Task<Material?> GetById(int material)
+        {
+            return await MaterialDAO.Instance.GetById(material);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using JeweleryStorePlatformBusinessObject.Address;
+using JeweleryStorePlatformBusinessObject.Design;
 using JeweleryStorePlatformBusinessObject.Jewelery;
 using JeweleryStorePlatformDataAccess;
 using JeweleryStorePlatformRepository.Interface;
@@ -19,6 +20,10 @@ namespace JeweleryStorePlatformRepository
         public async Task<List<Color>> GetAllColors()
         {
             return await ColorDAO.Instance.GetAllColors();
+        }
+        public async Task<Color?> GetById(int color)
+        {
+            return await ColorDAO.Instance.GetById(color);
         }
     }
 }

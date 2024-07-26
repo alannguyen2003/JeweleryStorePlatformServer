@@ -1,8 +1,6 @@
 ﻿using JeweleryStorePlatformBusinessObject.Jewelery;
-using JeweleryStorePlatformDataAccess;
 using JeweleryStorePlatformRepository.Interface;
 using JeweleryStorePlatformService.Interface;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,7 +10,11 @@ namespace JeweleryStorePlatformService
     public class JeweleryService : IJeweleryService
     {
         private readonly IJeweleryRepository _jeweleryRepository;
-        private readonly AppDbContext _context;
+
+        public JeweleryService(IJeweleryRepository jeweleryRepository)
+        {
+            _jeweleryRepository = jeweleryRepository;
+        }
 
         public async Task<List<Jewelery>> GetAll()
         {
@@ -22,11 +24,6 @@ namespace JeweleryStorePlatformService
         public async Task<Jewelery> GetById(int jeweleryId)
         {
             return await _jeweleryRepository.GetById(jeweleryId);
-        }
-        public JeweleryService(AppDbContext context, IJeweleryRepository jeweleryRepository)
-        {
-            _context = context;
-            _jeweleryRepository = jeweleryRepository;
         }
 
         public async Task<int> Create(JeweleryCreateRequest request)
@@ -38,31 +35,29 @@ namespace JeweleryStorePlatformService
 
             try
             {
-                // Kiểm tra xem JeweleryType có tồn tại không
-                var jeweleryType = await _context.JeweleryTypes.FindAsync(request.TypeId);
+                // Ensure JeweleryType exists
+                var jeweleryType = await _jeweleryRepository.GetJeweleryTypeById(request.TypeId);
                 if (jeweleryType == null)
                 {
                     throw new ArgumentException($"JeweleryType with ID {request.TypeId} does not exist.");
                 }
 
-                // Tạo mới đối tượng Jewelery
+                // Create new Jewelery entity
                 var jewelery = new Jewelery
                 {
                     JeweleryName = request.JeweleryName,
                     JeweleryTypeId = request.TypeId,
-                    JeweleryType = jeweleryType // Gán thể hiện của JeweleryType từ DB
                 };
 
-                // Thêm Jewelery vào context và lưu vào cơ sở dữ liệu
-                _context.Jeweleries.Add(jewelery);
-                await _context.SaveChangesAsync();
+                // Add the new Jewelery entity
+                await _jeweleryRepository.Add(jewelery);
 
-                // Trả về id của Jewelery vừa được tạo
+                // Return the id of the newly created Jewelery
                 return jewelery.Id;
             }
             catch (Exception ex)
             {
-                // Xử lý và ném lại ngoại lệ nếu có lỗi xảy ra
+                // Handle and rethrow the exception if an error occurs
                 throw new Exception("An error occurred while creating the jewelery", ex);
             }
         }

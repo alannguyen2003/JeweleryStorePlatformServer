@@ -14,5 +14,6 @@ namespace JeweleryStorePlatformRepository.Interface
     {
         public Task<List<JeweleryDesign>> GetAllJeweleryDesign();
         public Task<JeweleryDesign> AddNewJeweleryDesign(JeweleryDesign jeweleryDesign);
+        Task<JeweleryDesign?> GetById(int jeweleryId);
     }
 }
