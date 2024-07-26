@@ -1,4 +1,6 @@
 ﻿using JeweleryStorePlatformBusinessObject.Jewelery;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JeweleryStorePlatformRepository.Interface
 {
@@ -10,5 +12,6 @@ namespace JeweleryStorePlatformRepository.Interface
         Task AddRange(List<Jewelery> jewelery);
         Task<int> Update(Jewelery jewelery);
         Task<int> Delete(int jeweleryId);
+        Task<JeweleryType> GetJeweleryTypeById(int typeId);
     }
 }
