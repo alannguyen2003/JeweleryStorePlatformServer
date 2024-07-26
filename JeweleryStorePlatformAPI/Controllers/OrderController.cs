@@ -16,6 +16,7 @@ namespace JeweleryStorePlatformAPI.Controllers;
 public class OrderController : ControllerBase
 {
     private readonly IOrderService _orderService;
+    private readonly ITransactionService _transactionService;
     public OrderController(IOrderService orderService)
     {
         _orderService = orderService;
@@ -134,6 +135,84 @@ public class OrderController : ControllerBase
             {
                 Succeeded = true,
                 Message = "Order has been accepted!"
+            });
+        }
+        catch (Exception ex)
+        {
+            return Ok(ex.InnerException);
+        }
+    }
+    
+    [Authorize]
+    [HttpGet("reject-order")]
+    public async Task<IActionResult> RejectOrder(int orderId)
+    {
+        try
+        {
+            await _orderService.RejectOrder(orderId);
+            return Ok(new Result<string>()
+            {
+                Succeeded = true,
+                Message = "Order has been rejected!"
+            });
+        }
+        catch (Exception ex)
+        {
+            return Ok(ex.InnerException);
+        }
+    }
+    
+    [Authorize]
+    [HttpGet("change-to-ship-order")]
+    public async Task<IActionResult> ChangeToShip(int orderId)
+    {
+        try
+        {
+            await _orderService.ChangeToShipOrder(orderId);
+            return Ok(new Result<string>()
+            {
+                Succeeded = true,
+                Message = "Order has been change to ship!"
+            });
+        }
+        catch (Exception ex)
+        {
+            return Ok(ex.InnerException);
+        }
+    }
+    
+    [Authorize]
+    [HttpGet("success-payment")]
+    public async Task<IActionResult> SuccessPayment(int transactionId)
+    {
+        try
+        {
+            var transaction = await _transactionService.GetTransactionById(transactionId);
+            await _orderService.ChangeToPaid(transaction.OrderId);
+            return Ok(new Result<string>()
+            {
+                Succeeded = true,
+                Message = "Order has been paid!"
+            });
+        }
+        catch (Exception ex)
+        {
+            return Ok(ex.InnerException);
+        }
+    }
+    
+    [Authorize]
+    [HttpGet("cancel-payment")]
+    public async Task<IActionResult> CancelPayment(int transactionId)
+    {
+        try
+        {
+            var transaction = await _transactionService.GetTransactionById(transactionId);
+            await _orderService.RejectOrder(transaction.OrderId);
+            return Ok(new Result<string>()
+            {
+                Succeeded = true,
+                Message = "Order has been rejected!"
             });
         }
         catch (Exception ex)

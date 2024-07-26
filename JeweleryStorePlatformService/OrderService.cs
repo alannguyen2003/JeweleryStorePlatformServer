@@ -150,5 +150,25 @@ namespace JeweleryStorePlatformService
         {
             await _orderRepository.AcceptOrder(orderId);
         }
+
+        public async Task RejectOrder(int orderId)
+        {
+            await _orderRepository.RejectOrder(orderId);
+        }
+
+        public async Task ChangeToShipOrder(int orderId)
+        {
+            await _orderRepository.ChangeToShipOrder(orderId);
+        }
+
+        public async Task ChangeToPaid(int orderId)
+        {
+            await _orderRepository.ChangeToPaid(orderId);
+        }
+
+        public async Task FinishOrder(int orderId)
+        {
+            await _orderRepository.FinishOrder(orderId);
+        }
     }
 }
